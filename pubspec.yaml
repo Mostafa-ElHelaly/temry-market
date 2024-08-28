@@ -1,0 +1,78 @@
+name: temry_market
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+
+  #local storage
+  shared_preferences: ^2.3.2
+  flutter_secure_storage: ^9.2.2
+
+  #state management
+  bloc: ^8.1.2
+  flutter_bloc: ^8.0.1
+  get_it: ^7.6.0
+
+  http: ^1.2.2
+  equatable: ^2.0.5
+  dartz: ^0.10.1
+  internet_connection_checker: ^2.0.0
+
+  #ui
+  oktoast: ^3.3.1
+  flutter_snake_navigationbar: ^0.6.1
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  carousel_slider: ^5.0.0
+  smooth_page_indicator: ^1.1.0
+  flutter_easyloading: ^3.0.5
+  pinput: ^5.0.0
+  easy_localization: ^3.0.7
+  image_picker: ^1.1.1
+  csc_picker: ^0.2.7
+  dio: ^5.4.3+1
+  readmore: ^3.0.0
+  google_sign_in: ^6.2.1
+  dropdown_button2: ^2.3.9
+  table_calendar: ^3.1.1
+  givestarreviews: ^1.0.2
+  modal_bottom_sheet: ^3.0.0
+  country_code_picker: ^3.0.0
+  email_otp: ^3.0.2
+  provider: ^6.1.2
+  flutter_rating_bar: ^4.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  #  mockito: ^5.4.2
+  mocktail: ^1.0.4
+  bloc_test: ^9.1.4
+
+  flutter_lints: ^4.0.0
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/navbar_icons/
+    - assets/status_image/
+    - assets/dev/
+    - assets/other_images/
+    - assets/icons/
