@@ -46,9 +46,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<AuthenticationResponseModel> signUp(SignUpParams params) async {
     final body = {
-      'firstName': params.firstName,
-      'lastName': params.lastName,
+      'first_name': params.firstName,
+      'last_name': params.lastName,
       'email': params.email,
+      'mobile': params.mobile,
       'password': params.password,
     };
     final response = await client.post(Uri.parse(ConstantApi.register),
@@ -59,6 +60,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     print(body['email']);
     print(body['password']);
     print(body['firstName']);
+    print(body['mobile']);
     print(body['lastName']);
     print('--------------------------------');
     print(response.statusCode);
