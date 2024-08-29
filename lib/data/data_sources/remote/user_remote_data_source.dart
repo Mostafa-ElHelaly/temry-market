@@ -59,9 +59,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         body: body);
     print(body['email']);
     print(body['password']);
-    print(body['firstName']);
+    print(body['first_name']);
     print(body['mobile']);
-    print(body['lastName']);
+    print(body['last_name']);
     print('--------------------------------');
     print(response.statusCode);
     print('--------------------------------');

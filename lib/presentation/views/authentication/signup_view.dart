@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:temry_market/core/constant/config_size.dart';
+import 'package:temry_market/core/widgets/snack_bar.dart';
 
 import '../../../core/constant/images.dart';
 import '../../../core/error/failures.dart';
@@ -39,15 +40,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           EasyLoading.show(status: 'Loading...');
         } else if (state is UserLogged) {
           context.read<CartBloc>().add(const GetCart());
+
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.signIn,
             ModalRoute.withName(''),
           );
         } else if (state is UserLoggedFail) {
-          if (state.failure is CredentialFailure) {
-            EasyLoading.showError("Username/Password Wrong!");
-          } else {
-            EasyLoading.showError("Error");
+          if (state.failure is ServerFailure) {
+            EasyLoading.showError(state.failure.toString());
           }
         }
       },
@@ -170,17 +170,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (passwordController.text !=
                             confirmPasswordController.text) {
                         } else {
-                          context.read<UserBloc>().add(
-                                SignUpUser(
-                                  SignUpParams(
-                                    firstName: firstNameController.text,
-                                    lastName: lastNameController.text,
-                                    email: emailController.text,
-                                    mobile: phoneController.text,
-                                    password: passwordController.text,
-                                  ),
-                                ),
-                              );
+                          BlocProvider.of<UserBloc>(context).add(
+                            SignUpUser(
+                              SignUpParams(
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
+                                email: emailController.text,
+                                mobile: phoneController.text,
+                                password: passwordController.text,
+                              ),
+                            ),
+                          );
                         }
                       }
                     },
@@ -194,6 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (_formKey.currentState!.validate()) {
                         if (passwordController.text !=
                             confirmPasswordController.text) {
+                          errorSnackBar(context, 'Passwords do not match');
                         } else {
                           context.read<UserBloc>().add(
                                 SignUpUser(
