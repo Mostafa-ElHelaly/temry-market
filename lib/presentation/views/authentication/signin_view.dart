@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
@@ -37,10 +38,10 @@ class _SignInViewState extends State<SignInView> {
         if (state is UserLoading) {
           EasyLoading.show(status: 'Loading...');
         } else if (state is UserLogged) {
-          context.read<CartBloc>().add(const GetCart());
-          context.read<DeliveryInfoFetchCubit>().fetchDeliveryInfo();
-          context.read<OrderFetchCubit>().getOrders();
-          context.read<NavbarCubit>().update(0);
+          // context.read<CartBloc>().add(const GetCart());
+          // context.read<DeliveryInfoFetchCubit>().fetchDeliveryInfo();
+          // context.read<OrderFetchCubit>().getOrders();
+          // context.read<NavbarCubit>().update(0);
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.home,
             ModalRoute.withName(''),
@@ -65,7 +66,7 @@ class _SignInViewState extends State<SignInView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: ConfigSize.defaultSize! * 10,
+                    height: ConfigSize.defaultSize! * 14,
                   ),
                   SizedBox(
                       height: ConfigSize.defaultSize! * 10,
@@ -76,17 +77,17 @@ class _SignInViewState extends State<SignInView> {
                   SizedBox(
                     height: ConfigSize.defaultSize! * 5,
                   ),
-                  Text(
-                    "Please enter \n your e-mail address and password \n to sign-in",
-                    style: TextStyle(
-                      fontSize: ConfigSize.defaultSize! * 1.8,
-                      color: AppColors.textFourth,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const Spacer(),
+                  // Text(
+                  //   "Please enter \n your e-mail address and password \n to sign-in",
+                  //   style: TextStyle(
+                  //     fontSize: ConfigSize.defaultSize! * 1.8,
+                  //     color: AppColors.textFourth,
+                  //   ),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // const Spacer(),
                   SizedBox(
-                    height: ConfigSize.defaultSize! * 2.4,
+                    height: ConfigSize.defaultSize! * 7,
                   ),
                   InputTextFormField(
                     controller: emailController,
@@ -169,6 +170,22 @@ class _SignInViewState extends State<SignInView> {
                   //   },
                   //   titleText: 'Back',
                   // ),
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      FadeAnimatedText(
+                        'Hello, Flutter!',
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                    totalRepeatCount: 2,
+                    pause: const Duration(milliseconds: 1000),
+                    displayFullTextOnTap: false,
+                    stopPauseOnTap: true,
+                  ),
+
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
