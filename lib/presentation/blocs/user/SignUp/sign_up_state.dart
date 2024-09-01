@@ -23,7 +23,7 @@ final class SignUPErrorState extends SignUPState {
 }
 
 final class SignUPSuccessState extends SignUPState {
-  final User SignUPModelResponse;
+  final Unit SignUPModelResponse;
 
   const SignUPSuccessState({required this.SignUPModelResponse});
 }

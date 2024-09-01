@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/widgets/snack_bar.dart';
+import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
+import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_state.dart';
 
 import '../../../core/constant/images.dart';
 import '../../../core/error/failures.dart';
@@ -33,22 +35,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(
+    return BlocListener<SignUpBloc, SignUPState>(
       listener: (context, state) {
         EasyLoading.dismiss();
-        if (state is UserLoading) {
-          EasyLoading.show(status: 'Loading...');
-        } else if (state is UserLogged) {
+        if (state is SignUPErrorState) {
+          EasyLoading.show(status: state.failure.toString());
+        } else if (state is SignUPSuccessState) {
           context.read<CartBloc>().add(const GetCart());
-
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.signIn,
             ModalRoute.withName(''),
           );
-        } else if (state is UserLoggedFail) {
-          if (state.failure is ServerFailure) {
-            EasyLoading.showError(state.failure.toString());
-          }
+        } else {
+          EasyLoading.show(status: 'Loading...');
         }
       },
       child: Scaffold(
@@ -196,17 +195,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             confirmPasswordController.text) {
                           errorSnackBar(context, 'Passwords do not match');
                         } else {
-                          context.read<UserBloc>().add(
-                                SignUpUser(
-                                  SignUpParams(
-                                    firstName: firstNameController.text,
-                                    lastName: lastNameController.text,
-                                    email: emailController.text,
-                                    mobile: phoneController.text,
-                                    password: passwordController.text,
-                                  ),
-                                ),
-                              );
+                          BlocProvider.of<SignUpBloc>(context).add(
+                            SignUpParams(
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              email: emailController.text,
+                              mobile: phoneController.text,
+                              password: passwordController.text,
+                            ),
+                          );
                         }
                       }
                     },

@@ -30,10 +30,13 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> signUp(params) async {
-    return await _authenticate(() {
-      return remoteDataSource.signUp(params);
-    });
+  Future<Either<Failure, Unit>> signUp(params) async {
+    try {
+      final result = await remoteDataSource.signUp(params);
+      return Right(result);
+    } on Exception catch (e) {
+      return Left(ExceptionFailure());
+    }
   }
 
   @override
