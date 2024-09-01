@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temry_market/domain/usecases/user/sign_out_usecase.dart';
 import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
@@ -61,16 +62,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   FutureOr<void> _onSignUp(SignUpUser event, Emitter<UserState> emit) async {
-    try {
-      emit(UserLoading());
-      final result = await _signUpUseCase(event.params);
-      result.fold(
-        (failure) => emit(UserLoggedFail(failure)),
-        (user) => emit(UserLogged(user)),
-      );
-    } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
-    }
+    // try {
+    //   emit(UserLoading());
+    //   final result = await _signUpUseCase(event.params);
+    //   result.fold(
+    //     (failure) => emit(UserLoggedFail(failure)),
+    //     (user) => emit(UserLogged(unit)),
+    //   );
+    // } catch (e) {
+    //   emit(UserLoggedFail(ExceptionFailure()));
+    // }
   }
 
   void _onSignOut(SignOutUser event, Emitter<UserState> emit) async {

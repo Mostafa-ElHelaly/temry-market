@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 
 import '../../data/data_sources/local/cart_local_data_source.dart';
 import '../../data/data_sources/local/category_local_data_source.dart';
@@ -207,6 +208,10 @@ Future<void> init() async {
   sl.registerFactory(
     () => UserBloc(sl(), sl(), sl(), sl()),
   );
+  sl.registerFactory(
+    () => SignUpBloc(registerUseCase: sl()),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetCachedUserUseCase(sl()));
   sl.registerLazySingleton(() => SignInUseCase(sl()));

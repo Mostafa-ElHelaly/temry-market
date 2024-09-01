@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
 import 'package:temry_market/core/error/failures.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import '../../models/user/authentication_response_model.dart';
 
 abstract class UserRemoteDataSource {
   Future<AuthenticationResponseModel> signIn(SignInParams params);
-  Future<AuthenticationResponseModel> signUp(SignUpParams params);
+  Future<Unit> signUp(SignUpParams params);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -44,7 +45,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<AuthenticationResponseModel> signUp(SignUpParams params) async {
+  Future<Unit> signUp(SignUpParams params) async {
     final body = {
       'first_name': params.firstName,
       'last_name': params.lastName,
@@ -59,15 +60,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         body: body);
     print(body['email']);
     print(body['password']);
-    print(body['firstName']);
+    print(body['first_name']);
     print(body['mobile']);
-    print(body['lastName']);
+    print(body['last_name']);
     print('--------------------------------');
     print(response.statusCode);
     print('--------------------------------');
     print(response.body);
-    if (response.statusCode == 201) {
-      return authenticationResponseModelFromJson(response.body);
+    if (response.statusCode == 200) {
+      return Future.value(unit);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
       throw CredentialFailure();
     } else {
