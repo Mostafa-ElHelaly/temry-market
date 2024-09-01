@@ -18,14 +18,15 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetCachedUserUseCase _getCachedUserUseCase;
-  final SignInUseCase _signInUseCase;
+  // final SignInUseCase _signInUseCase;
   final SignUpUseCase _signUpUseCase;
   final SignOutUseCase _signOutUseCase;
   UserBloc(
-    this._signInUseCase,
+    // this._signInUseCase,
     this._getCachedUserUseCase,
     this._signOutUseCase,
     this._signUpUseCase,
+    Object object,
   ) : super(UserInitial()) {
     on<SignInUser>(_onSignIn);
     on<SignUpUser>(_onSignUp);
@@ -34,18 +35,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   void _onSignIn(SignInUser event, Emitter<UserState> emit) async {
-    try {
-      emit(UserLoading());
-      final result = await _signInUseCase(event.params);
-      print("xxxxxxxxxxxxxxxxxxxxxxx");
-      print(result);
-      result.fold(
-        (failure) => emit(UserLoggedFail(failure)),
-        (user) => emit(UserLogged(user)),
-      );
-    } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
-    }
+    // try {
+    //   emit(UserLoading());
+    //   final result = await _signInUseCase(event.params);
+    //   print("xxxxxxxxxxxxxxxxxxxxxxx");
+    //   print(result);
+    //   result.fold(
+    //     (failure) => emit(UserLoggedFail(failure)),
+    //     (user) => emit(UserLogged(user)),
+    //   );
+    // } catch (e) {
+    //   emit(UserLoggedFail(ExceptionFailure()));
+    // }
   }
 
   void _onCheckUser(CheckUser event, Emitter<UserState> emit) async {

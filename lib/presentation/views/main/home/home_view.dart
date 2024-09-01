@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/locale_keys.g.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../../core/error/failures.dart';
@@ -12,7 +13,6 @@ import '../../../../core/router/app_router.dart';
 import '../../../../domain/usecases/product/get_product_usecase.dart';
 import '../../../blocs/filter/filter_cubit.dart';
 import '../../../blocs/product/product_bloc.dart';
-import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/alert_card.dart';
 import '../../../widgets/input_form_button.dart';
 import '../../../widgets/product_card.dart';
@@ -81,8 +81,9 @@ class _HomeViewState extends State<HomeView> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-              if (state is UserLogged) {
+            child:
+                BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+              if (state is SignInSuccessState) {
                 return Row(
                   children: [
                     GestureDetector(
@@ -90,7 +91,7 @@ class _HomeViewState extends State<HomeView> {
                         Navigator.of(context).pushNamed(AppRouter.userProfile);
                       },
                       child: Text(
-                        "${state.user.firstName} ${state.user.lastName}",
+                        "${state.SignInModelResponse['data']['user']['first_name']} ${state.SignInModelResponse['data']['user']['last_name']}",
                         style: const TextStyle(fontSize: 26),
                       ),
                     ),
@@ -102,20 +103,11 @@ class _HomeViewState extends State<HomeView> {
                       onTap: () {
                         Navigator.of(context).pushNamed(AppRouter.userProfile);
                       },
-                      child: state.user.image != null
-                          ? CachedNetworkImage(
-                              imageUrl: state.user.image!,
-                              imageBuilder: (context, image) => CircleAvatar(
-                                radius: 24.0,
-                                backgroundImage: image,
-                                backgroundColor: Colors.transparent,
-                              ),
-                            )
-                          : const CircleAvatar(
-                              radius: 24.0,
-                              backgroundImage: AssetImage(kUserAvatar),
-                              backgroundColor: Colors.transparent,
-                            ),
+                      child: const CircleAvatar(
+                        radius: 24.0,
+                        backgroundImage: AssetImage(kUserAvatar),
+                        backgroundColor: Colors.transparent,
+                      ),
                     )
                   ],
                 );

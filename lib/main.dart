@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_event.dart';
 
@@ -56,11 +57,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<CartBloc>()..add(const GetCart()),
         ),
-        BlocProvider(
-          create: (context) => di.sl<UserBloc>()..add(CheckUser()),
-        ),
+        // BlocProvider(
+        //   create: (context) => di.sl<UserBloc>()..add(CheckUser()),
+        // ),
         BlocProvider(
           create: (context) => di.sl<SignUpBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<SignInBloc>(),
         ),
         BlocProvider(
           create: (context) => di.sl<DeliveryInfoActionCubit>(),
@@ -76,7 +80,7 @@ class MyApp extends StatelessWidget {
       child: OKToast(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRouter.home,
+          initialRoute: AppRouter.signIn,
           onGenerateRoute: AppRouter.onGenerateRoute,
           title: appTitle,
           // theme: AppTheme.lightTheme,

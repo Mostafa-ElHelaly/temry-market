@@ -6,6 +6,8 @@ import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cu
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 
 import '../../../core/constant/images.dart';
 import '../../../core/error/failures.dart';
@@ -32,13 +34,12 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     ConfigSize().init(context);
-    return BlocListener<UserBloc, UserState>(
+    return BlocListener<SignInBloc, SignInState>(
       listener: (context, state) {
-        print(state);
         EasyLoading.dismiss();
-        if (state is UserLoading) {
+        if (state is SignInLoadingState) {
           EasyLoading.show(status: 'Loading...');
-        } else if (state is UserLogged) {
+        } else if (state is SignInSuccessState) {
           // context.read<CartBloc>().add(const GetCart());
           // context.read<DeliveryInfoFetchCubit>().fetchDeliveryInfo();
           // context.read<OrderFetchCubit>().getOrders();
@@ -47,11 +48,11 @@ class _SignInViewState extends State<SignInView> {
             AppRouter.home,
             ModalRoute.withName(''),
           );
-        } else if (state is UserLoggedFail) {
+        } else if (state is SignInErrorState) {
           if (state.failure is CredentialFailure) {
-            EasyLoading.showError("Username/Password Wrong!");
+            EasyLoading.showError(state.failure.toString());
           } else {
-            // EasyLoading.showError("Error");
+            EasyLoading.showError("Error");
           }
         }
       },
@@ -117,10 +118,10 @@ class _SignInViewState extends State<SignInView> {
                     },
                     onFieldSubmitted: (_) {
                       if (_formKey.currentState!.validate()) {
-                        context.read<UserBloc>().add(SignInUser(SignInParams(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            )));
+                        BlocProvider.of<SignInBloc>(context).add(SignInParams(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ));
                       }
                     },
                   ),
@@ -149,14 +150,10 @@ class _SignInViewState extends State<SignInView> {
                     color: AppColors.secondary,
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
-                        context.read<UserBloc>().add(
-                              SignInUser(
-                                SignInParams(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                ),
-                              ),
-                            );
+                        BlocProvider.of<SignInBloc>(context).add(SignInParams(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ));
                       }
                     },
                     titleText: 'Sign In',

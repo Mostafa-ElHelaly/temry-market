@@ -23,10 +23,13 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, User>> signIn(params) async {
-    return await _authenticate(() {
-      return remoteDataSource.signIn(params);
-    });
+  Future<Either<Failure, Map<String, dynamic>>> signIn(params) async {
+    try {
+      final result = await remoteDataSource.signIn(params);
+      return Right(result);
+    } on Exception catch (e) {
+      return Left(ExceptionFailure());
+    }
   }
 
   @override

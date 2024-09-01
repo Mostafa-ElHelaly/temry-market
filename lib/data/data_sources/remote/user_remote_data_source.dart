@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
 import 'package:temry_market/core/error/failures.dart';
@@ -9,7 +11,7 @@ import '../../../domain/usecases/user/sign_up_usecase.dart';
 import '../../models/user/authentication_response_model.dart';
 
 abstract class UserRemoteDataSource {
-  Future<AuthenticationResponseModel> signIn(SignInParams params);
+  Future<Map<String, dynamic>> signIn(SignInParams params);
   Future<Unit> signUp(SignUpParams params);
 }
 
@@ -18,7 +20,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<AuthenticationResponseModel> signIn(SignInParams params) async {
+  Future<Map<String, dynamic>> signIn(SignInParams params) async {
     final body = {
       'email': params.email,
       'password': params.password,
@@ -35,8 +37,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     print(response.statusCode);
     print('--------------------------------');
     print(response.body);
+    Map<String, dynamic> responseBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      return authenticationResponseModelFromJson(response.body);
+      return responseBody;
     } else if (response.statusCode == 400 || response.statusCode == 401) {
       throw CredentialFailure();
     } else {
