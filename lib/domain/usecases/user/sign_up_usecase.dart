@@ -15,6 +15,7 @@ class SignUpUseCase implements UseCase<Unit, SignUpParams> {
   }
 }
 
+//signup
 class SignUpParams {
   final String firstName;
   final String lastName;
