@@ -72,229 +72,232 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: (MediaQuery.of(context).padding.top + 10),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child:
-                BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
-              if (state is SignInSuccessState) {
-                return Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.userProfile);
-                      },
-                      child: Text(
-                        "${state.SignInModelResponse['data']['user']['first_name']} ${state.SignInModelResponse['data']['user']['last_name']}",
-                        style: const TextStyle(fontSize: 26),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: (MediaQuery.of(context).padding.top + 10),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: BlocBuilder<SignInBloc, SignInState>(
+                  builder: (context, state) {
+                if (state is SignInSuccessState) {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRouter.userProfile);
+                        },
+                        child: Text(
+                          "${state.SignInModelResponse['data']['user']['first_name']} ${state.SignInModelResponse['data']['user']['last_name']}",
+                          style: const TextStyle(fontSize: 26),
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.userProfile);
-                      },
-                      child: const CircleAvatar(
-                        radius: 24.0,
-                        backgroundImage: AssetImage(kUserAvatar),
-                        backgroundColor: Colors.transparent,
+                      const Spacer(),
+                      const SizedBox(
+                        width: 8,
                       ),
-                    )
-                  ],
-                );
-              } else {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Welcome,",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 36),
-                        ),
-                        Text(
-                          "E-Shop mobile store",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 22),
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.signIn);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircleAvatar(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRouter.userProfile);
+                        },
+                        child: const CircleAvatar(
                           radius: 24.0,
                           backgroundImage: AssetImage(kUserAvatar),
                           backgroundColor: Colors.transparent,
                         ),
-                      ),
-                    )
-                  ],
-                );
-              }
-            }),
-          ),
-          SizedBox(
-            height: ConfigSize.defaultSize! * 2,
-          ),
-          Padding(
-            padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
-            child: SizedBox(
-              height: ConfigSize.defaultSize! * 11,
-              child: ListView.builder(
-                itemCount: image.length,
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadiusDirectional.circular(10),
-                          border:
-                              Border.all(width: 1, color: AppColors.secondary)),
-                      height: ConfigSize.defaultSize! * 10.1,
-                      width: ConfigSize.defaultSize! * 8.8,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      )
+                    ],
+                  );
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: ConfigSize.defaultSize! * 1.5,
-                          ),
-                          Image(
-                            image: image[index],
-                            width: ConfigSize.defaultSize! * 3.8,
-                            height: ConfigSize.defaultSize! * 4.2,
+                            height: 8,
                           ),
                           Text(
-                            text[index],
+                            "Welcome,",
                             style: TextStyle(
-                                fontSize: ConfigSize.defaultSize! * 1.1,
-                                color: AppColors.secondary),
+                                fontWeight: FontWeight.bold, fontSize: 36),
+                          ),
+                          Text(
+                            "E-Shop mobile store",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 22),
                           ),
                         ],
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(AppRouter.signIn);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 24.0,
+                            backgroundImage: AssetImage(kUserAvatar),
+                            backgroundColor: Colors.transparent,
+                          ),
+                        ),
+                      )
+                    ],
                   );
-                },
+                }
+              }),
+            ),
+            SizedBox(
+              height: ConfigSize.defaultSize! * 2,
+            ),
+            Padding(
+              padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+              child: SizedBox(
+                height: ConfigSize.defaultSize! * 11,
+                child: ListView.builder(
+                  itemCount: image.length,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(10),
+                            border: Border.all(
+                                width: 1, color: AppColors.secondary)),
+                        height: ConfigSize.defaultSize! * 10.1,
+                        width: ConfigSize.defaultSize! * 8.8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: ConfigSize.defaultSize! * 1.5,
+                            ),
+                            Image(
+                              image: image[index],
+                              width: ConfigSize.defaultSize! * 3.8,
+                              height: ConfigSize.defaultSize! * 4.2,
+                            ),
+                            Text(
+                              text[index],
+                              style: TextStyle(
+                                  fontSize: ConfigSize.defaultSize! * 1.1,
+                                  color: AppColors.secondary),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 12,
-              left: 20,
-              right: 20,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BlocBuilder<FilterCubit, FilterProductParams>(
-                    builder: (context, state) {
-                      return TextField(
-                        autofocus: false,
-                        controller:
-                            context.read<FilterCubit>().searchController,
-                        onChanged: (val) => setState(() {}),
-                        onSubmitted: (val) => context.read<ProductBloc>().add(
-                            GetProducts(FilterProductParams(keyword: val))),
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(
-                                left: 20, bottom: 22, top: 22),
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.only(left: 8),
-                              child: Icon(Icons.search),
-                            ),
-                            suffixIcon: context
-                                    .read<FilterCubit>()
-                                    .searchController
-                                    .text
-                                    .isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          context
-                                              .read<FilterCubit>()
-                                              .searchController
-                                              .clear();
-                                          context
-                                              .read<FilterCubit>()
-                                              .update(keyword: '');
-                                        },
-                                        icon: const Icon(Icons.clear)),
-                                  )
-                                : null,
-                            border: const OutlineInputBorder(),
-                            hintText: "Search Product",
-                            fillColor: Colors.grey.shade100,
-                            filled: true,
-                            focusedBorder: OutlineInputBorder(
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 12,
+                left: 20,
+                right: 20,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BlocBuilder<FilterCubit, FilterProductParams>(
+                      builder: (context, state) {
+                        return TextField(
+                          autofocus: false,
+                          controller:
+                              context.read<FilterCubit>().searchController,
+                          onChanged: (val) => setState(() {}),
+                          onSubmitted: (val) => context.read<ProductBloc>().add(
+                              GetProducts(FilterProductParams(keyword: val))),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, bottom: 22, top: 22),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Icon(Icons.search),
+                              ),
+                              suffixIcon: context
+                                      .read<FilterCubit>()
+                                      .searchController
+                                      .text
+                                      .isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(right: 8),
+                                      child: IconButton(
+                                          onPressed: () {
+                                            context
+                                                .read<FilterCubit>()
+                                                .searchController
+                                                .clear();
+                                            context
+                                                .read<FilterCubit>()
+                                                .update(keyword: '');
+                                          },
+                                          icon: const Icon(Icons.clear)),
+                                    )
+                                  : null,
+                              border: const OutlineInputBorder(),
+                              hintText: "Search Product",
+                              fillColor: Colors.grey.shade100,
+                              filled: true,
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 3.0),
+                                  borderRadius: BorderRadius.circular(26)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(26),
                                 borderSide: const BorderSide(
                                     color: Colors.white, width: 3.0),
-                                borderRadius: BorderRadius.circular(26)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(26),
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 3.0),
-                            )),
-                      );
-                    },
+                              )),
+                        );
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                SizedBox(
-                  width: 55,
-                  child: BlocBuilder<FilterCubit, FilterProductParams>(
-                    builder: (context, state) {
-                      return Badge(
-                        alignment: AlignmentDirectional.topEnd,
-                        label: Text(
-                          context
-                              .read<FilterCubit>()
-                              .getFiltersCount()
-                              .toString(),
-                          style: const TextStyle(color: Colors.black87),
-                        ),
-                        isLabelVisible:
-                            context.read<FilterCubit>().getFiltersCount() != 0,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: InputFormButton(
-                          color: Colors.black87,
-                          onClick: () {
-                            Navigator.of(context).pushNamed(AppRouter.filter);
-                          },
-                        ),
-                      );
-                    },
+                  const SizedBox(
+                    width: 8,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 55,
+                    child: BlocBuilder<FilterCubit, FilterProductParams>(
+                      builder: (context, state) {
+                        return Badge(
+                          alignment: AlignmentDirectional.topEnd,
+                          label: Text(
+                            context
+                                .read<FilterCubit>()
+                                .getFiltersCount()
+                                .toString(),
+                            style: const TextStyle(color: Colors.black87),
+                          ),
+                          isLabelVisible:
+                              context.read<FilterCubit>().getFiltersCount() !=
+                                  0,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          child: InputFormButton(
+                            color: Colors.black87,
+                            onClick: () {
+                              Navigator.of(context).pushNamed(AppRouter.filter);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Padding(
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: BlocBuilder<ProductBloc, ProductState>(
                     builder: (context, state) {
@@ -385,9 +388,9 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
                   );
-                })),
-          )
-        ],
+                }))
+          ],
+        ),
       ),
     );
   }
