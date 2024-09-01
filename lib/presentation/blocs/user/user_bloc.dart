@@ -36,6 +36,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(UserLoading());
       final result = await _signInUseCase(event.params);
+      print("xxxxxxxxxxxxxxxxxxxxxxx");
+      print(result);
       result.fold(
         (failure) => emit(UserLoggedFail(failure)),
         (user) => emit(UserLogged(user)),

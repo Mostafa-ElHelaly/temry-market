@@ -9,7 +9,7 @@ class ConstantApi {
   static const String users = "$baseUrl/admin/clients/get";
   static const String categories = "$baseUrl/public/categories";
   static const String otpemail = "$baseUrl/client/access/otpmail";
-  static const String search = "$baseUrl/public/courses";
+  static const String search = "$baseUrl/public/products/search";
   static const String trainers = "$baseUrl/admin/trainers/get";
   static const String coursedetails = "$baseUrl/public/course/";
 }

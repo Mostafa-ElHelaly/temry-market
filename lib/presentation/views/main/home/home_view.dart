@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:temry_market/core/constant/colors%20copy.dart';
+import 'package:temry_market/core/constant/config_size.dart';
+import 'package:temry_market/core/constant/locale_keys.g.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../../core/error/failures.dart';
@@ -20,6 +23,31 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
+
+List<ImageProvider<Object>> image = [
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png'),
+  const AssetImage('assets/other_images/user.png')
+];
+List<String> text = [
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+  StringManager.type,
+];
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController scrollController = ScrollController();
@@ -131,6 +159,53 @@ class _HomeViewState extends State<HomeView> {
                 );
               }
             }),
+          ),
+          SizedBox(
+            height: ConfigSize.defaultSize! * 2,
+          ),
+          Padding(
+            padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+            child: SizedBox(
+              height: ConfigSize.defaultSize! * 11,
+              child: ListView.builder(
+                itemCount: image.length,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadiusDirectional.circular(10),
+                          border:
+                              Border.all(width: 1, color: AppColors.secondary)),
+                      height: ConfigSize.defaultSize! * 10.1,
+                      width: ConfigSize.defaultSize! * 8.8,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: ConfigSize.defaultSize! * 1.5,
+                          ),
+                          Image(
+                            image: image[index],
+                            width: ConfigSize.defaultSize! * 3.8,
+                            height: ConfigSize.defaultSize! * 4.2,
+                          ),
+                          Text(
+                            text[index],
+                            style: TextStyle(
+                                fontSize: ConfigSize.defaultSize! * 1.1,
+                                color: AppColors.secondary),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(

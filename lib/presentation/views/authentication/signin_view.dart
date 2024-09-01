@@ -34,6 +34,7 @@ class _SignInViewState extends State<SignInView> {
     ConfigSize().init(context);
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
+        print(state);
         EasyLoading.dismiss();
         if (state is UserLoading) {
           EasyLoading.show(status: 'Loading...');
@@ -50,7 +51,7 @@ class _SignInViewState extends State<SignInView> {
           if (state.failure is CredentialFailure) {
             EasyLoading.showError("Username/Password Wrong!");
           } else {
-            EasyLoading.showError("Error");
+            // EasyLoading.showError("Error");
           }
         }
       },
