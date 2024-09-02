@@ -42,6 +42,16 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> forgetpassword(params) async {
+    try {
+      final result = await remoteDataSource.forgetpassword(params);
+      return Right(result);
+    } on Exception catch (e) {
+      return Left(ExceptionFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, User>> getCachedUser() async {
     try {
       final user = await localDataSource.getUser();

@@ -7,6 +7,7 @@ import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_event.dart';
+import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
 
 import 'core/constant/strings.dart';
 import 'core/router/app_router.dart';
@@ -65,6 +66,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.sl<SignInBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<ForgetPasswordBloc>(),
         ),
         BlocProvider(
           create: (context) => di.sl<DeliveryInfoActionCubit>(),

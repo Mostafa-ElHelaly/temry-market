@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temry_market/presentation/views/authentication/forget_password/forget_password_screen.dart';
+import 'package:temry_market/presentation/views/authentication/forget_password/forget_Password.dart';
 import 'package:temry_market/presentation/views/main/home/filter/filter_view.dart';
 
 import '../../domain/entities/cart/cart_item.dart';
