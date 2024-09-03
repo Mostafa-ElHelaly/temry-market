@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:temry_market/domain/entities/product/product.dart';
+
 import '../../../domain/entities/cart/cart_item.dart';
 import '../product/price_tag_model.dart';
 import '../product/product_model.dart';
@@ -22,14 +24,14 @@ String cartItemModelToJson(List<CartItemModel> data) =>
 class CartItemModel extends CartItem {
   const CartItemModel({
     String? id,
-    required ProductModel product,
+    required Product product,
     required PriceTagModel priceTag,
   }) : super(id: id, product: product, priceTag: priceTag);
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
     return CartItemModel(
       id: json["_id"],
-      product: ProductModel.fromJson(json["product"]),
+      product: json["Product"],
       priceTag: PriceTagModel.fromJson(json["priceTag"]),
     );
   }
@@ -49,7 +51,7 @@ class CartItemModel extends CartItem {
   factory CartItemModel.fromParent(CartItem cartItem) {
     return CartItemModel(
       id: cartItem.id,
-      product: cartItem.product as ProductModel,
+      product: cartItem.product,
       priceTag: cartItem.priceTag as PriceTagModel,
     );
   }

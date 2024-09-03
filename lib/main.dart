@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
       child: OKToast(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRouter.signIn,
+          initialRoute: AppRouter.home,
           onGenerateRoute: AppRouter.onGenerateRoute,
           title: appTitle,
           // theme: AppTheme.lightTheme,

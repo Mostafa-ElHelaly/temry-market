@@ -1,3 +1,5 @@
+import 'package:temry_market/domain/entities/product/product.dart';
+
 import '../../../domain/entities/order/order_item.dart';
 import '../product/price_tag_model.dart';
 import '../product/product_model.dart';
@@ -5,7 +7,7 @@ import '../product/product_model.dart';
 class OrderItemModel extends OrderItem {
   const OrderItemModel({
     required String id,
-    required ProductModel product,
+    required Product product,
     required PriceTagModel priceTag,
     required num price,
     required num quantity,
@@ -19,7 +21,7 @@ class OrderItemModel extends OrderItem {
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) => OrderItemModel(
       id: json["_id"],
-      product: ProductModel.fromJson(json["product"]),
+      product: json["Product"],
       priceTag: PriceTagModel.fromJson(json["priceTag"]),
       price: json["price"],
       quantity: json["quantity"]);
@@ -42,7 +44,7 @@ class OrderItemModel extends OrderItem {
 
   factory OrderItemModel.fromEntity(OrderItem entity) => OrderItemModel(
         id: entity.id,
-        product: ProductModel.fromEntity(entity.product),
+        product: entity.product,
         priceTag: PriceTagModel.fromEntity(entity.priceTag),
         price: entity.price,
         quantity: entity.quantity,
