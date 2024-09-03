@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:temry_market/presentation/views/authentication/forget_password/forget_Password.dart';
+import 'package:temry_market/presentation/views/main/category/category_view.dart';
 import 'package:temry_market/presentation/views/main/home/filter/filter_view.dart';
 
-import '../../domain/entities/cart/cart_item.dart';
-import '../../domain/entities/product/product.dart';
-import '../../domain/entities/user/user.dart';
-import '../../presentation/views/authentication/signin_view.dart';
-import '../../presentation/views/authentication/signup_view.dart';
-import '../../presentation/views/main/main_view.dart';
-import '../../presentation/views/main/other/about/about_view.dart';
-import '../../presentation/views/main/other/delivery_info/delivery_info.dart';
-import '../../presentation/views/main/other/notification/notification_view.dart';
-import '../../presentation/views/main/other/orders/order_view.dart';
-import '../../presentation/views/main/other/profile/profile_screen.dart';
-import '../../presentation/views/main/other/settings/settings_view.dart';
-import '../../presentation/views/order_chekout/order_checkout_view.dart';
-import '../../presentation/views/product/product_details_view.dart';
-import '../error/exceptions.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
+import 'package:temry_market/presentation/views/authentication/signin_view.dart';
+import 'package:temry_market/presentation/views/authentication/signup_view.dart';
+import 'package:temry_market/presentation/views/main/main_view.dart';
+import 'package:temry_market/presentation/views/main/other/about/about_view.dart';
+import 'package:temry_market/presentation/views/main/other/delivery_info/delivery_info.dart';
+import 'package:temry_market/presentation/views/main/other/notification/notification_view.dart';
+import 'package:temry_market/presentation/views/main/other/orders/order_view.dart';
+import 'package:temry_market/presentation/views/main/other/profile/profile_screen.dart';
+import 'package:temry_market/presentation/views/main/other/settings/settings_view.dart';
+import 'package:temry_market/presentation/views/order_chekout/order_checkout_view.dart';
+import 'package:temry_market/presentation/views/product/product_details_view.dart';
+import 'package:temry_market/core/error/exceptions.dart';
 
 class AppRouter {
   //main menu
@@ -29,6 +29,7 @@ class AppRouter {
 
   //products
   static const String productDetails = '/product-details';
+  static const String categoryView = '/CategoryView';
   //other
   static const String userProfile = '/user-profile';
   static const String orderCheckout = '/order-checkout';
@@ -59,11 +60,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => ProductDetailsView(product: product));
       case userProfile:
-        User user = routeSettings.arguments as User;
-        return MaterialPageRoute(
-            builder: (_) => UserProfileScreen(
-                  user: user,
-                ));
+        return MaterialPageRoute(builder: (_) => const UserProfileScreen());
+
       case orderCheckout:
         List<CartItem> items = routeSettings.arguments as List<CartItem>;
         return MaterialPageRoute(
@@ -74,6 +72,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DeliveryInfoView());
       case orders:
         return MaterialPageRoute(builder: (_) => const OrderView());
+      case categoryView:
+        return MaterialPageRoute(builder: (_) => const CategoryView());
       case settings:
         return MaterialPageRoute(builder: (_) => const SettingsView());
       case notifications:

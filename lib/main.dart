@@ -3,26 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
-import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_event.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
 
-import 'core/constant/strings.dart';
-import 'core/router/app_router.dart';
-import 'domain/usecases/product/get_product_usecase.dart';
-import 'presentation/blocs/cart/cart_bloc.dart';
-import 'presentation/blocs/category/category_bloc.dart';
-import 'presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
-import 'presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import 'presentation/blocs/filter/filter_cubit.dart';
+import 'package:temry_market/core/constant/strings.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
+import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 
-import 'core/services/services_locator.dart' as di;
-import 'presentation/blocs/home/navbar_cubit.dart';
-import 'presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
-import 'presentation/blocs/product/product_bloc.dart';
-import 'presentation/blocs/user/user_bloc.dart';
+import 'package:temry_market/core/services/services_locator.dart' as di;
+import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
+import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
+import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

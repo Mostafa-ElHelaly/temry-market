@@ -49,10 +49,10 @@ class OtherView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${state.SignInModelResponse['data']['user']['first_name']} ${state.SignInModelResponse['data']['user']['last_name']}",
+                              "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                            Text(state.SignInModelResponse['data']['user']
+                            Text(state.signInModelResponse['data']['user']
                                 ['email'])
                           ],
                         ),
@@ -97,8 +97,8 @@ class OtherView extends StatelessWidget {
                   if (state is SignInSuccessState) {
                     Navigator.of(context).pushNamed(
                       AppRouter.userProfile,
-                      arguments:
-                          state.SignInModelResponse['data']['user'].email,
+                      arguments: state.signInModelResponse['data']['user']
+                          ['email'],
                     );
                   } else {
                     Navigator.of(context).pushNamed(AppRouter.signIn);

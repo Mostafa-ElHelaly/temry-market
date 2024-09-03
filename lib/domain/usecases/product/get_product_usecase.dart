@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../../core/error/failures.dart';
-import '../../../../../core/usecases/usecase.dart';
-import '../../entities/category/category.dart';
-import '../../entities/product/product_response.dart';
-import '../../repositories/product_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/category/category.dart';
+import 'package:temry_market/domain/entities/product/product_response.dart';
+import 'package:temry_market/domain/repositories/product_repository.dart';
 
 class GetProductUseCase
     implements UseCase<ProductResponse, FilterProductParams> {

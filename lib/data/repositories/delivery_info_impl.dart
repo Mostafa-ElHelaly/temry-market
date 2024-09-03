@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/entities/user/delivery_info.dart';
-import '../../domain/repositories/delivery_info_repository.dart';
-import '../data_sources/local/delivery_info_local_data_source.dart';
-import '../data_sources/local/user_local_data_source.dart';
-import '../data_sources/remote/delivery_info_remote_data_source.dart';
-import '../models/user/delivery_info_model.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/network/network_info.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/repositories/delivery_info_repository.dart';
+import 'package:temry_market/data/data_sources/local/delivery_info_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/user_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/delivery_info_remote_data_source.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
 
 class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
   final DeliveryInfoRemoteDataSource remoteDataSource;

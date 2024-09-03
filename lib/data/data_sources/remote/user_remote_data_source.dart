@@ -9,7 +9,6 @@ import 'package:temry_market/domain/usecases/user/forget_password_usecase.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../domain/usecases/user/sign_in_usecase.dart';
 import '../../../domain/usecases/user/sign_up_usecase.dart';
-import '../../models/user/authentication_response_model.dart';
 
 abstract class UserRemoteDataSource {
   Future<Map<String, dynamic>> signIn(SignInParams params);

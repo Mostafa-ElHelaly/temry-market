@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../domain/entities/category/category.dart';
-import '../../../domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/domain/entities/category/category.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 
 class FilterCubit extends Cubit<FilterProductParams> {
   final TextEditingController searchController = TextEditingController();
@@ -50,7 +50,7 @@ class FilterCubit extends Cubit<FilterProductParams> {
   int getFiltersCount() {
     int count = 0;
     count = (state.categories.length) + count;
-    count = count + ((state.minPrice!=0 || state.maxPrice!=10000)? 1 : 0);
+    count = count + ((state.minPrice != 0 || state.maxPrice != 10000) ? 1 : 0);
     return count;
   }
 

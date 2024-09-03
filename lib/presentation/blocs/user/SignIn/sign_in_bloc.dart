@@ -10,7 +10,7 @@ class SignInBloc extends Bloc<SignInParams, SignInState> {
       emit(const SignInLoadingState());
       final result = await SignInUseCase.call(event);
       result.fold((l) => emit(SignInErrorState(failure: l)),
-          (r) => emit(SignInSuccessState(SignInModelResponse: r)));
+          (r) => emit(SignInSuccessState(signInModelResponse: r)));
     });
   }
 }

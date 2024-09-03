@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
-import '../entities/cart/cart_item.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
 
 abstract class CartRepository {
   Future<Either<Failure, List<CartItem>>> getCachedCart();

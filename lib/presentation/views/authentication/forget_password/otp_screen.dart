@@ -6,7 +6,6 @@ import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/core/widgets/main_button.dart';
 import 'package:temry_market/presentation/views/authentication/forget_password/counter_by_minute.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {

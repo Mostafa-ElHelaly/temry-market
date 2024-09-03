@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/entities/order/order_details.dart';
-import '../../domain/repositories/order_repository.dart';
-import '../data_sources/local/order_local_data_source.dart';
-import '../data_sources/local/user_local_data_source.dart';
-import '../data_sources/remote/order_remote_data_source.dart';
-import '../models/order/order_details_model.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/network/network_info.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/domain/repositories/order_repository.dart';
+import 'package:temry_market/data/data_sources/local/order_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/user_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/order_remote_data_source.dart';
+import 'package:temry_market/data/models/order/order_details_model.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
   final OrderRemoteDataSource remoteDataSource;

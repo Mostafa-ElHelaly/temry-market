@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/entities/user/user.dart';
-import '../../domain/repositories/user_repository.dart';
-import '../data_sources/local/user_local_data_source.dart';
-import '../data_sources/remote/user_remote_data_source.dart';
-import '../models/user/authentication_response_model.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/network/network_info.dart';
+import 'package:temry_market/domain/entities/user/user.dart';
+import 'package:temry_market/domain/repositories/user_repository.dart';
+import 'package:temry_market/data/data_sources/local/user_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/user_remote_data_source.dart';
+import 'package:temry_market/data/models/user/authentication_response_model.dart';
 
 typedef _DataSourceChooser = Future<AuthenticationResponseModel> Function();
 

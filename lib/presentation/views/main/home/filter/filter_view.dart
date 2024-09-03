@@ -2,11 +2,11 @@ import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/usecases/product/get_product_usecase.dart';
-import '../../../../blocs/category/category_bloc.dart';
-import '../../../../blocs/filter/filter_cubit.dart';
-import '../../../../widgets/input_form_button.dart';
-import '../../../../widgets/input_range_slider.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
+import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/input_range_slider.dart';
 
 class FilterView extends StatelessWidget {
   const FilterView({Key? key}) : super(key: key);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:temry_market/core/constant/colors%20copy.dart';
 
 import '../../blocs/home/navbar_cubit.dart';
 import 'cart/cart_view.dart';
@@ -52,9 +53,8 @@ class _MainViewState extends State<MainView> {
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(48)),
                     ),
-                    backgroundColor: Colors.black87,
-                    snakeViewColor: Colors.black87,
-                    height: 68,
+                    backgroundColor: AppColors.secondary,
+                    snakeViewColor: AppColors.secondary,
                     elevation: 4,
                     selectedItemColor: SnakeShape.circle == SnakeShape.indicator
                         ? Colors.black87
@@ -86,7 +86,7 @@ class _MainViewState extends State<MainView> {
                           activeIcon: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
+                              backgroundColor: AppColors.primary,
                               maxRadius: 4,
                             ),
                           ),
@@ -100,7 +100,7 @@ class _MainViewState extends State<MainView> {
                           activeIcon: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
+                              backgroundColor: AppColors.primary,
                               maxRadius: 4,
                             ),
                           ),
@@ -114,7 +114,7 @@ class _MainViewState extends State<MainView> {
                           activeIcon: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
+                              backgroundColor: AppColors.primary,
                               maxRadius: 4,
                             ),
                           ),
@@ -128,7 +128,7 @@ class _MainViewState extends State<MainView> {
                           activeIcon: Padding(
                             padding: EdgeInsets.all(5.0),
                             child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
+                              backgroundColor: AppColors.primary,
                               maxRadius: 4,
                             ),
                           ),

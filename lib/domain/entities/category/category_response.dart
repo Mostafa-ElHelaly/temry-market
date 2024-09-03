@@ -1,4 +1,4 @@
-import 'category.dart';
+import 'package:temry_market/domain/entities/category/category.dart';
 
 class CategoryResponse {
   final List<Category> categories;

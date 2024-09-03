@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:temry_market/domain/entities/category/category.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/repositories/category_repository.dart';
-import '../data_sources/local/category_local_data_source.dart';
-import '../data_sources/remote/category_remote_data_source.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/network/network_info.dart';
+import 'package:temry_market/domain/repositories/category_repository.dart';
+import 'package:temry_market/data/data_sources/local/category_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/category_remote_data_source.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryRemoteDataSource remoteDataSource;

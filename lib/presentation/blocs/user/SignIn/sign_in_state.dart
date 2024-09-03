@@ -1,7 +1,5 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temry_market/core/error/failures.dart';
-import 'package:temry_market/domain/entities/user/user.dart';
 
 abstract class SignInState extends Equatable {
   const SignInState();
@@ -23,7 +21,7 @@ final class SignInErrorState extends SignInState {
 }
 
 final class SignInSuccessState extends SignInState {
-  final Map<String, dynamic> SignInModelResponse;
+  final Map<String, dynamic> signInModelResponse;
 
-  const SignInSuccessState({required this.SignInModelResponse});
+  const SignInSuccessState({required this.signInModelResponse});
 }

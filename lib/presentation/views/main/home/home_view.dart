@@ -7,15 +7,16 @@ import 'package:temry_market/core/constant/locale_keys.g.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 
-import '../../../../core/constant/images.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../../domain/usecases/product/get_product_usecase.dart';
-import '../../../blocs/filter/filter_cubit.dart';
-import '../../../blocs/product/product_bloc.dart';
-import '../../../widgets/alert_card.dart';
-import '../../../widgets/input_form_button.dart';
-import '../../../widgets/product_card.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
+import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
+import 'package:temry_market/presentation/views/main/category/category_view.dart';
+import 'package:temry_market/presentation/widgets/alert_card.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -25,28 +26,16 @@ class HomeView extends StatefulWidget {
 }
 
 List<ImageProvider<Object>> image = [
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png'),
-  const AssetImage('assets/other_images/user.png')
+  const AssetImage('assets/other_images/fresh.jpg'),
+  const AssetImage('assets/other_images/matinted.jpg'),
+  const AssetImage('assets/other_images/half cooked.jpg'),
+  const AssetImage('assets/other_images/frozen.jpg'),
 ];
 List<String> text = [
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
-  StringManager.type,
+  StringManager.fresh,
+  StringManager.marinated,
+  StringManager.halfCooked,
+  StringManager.frozen,
 ];
 
 class _HomeViewState extends State<HomeView> {
@@ -93,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
                               .pushNamed(AppRouter.userProfile);
                         },
                         child: Text(
-                          "${state.SignInModelResponse['data']['user']['first_name']} ${state.SignInModelResponse['data']['user']['last_name']}",
+                          "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
                           style: const TextStyle(fontSize: 26),
                         ),
                       ),
@@ -109,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
                         child: const CircleAvatar(
                           radius: 24.0,
                           backgroundImage: AssetImage(kUserAvatar),
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: AppColors.secondary,
                         ),
                       )
                     ],
@@ -146,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
                           child: CircleAvatar(
                             radius: 24.0,
                             backgroundImage: AssetImage(kUserAvatar),
-                            backgroundColor: Colors.transparent,
+                            backgroundColor: AppColors.secondary,
                           ),
                         ),
                       )
@@ -158,47 +147,69 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(
               height: ConfigSize.defaultSize! * 2,
             ),
-            Padding(
-              padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
-              child: SizedBox(
-                height: ConfigSize.defaultSize! * 11,
-                child: ListView.builder(
-                  itemCount: image.length,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadiusDirectional.circular(10),
-                            border: Border.all(
-                                width: 1, color: AppColors.secondary)),
-                        height: ConfigSize.defaultSize! * 10.1,
-                        width: ConfigSize.defaultSize! * 8.8,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: ConfigSize.defaultSize! * 1.5,
-                            ),
-                            Image(
-                              image: image[index],
-                              width: ConfigSize.defaultSize! * 3.8,
-                              height: ConfigSize.defaultSize! * 4.2,
-                            ),
-                            Text(
-                              text[index],
-                              style: TextStyle(
-                                  fontSize: ConfigSize.defaultSize! * 1.1,
-                                  color: AppColors.secondary),
-                            ),
-                          ],
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  AppRouter.categoryView,
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+                child: SizedBox(
+                  height: ConfigSize.defaultSize! * 10,
+                  child: ListView.builder(
+                    itemCount: image.length,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(10),
+                              border: Border.all(
+                                width: 1.5,
+                                color: AppColors.secondary,
+                              )),
+                          height: ConfigSize.defaultSize! * 10.1,
+                          width: ConfigSize.defaultSize! * 8.8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: ConfigSize.defaultSize! * 1,
+                              ),
+                              Container(
+                                height: ConfigSize.defaultSize! * 5.5,
+                                width: ConfigSize.defaultSize! * 5.5,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: image[index],
+                                  ),
+                                ),
+                                // child: Image(
+                                //   image: image[index],
+                                //   width: ConfigSize.defaultSize! * 5,
+                                //   height: ConfigSize.defaultSize! * 6,
+                                // ),
+                              ),
+                              Text(
+                                text[index],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ConfigSize.defaultSize! * 1.1,
+                                    color: AppColors.secondary),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -278,14 +289,15 @@ class _HomeViewState extends State<HomeView> {
                                 .read<FilterCubit>()
                                 .getFiltersCount()
                                 .toString(),
-                            style: const TextStyle(color: Colors.black87),
+                            style: const TextStyle(
+                                color: Color.fromARGB(221, 255, 0, 0)),
                           ),
                           isLabelVisible:
                               context.read<FilterCubit>().getFiltersCount() !=
                                   0,
                           backgroundColor: Theme.of(context).primaryColor,
                           child: InputFormButton(
-                            color: Colors.black87,
+                            color: AppColors.secondary,
                             onClick: () {
                               Navigator.of(context).pushNamed(AppRouter.filter);
                             },

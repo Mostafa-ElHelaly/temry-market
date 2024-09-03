@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../core/usecases/usecase.dart';
-import '../entities/order/order_details.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
 
 abstract class OrderRepository {
   Future<Either<Failure, OrderDetails>> addOrder(OrderDetails params);

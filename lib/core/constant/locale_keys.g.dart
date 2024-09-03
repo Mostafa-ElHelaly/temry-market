@@ -21,6 +21,10 @@ abstract class StringManager {
   static const courses = 'Courses';
   static const categories = 'Categories';
   static const myCourses = 'My blabla';
+  static const fresh = 'Fresh';
+  static const marinated = 'Marinated';
+  static const halfCooked = 'Half Cooked';
+  static const frozen = 'Frozen';
 
   static const education = 'Education';
   static const birthdate = 'Birthdate';

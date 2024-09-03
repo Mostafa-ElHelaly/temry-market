@@ -1,13 +1,14 @@
 import 'package:temry_market/core/constant/images.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/entities/user/user.dart';
-import '../../../../widgets/input_form_button.dart';
-import '../../../../widgets/input_text_form_field.dart';
+import 'package:temry_market/domain/entities/user/user.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  final User user;
-  const UserProfileScreen({Key? key, required this.user}) : super(key: key);
+  const UserProfileScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -20,9 +21,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   void initState() {
-    firstNameController.text = widget.user.firstName;
-    lastNameController.text = widget.user.lastName;
-    email.text = widget.user.email;
+    // firstNameController.text = widget.user.firstName;
+    // lastNameController.text = widget.user.lastName;
+    // email.text = widget.user.email;
     super.initState();
   }
 

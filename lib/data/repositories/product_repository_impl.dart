@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../core/network/network_info.dart';
-import '../../domain/entities/product/product_response.dart';
-import '../../domain/repositories/product_repository.dart';
-import '../../domain/usecases/product/get_product_usecase.dart';
-import '../data_sources/local/product_local_data_source.dart';
-import '../data_sources/remote/product_remote_data_source.dart';
-import '../models/product/product_response_model.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/network/network_info.dart';
+import 'package:temry_market/domain/entities/product/product_response.dart';
+import 'package:temry_market/domain/repositories/product_repository.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/data/data_sources/local/product_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/product_remote_data_source.dart';
+import 'package:temry_market/data/models/product/product_response_model.dart';
 
 typedef _ConcreteOrProductChooser = Future<ProductResponse> Function();
 
@@ -24,7 +24,8 @@ class ProductRepositoryImpl implements ProductRepository {
   });
 
   @override
-  Future<Either<Failure, ProductResponse>> getProducts(FilterProductParams params) async {
+  Future<Either<Failure, ProductResponse>> getProducts(
+      FilterProductParams params) async {
     return await _getProduct(() {
       return remoteDataSource.getProducts(params);
     });

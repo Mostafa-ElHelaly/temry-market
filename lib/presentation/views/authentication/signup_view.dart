@@ -6,15 +6,13 @@ import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/widgets/snack_bar.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_state.dart';
-
-import '../../../core/constant/images.dart';
-import '../../../core/error/failures.dart';
-import '../../../core/router/app_router.dart';
-import '../../../domain/usecases/user/sign_up_usecase.dart';
-import '../../blocs/cart/cart_bloc.dart';
-import '../../blocs/user/user_bloc.dart';
-import '../../widgets/input_form_button.dart';
-import '../../widgets/input_text_form_field.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
+import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
+import 'package:temry_market/presentation/blocs/user/user_bloc.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

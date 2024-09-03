@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../product/price_tag.dart';
-import '../product/product.dart';
+import 'package:temry_market/domain/entities/product/price_tag.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
 
 class CartItem extends Equatable {
   final String? id;

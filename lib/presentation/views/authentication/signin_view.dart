@@ -1,23 +1,17 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
-import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
-import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
-
-import '../../../core/constant/images.dart';
-import '../../../core/error/failures.dart';
-import '../../../core/router/app_router.dart';
-import '../../../domain/usecases/user/sign_in_usecase.dart';
-import '../../blocs/cart/cart_bloc.dart';
-import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import '../../blocs/user/user_bloc.dart';
-import '../../widgets/input_form_button.dart';
-import '../../widgets/input_text_form_field.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/usecases/user/sign_in_usecase.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
