@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constant/images.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../../domain/entities/cart/cart_item.dart';
-import '../../../blocs/cart/cart_bloc.dart';
-import '../../../widgets/cart_item_card.dart';
-import '../../../widgets/input_form_button.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
+import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
+import 'package:temry_market/presentation/widgets/cart_item_card.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
 
 class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
@@ -81,7 +81,7 @@ class _CartViewState extends State<CartView> {
                             if (state is CartLoading && state.cart.isEmpty) {
                               return const CartItemCard();
                             } else {
-                              if(state.cart.length<index){
+                              if (state.cart.length < index) {
                                 return const CartItemCard();
                               }
                               return CartItemCard(

@@ -6,14 +6,12 @@ import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/locale_keys.g.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
-
 import 'package:temry_market/core/constant/images.dart';
 import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
-import 'package:temry_market/presentation/views/main/category/category_view.dart';
 import 'package:temry_market/presentation/widgets/alert_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';

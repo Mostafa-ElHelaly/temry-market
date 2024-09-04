@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../category/category.dart';
-import 'price_tag.dart';
+import 'package:temry_market/domain/entities/category/category.dart';
+import 'package:temry_market/domain/entities/product/price_tag.dart';
 
 class Product extends Equatable {
   final int id;

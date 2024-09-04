@@ -1,8 +1,8 @@
 import 'package:temry_market/domain/entities/product/product.dart';
 
-import '../../../domain/entities/order/order_item.dart';
-import '../product/price_tag_model.dart';
-import '../product/product_model.dart';
+import 'package:temry_market/domain/entities/order/order_item.dart';
+import 'package:temry_market/data/models/product/price_tag_model.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 
 class OrderItemModel extends OrderItem {
   const OrderItemModel({

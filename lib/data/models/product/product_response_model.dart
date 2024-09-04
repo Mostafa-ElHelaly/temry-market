@@ -1,8 +1,8 @@
-import '../../../domain/entities/product/pagination_meta_data.dart';
-import '../../../domain/entities/product/product.dart';
-import '../../../domain/entities/product/product_response.dart';
-import 'pagination_data_model.dart';
-import 'product_model.dart';
+import 'package:temry_market/domain/entities/product/pagination_meta_data.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
+import 'package:temry_market/domain/entities/product/product_response.dart';
+import 'package:temry_market/data/models/product/pagination_data_model.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 import 'dart:convert';
 
 ProductResponseModel productResponseModelFromJson(String str) =>
