@@ -4,6 +4,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/locale_keys.g.dart';
+import 'package:temry_market/presentation/blocs/product/product_event.dart';
+import 'package:temry_market/presentation/blocs/product/product_state.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/core/constant/images.dart';
@@ -44,8 +46,8 @@ class _HomeViewState extends State<HomeView> {
     double currentScroll = scrollController.position.pixels;
     double scrollPercentage = 0.7;
     if (currentScroll > (maxScroll * scrollPercentage)) {
-      if (context.read<ProductBloc>().state is ProductLoaded) {
-        context.read<ProductBloc>().add(const GetMoreProducts());
+      if (context.read<ProductBloc>().state is ProductSuccessState) {
+        context.read<ProductBloc>().add(GetProductEvent());
       }
     }
   }
@@ -53,6 +55,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     scrollController.addListener(_scrollListener);
+    BlocProvider.of<ProductBloc>(context).add(ProductEvent());
+
     super.initState();
   }
 
@@ -228,7 +232,8 @@ class _HomeViewState extends State<HomeView> {
                               context.read<FilterCubit>().searchController,
                           onChanged: (val) => setState(() {}),
                           onSubmitted: (val) => context.read<ProductBloc>().add(
-                              GetProducts(FilterProductParams(keyword: val))),
+                                GetProductEvent(),
+                              ),
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(
                                   left: 20, bottom: 22, top: 22),
@@ -311,93 +316,50 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: BlocBuilder<ProductBloc, ProductState>(
                     builder: (context, state) {
-                  //Result Empty and No Error
-                  if (state is ProductLoaded && state.products.isEmpty) {
-                    return const AlertCard(
-                      image: kEmpty,
-                      message: "Products not found!",
-                    );
-                  }
-                  //Error and no preloaded data
-                  if (state is ProductError && state.products.isEmpty) {
-                    if (state.failure is NetworkFailure) {
-                      return AlertCard(
-                        image: kNoConnection,
-                        message: "Network failure\nTry again!",
-                        onClick: () {
-                          context.read<ProductBloc>().add(GetProducts(
-                              FilterProductParams(
-                                  keyword: context
-                                      .read<FilterCubit>()
-                                      .searchController
-                                      .text)));
-                        },
-                      );
-                    }
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (state.failure is ServerFailure)
-                          Image.asset(
-                              'assets/status_image/internal-server-error.png'),
-                        if (state.failure is CacheFailure)
-                          Image.asset('assets/status_image/no-connection.png'),
-                        const Text("Products not found!"),
-                        IconButton(
-                            onPressed: () {
-                              context.read<ProductBloc>().add(GetProducts(
-                                  FilterProductParams(
-                                      keyword: context
-                                          .read<FilterCubit>()
-                                          .searchController
-                                          .text)));
-                            },
-                            icon: const Icon(Icons.refresh)),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                        )
-                      ],
-                    );
-                  }
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      context
-                          .read<ProductBloc>()
-                          .add(const GetProducts(FilterProductParams()));
-                    },
-                    child: GridView.builder(
-                      itemCount: state.products.length +
-                          ((state is ProductLoading) ? 10 : 0),
-                      controller: scrollController,
-                      padding: EdgeInsets.only(
-                          top: 18,
-                          left: 20,
-                          right: 20,
-                          bottom: (80 + MediaQuery.of(context).padding.bottom)),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.55,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 20,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (state.products.length > index) {
-                          return ProductCard(
-                            product: state.products[index],
-                          );
-                        } else {
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade100,
-                            highlightColor: Colors.white,
-                            child: const ProductCard(),
-                          );
-                        }
+                  if (state is ProductSuccessState) {
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<ProductBloc>().add(GetProductEvent());
                       },
-                    ),
-                  );
+                      child: GridView.builder(
+                        itemCount: state.searchList.length +
+                            ((state is ProductLoadingState) ? 10 : 0),
+                        controller: scrollController,
+                        padding: EdgeInsets.only(
+                            top: 18,
+                            left: 20,
+                            right: 20,
+                            bottom:
+                                (80 + MediaQuery.of(context).padding.bottom)),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.55,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 20,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (state.searchList.length > index) {
+                            return Card(
+                                child: Text(
+                                    state.searchList[index].name.toString()));
+                          } else {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.shade100,
+                              highlightColor: Colors.white,
+                              child: const ProductCard(),
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  } else if (state is ProductErrorState) {
+                    return Center(child: Text(state.failure.toString()));
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 }))
           ],
         ),
@@ -405,3 +367,53 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
+
+
+
+  //Result Empty and No Error
+                  // if (state is ProductSuccessState &&
+                  //     state.searchList.isEmpty) {
+                  //   return const AlertCard(
+                  //     image: kEmpty,
+                  //     message: "Products not found!",
+                  //   );
+                  // }
+                  // //Error and no preloaded data
+                  // if (state is ProductErrorState &&
+                  //     state.failure is NetworkFailure) {
+                  //   if (state.failure is NetworkFailure) {
+                  //     return AlertCard(
+                  //       image: kNoConnection,
+                  //       message: "Network failure\nTry again!",
+                  //       onClick: () {
+                  //         context.read<ProductBloc>().add(GetProductEvent());
+                  //       },
+                  //     );
+                  //   }
+                  //   return Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       if (state.failure is ServerFailure)
+                  //         Image.asset(
+                  //             'assets/status_image/internal-server-error.png'),
+                  //       if (state.failure is CacheFailure)
+                  //         Image.asset('assets/status_image/no-connection.png'),
+                  //       const Text("Products not found!"),
+                  //       IconButton(
+                  //           onPressed: () {
+                  //             context
+                  //                 .read<ProductBloc>()
+                  //                 .add(GetProductEvent());
+                  //           },
+                  //           icon: const Icon(Icons.refresh)),
+                  //       SizedBox(
+                  //         height: MediaQuery.of(context).size.height * 0.1,
+                  //       )
+                  //     ],
+                  //   );
+                  // }
+                  // if (state is ProductSuccessState) {
+                 
+                  // } else {
+                  //   return const Center(child: CircularProgressIndicator());
+                  // }

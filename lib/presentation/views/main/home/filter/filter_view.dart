@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
+import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/input_range_slider.dart';
 
@@ -103,9 +104,7 @@ class FilterView extends StatelessWidget {
             return InputFormButton(
               color: Colors.black87,
               onClick: () {
-                context
-                    .read<ProductBloc>()
-                    .add(GetProducts(context.read<FilterCubit>().state));
+                context.read<ProductBloc>().add(GetProductEvent());
                 Navigator.of(context).pop();
               },
               titleText: 'Continue',

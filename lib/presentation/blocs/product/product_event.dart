@@ -1,19 +1,8 @@
-part of 'product_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class ProductEvent extends Equatable {
-  const ProductEvent();
-}
-
-class GetProducts extends ProductEvent {
-  final FilterProductParams params;
-  const GetProducts(this.params);
-
+class ProductEvent extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class GetMoreProducts extends ProductEvent {
-  const GetMoreProducts();
-  @override
-  List<Object> get props => [];
-}
+class GetProductEvent extends ProductEvent {}

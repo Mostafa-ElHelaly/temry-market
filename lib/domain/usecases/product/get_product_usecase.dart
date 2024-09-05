@@ -2,19 +2,34 @@ import 'package:dartz/dartz.dart';
 
 import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/domain/entities/category/category.dart';
 import 'package:temry_market/domain/entities/product/product_response.dart';
 import 'package:temry_market/domain/repositories/product_repository.dart';
 
-class GetProductUseCase
-    implements UseCase<ProductResponse, FilterProductParams> {
-  final ProductRepository repository;
-  GetProductUseCase(this.repository);
+// class GetProductUseCase
+//     implements UseCase<ProductResponse, FilterProductParams> {
+//   final ProductRepository repository;
+//   GetProductUseCase(this.repository);
+
+//   @override
+//   Future<Either<Failure, ProductResponse>> call(
+//       FilterProductParams params) async {
+//     return await repository.getProducts(params);
+//   }
+// }
+
+class GetProductUseCase extends UseCase2<List<ProductModel>, NoParams> {
+  final ProductRepository baseRepository;
+
+  GetProductUseCase({required this.baseRepository});
 
   @override
-  Future<Either<Failure, ProductResponse>> call(
-      FilterProductParams params) async {
-    return await repository.getProducts(params);
+  Future<Either<Failuremessage, List<ProductModel>>> call(
+      NoParams params) async {
+    final result = await baseRepository.getProducts();
+
+    return result;
   }
 }
 

@@ -38,7 +38,7 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
           return Left(failure);
         }
       } else {
-        return Left(AuthenticationFailure());
+        return Left(AuthenticationFailure2());
       }
     } else {
       return Left(NetworkFailure());
@@ -71,7 +71,7 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
         return Left(failure);
       }
     } else {
-      return Left(AuthenticationFailure());
+      return Left(AuthenticationFailure2());
     }
   }
 
@@ -92,7 +92,7 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
         return Left(failure);
       }
     } else {
-      return Left(AuthenticationFailure());
+      return Left(AuthenticationFailure2());
     }
   }
 

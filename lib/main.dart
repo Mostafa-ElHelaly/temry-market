@@ -45,9 +45,10 @@ class MyApp extends StatelessWidget {
           create: (context) => FilterCubit(),
         ),
         BlocProvider(
-          create: (context) => di.sl<ProductBloc>()
-            ..add(const GetProducts(FilterProductParams())),
+          create: (context) =>
+              ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
         ),
+
         BlocProvider(
           create: (context) =>
               di.sl<CategoryBloc>()..add(const GetCategories()),

@@ -1,61 +1,27 @@
-part of 'product_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 
 abstract class ProductState extends Equatable {
-  final List<Product> products;
-  final PaginationMetaData metaData;
-  final FilterProductParams params;
-  const ProductState(
-      {required this.products, required this.metaData, required this.params});
-}
+  const ProductState();
 
-class ProductInitial extends ProductState {
-  const ProductInitial({
-    required super.products,
-    required super.metaData,
-    required super.params,
-  });
   @override
   List<Object> get props => [];
 }
 
-class ProductEmpty extends ProductState {
-  const ProductEmpty({
-    required super.products,
-    required super.metaData,
-    required super.params,
-  });
-  @override
-  List<Object> get props => [];
+final class ProductInitial extends ProductState {}
+
+final class ProductLoadingState extends ProductState {
+  const ProductLoadingState();
 }
 
-class ProductLoading extends ProductState {
-  const ProductLoading({
-    required super.products,
-    required super.metaData,
-    required super.params,
-  });
-  @override
-  List<Object> get props => [];
+final class ProductErrorState extends ProductState {
+  final String failure;
+
+  const ProductErrorState({required this.failure});
 }
 
-class ProductLoaded extends ProductState {
-  const ProductLoaded({
-    required super.products,
-    required super.metaData,
-    required super.params,
-  });
-  @override
-  List<Object> get props => [products];
-}
-
-class ProductError extends ProductState {
-  final Failure failure;
-  const ProductError({
-    required super.products,
-    required super.metaData,
-    required super.params,
-    required this.failure,
-  });
-  @override
-  List<Object> get props => [];
+final class ProductSuccessState extends ProductState {
+  final List<ProductModel> searchList;
+  const ProductSuccessState(this.searchList);
 }

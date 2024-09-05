@@ -1,7 +1,3 @@
-import 'package:temry_market/domain/entities/product/product.dart';
-import 'package:temry_market/data/models/category/category_model.dart';
-import 'package:temry_market/data/models/product/price_tag_model.dart';
-
 class ProductModel {
   int? id;
   int? productGroupId;
@@ -49,13 +45,9 @@ class ProductModel {
   String? briefAr;
   String? descAr;
   String? measureAr;
-  List<PriceTagModel>? priceTags;
-  List<CategoryModel>? categories;
-  List<String>? images;
-  DateTime? createdAt;
-  DateTime? updatedAt;
 
-  ProductModel({
+  ProductModel(
+    jsonDecode, {
     this.id,
     this.productGroupId,
     this.returnPolicyId,
@@ -102,11 +94,6 @@ class ProductModel {
     this.briefAr,
     this.descAr,
     this.measureAr,
-    this.priceTags,
-    this.categories,
-    this.images,
-    this.createdAt,
-    this.updatedAt,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -156,13 +143,6 @@ class ProductModel {
     briefAr = json['brief_ar'];
     descAr = json['desc_ar'];
     measureAr = json['measure_ar'];
-    List<PriceTagModel>.from(
-        json["priceTags"].map((x) => PriceTagModel.fromJson(x)));
-    List<CategoryModel>.from(
-        json["categories"].map((x) => CategoryModel.fromJson(x)));
-    List<String>.from(json["images"].map((x) => x));
-    DateTime.parse(json["createdAt"]);
-    DateTime.parse(json["updatedAt"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -213,35 +193,9 @@ class ProductModel {
     data['brief_ar'] = this.briefAr;
     data['desc_ar'] = this.descAr;
     data['measure_ar'] = this.measureAr;
-    data["priceTags"] = List<dynamic>.from(
-        (priceTags as List<PriceTagModel>).map((x) => x.toJson()));
-    data["categories"] = List<dynamic>.from(
-        (categories as List<CategoryModel>).map((x) => x.toJson()));
-    data["images"] = List<dynamic>.from(images!.map((x) => x));
-    data["createdAt"] = createdAt?.toIso8601String();
-    data["updatedAt"] = updatedAt?.toIso8601String();
-
     return data;
   }
-
-  factory ProductModel.fromEntity(Product entity) => ProductModel(
-        id: entity.id,
-        name: entity.name,
-        priceTags: entity.priceTags
-            .map((priceTag) => PriceTagModel.fromEntity(priceTag))
-            .toList(),
-        categories: entity.categories
-            .map((category) => CategoryModel.fromEntity(category))
-            .toList(),
-        images: entity.images,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
-      );
 }
-
-
-
-
 
 
 

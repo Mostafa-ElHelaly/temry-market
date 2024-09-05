@@ -34,20 +34,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<SignOutUser>(_onSignOut);
   }
 
-  void _onSignIn(SignInUser event, Emitter<UserState> emit) async {
-    // try {
-    //   emit(UserLoading());
-    //   final result = await _signInUseCase(event.params);
-    //   print("xxxxxxxxxxxxxxxxxxxxxxx");
-    //   print(result);
-    //   result.fold(
-    //     (failure) => emit(UserLoggedFail(failure)),
-    //     (user) => emit(UserLogged(user)),
-    //   );
-    // } catch (e) {
-    //   emit(UserLoggedFail(ExceptionFailure()));
-    // }
-  }
+  void _onSignIn(SignInUser event, Emitter<UserState> emit) async {}
 
   void _onCheckUser(CheckUser event, Emitter<UserState> emit) async {
     try {

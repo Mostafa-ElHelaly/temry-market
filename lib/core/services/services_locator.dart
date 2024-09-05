@@ -13,57 +13,56 @@ import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
 
-import '../../data/data_sources/local/cart_local_data_source.dart';
-import '../../data/data_sources/local/category_local_data_source.dart';
-import '../../data/data_sources/local/delivery_info_local_data_source.dart';
-import '../../data/data_sources/local/order_local_data_source.dart';
-import '../../data/data_sources/local/product_local_data_source.dart';
-import '../../data/data_sources/local/user_local_data_source.dart';
-import '../../data/data_sources/remote/cart_remote_data_source.dart';
-import '../../data/data_sources/remote/category_remote_data_source.dart';
-import '../../data/data_sources/remote/delivery_info_remote_data_source.dart';
-import '../../data/data_sources/remote/order_remote_data_source.dart';
-import '../../data/data_sources/remote/product_remote_data_source.dart';
-import '../../data/data_sources/remote/user_remote_data_source.dart';
-import '../../data/repositories/cart_repository_impl.dart';
-import '../../data/repositories/category_repository_impl.dart';
-import '../../data/repositories/delivery_info_impl.dart';
-import '../../data/repositories/order_repository_impl.dart';
-import '../../data/repositories/product_repository_impl.dart';
-import '../../data/repositories/user_repository_impl.dart';
-import '../../domain/repositories/cart_repository.dart';
-import '../../domain/repositories/category_repository.dart';
-import '../../domain/repositories/delivery_info_repository.dart';
-import '../../domain/repositories/order_repository.dart';
-import '../../domain/repositories/product_repository.dart';
-import '../../domain/repositories/user_repository.dart';
-import '../../domain/usecases/cart/add_cart_item_usecase.dart';
-import '../../domain/usecases/cart/clear_cart_usecase.dart';
-import '../../domain/usecases/cart/get_cached_cart_usecase.dart';
-import '../../domain/usecases/cart/sync_cart_usecase.dart';
-import '../../domain/usecases/category/filter_category_usecase.dart';
-import '../../domain/usecases/category/get_cached_category_usecase.dart';
-import '../../domain/usecases/category/get_remote_category_usecase.dart';
-import '../../domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
-import '../../domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
-import '../../domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
-import '../../domain/usecases/order/add_order_usecase.dart';
-import '../../domain/usecases/order/get_cached_orders_usecase.dart';
-import '../../domain/usecases/order/get_remote_orders_usecase.dart';
-import '../../domain/usecases/product/get_product_usecase.dart';
-import '../../domain/usecases/user/get_cached_user_usecase.dart';
-import '../../domain/usecases/user/sign_in_usecase.dart';
-import '../../domain/usecases/user/sign_out_usecase.dart';
-import '../../domain/usecases/user/sign_up_usecase.dart';
-import '../../presentation/blocs/cart/cart_bloc.dart';
-import '../../presentation/blocs/category/category_bloc.dart';
-import '../../presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
-import '../../presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import '../../presentation/blocs/order/order_add/order_add_cubit.dart';
-import '../../presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
-import '../../presentation/blocs/product/product_bloc.dart';
-import '../../presentation/blocs/user/user_bloc.dart';
-import '../network/network_info.dart';
+import 'package:temry_market/data/data_sources/local/cart_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/category_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/delivery_info_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/order_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/product_local_data_source.dart';
+import 'package:temry_market/data/data_sources/local/user_local_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/cart_remote_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/category_remote_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/delivery_info_remote_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/order_remote_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/product_remote_data_source.dart';
+import 'package:temry_market/data/data_sources/remote/user_remote_data_source.dart';
+import 'package:temry_market/data/repositories/cart_repository_impl.dart';
+import 'package:temry_market/data/repositories/category_repository_impl.dart';
+import 'package:temry_market/data/repositories/delivery_info_impl.dart';
+import 'package:temry_market/data/repositories/order_repository_impl.dart';
+import 'package:temry_market/data/repositories/product_repository_impl.dart';
+import 'package:temry_market/data/repositories/user_repository_impl.dart';
+import 'package:temry_market/domain/repositories/cart_repository.dart';
+import 'package:temry_market/domain/repositories/category_repository.dart';
+import 'package:temry_market/domain/repositories/delivery_info_repository.dart';
+import 'package:temry_market/domain/repositories/order_repository.dart';
+import 'package:temry_market/domain/repositories/product_repository.dart';
+import 'package:temry_market/domain/repositories/user_repository.dart';
+import 'package:temry_market/domain/usecases/cart/add_cart_item_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/clear_cart_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/get_cached_cart_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/sync_cart_usecase.dart';
+import 'package:temry_market/domain/usecases/category/filter_category_usecase.dart';
+import 'package:temry_market/domain/usecases/category/get_cached_category_usecase.dart';
+import 'package:temry_market/domain/usecases/category/get_remote_category_usecase.dart';
+import 'package:temry_market/domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
+import 'package:temry_market/domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
+import 'package:temry_market/domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
+import 'package:temry_market/domain/usecases/order/add_order_usecase.dart';
+import 'package:temry_market/domain/usecases/order/get_cached_orders_usecase.dart';
+import 'package:temry_market/domain/usecases/order/get_remote_orders_usecase.dart';
+import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
+import 'package:temry_market/domain/usecases/user/get_cached_user_usecase.dart';
+import 'package:temry_market/domain/usecases/user/sign_in_usecase.dart';
+import 'package:temry_market/domain/usecases/user/sign_out_usecase.dart';
+import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
+import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
+import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:temry_market/presentation/blocs/order/order_add/order_add_cubit.dart';
+import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
+import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
+import 'package:temry_market/core/network/network_info.dart';
 
 final sl = GetIt.instance;
 
@@ -71,25 +70,23 @@ Future<void> init() async {
   //Features - Product
   // Bloc
   sl.registerFactory(
-    () => ProductBloc(sl()),
+    () => ProductBloc(productUseCase: sl()),
   );
   // Use cases
-  sl.registerLazySingleton(() => GetProductUseCase(sl()));
+  sl.registerLazySingleton(() => GetProductUseCase(baseRepository: sl()));
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
       remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
     ),
   );
   // Data sources
   sl.registerLazySingleton<ProductRemoteDataSource>(
-    () => ProductRemoteDataSourceImpl(client: sl()),
+    () => ProductRemoteDataSourceImpl(),
   );
-  sl.registerLazySingleton<ProductLocalDataSource>(
-    () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
-  );
+  // sl.registerLazySingleton<ProductLocalDataSource>(
+  //   () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
+  // );
 
   //Features - Category
   // Bloc

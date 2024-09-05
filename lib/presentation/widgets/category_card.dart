@@ -4,6 +4,7 @@ import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:temry_market/presentation/blocs/product/product_event.dart';
 
 import '../../domain/entities/category/category.dart';
 import '../blocs/home/navbar_cubit.dart';
@@ -22,9 +23,7 @@ class CategoryCard extends StatelessWidget {
               curve: Curves.linear);
           context.read<NavbarCubit>().update(0);
           context.read<FilterCubit>().update(category: category);
-          context
-              .read<ProductBloc>()
-              .add(GetProducts(context.read<FilterCubit>().state));
+          context.read<ProductBloc>().add(GetProductEvent());
         }
       },
       child: category != null
