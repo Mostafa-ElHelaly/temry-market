@@ -91,26 +91,19 @@ Future<void> init() async {
   //Features - Category
   // Bloc
   sl.registerFactory(
-    () => CategoryBloc(sl(), sl(), sl()),
+    () => CategoryBloc(CategoryUseCase: sl()),
   );
   // Use cases
-  sl.registerLazySingleton(() => GetRemoteCategoryUseCase(sl()));
-  sl.registerLazySingleton(() => GetCachedCategoryUseCase(sl()));
-  sl.registerLazySingleton(() => FilterCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => GetRemoteCategoryUseCase(repository: sl()));
   // Repository
-  sl.registerLazySingleton<CategoryRepository>(
-    () => CategoryRepositoryImpl(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
+  sl.registerLazySingleton<CategoriesBaseRepository>(
+    () => CategoriesRepositoryImp(
+      baseRemotelyDataSource: sl(),
     ),
   );
   // Data sources
-  sl.registerLazySingleton<CategoryRemoteDataSource>(
-    () => CategoryRemoteDataSourceImpl(client: sl()),
-  );
-  sl.registerLazySingleton<CategoryLocalDataSource>(
-    () => CategoryLocalDataSourceImpl(sharedPreferences: sl()),
+  sl.registerLazySingleton<CategoryRemotelyDateSource>(
+    () => CategoryRemotelyDateSource(),
   );
 
   //Features - Cart

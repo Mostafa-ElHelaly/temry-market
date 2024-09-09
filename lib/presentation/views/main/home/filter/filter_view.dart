@@ -1,3 +1,4 @@
+import 'package:temry_market/presentation/blocs/category/category_state.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,38 +44,41 @@ class FilterView extends StatelessWidget {
           ),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, categoryState) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: categoryState.categories.length,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                itemBuilder: (context, index) => Row(
-                  children: [
-                    Text(
-                      categoryState.categories[index].name,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    const Spacer(),
-                    BlocBuilder<FilterCubit, FilterProductParams>(
-                      builder: (context, filterState) {
-                        return Checkbox(
-                          value: filterState.categories
-                                  .contains(categoryState.categories[index]) ||
-                              filterState.categories.isEmpty,
-                          onChanged: (bool? value) {
-                            context.read<FilterCubit>().updateCategory(
-                                category: categoryState.categories[index]);
-                          },
-                        );
-                      },
-                    )
-                  ],
-                ),
-              );
+              if (categoryState is CategorySuccessState) {
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: categoryState.searchList.length,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  itemBuilder: (context, index) => Row(
+                    children: [
+                      Text(
+                        categoryState.searchList[index].name.toString(),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      const Spacer(),
+                      BlocBuilder<FilterCubit, FilterProductParams>(
+                        builder: (context, filterState) {
+                          return Checkbox(
+                            value: filterState.categories.contains(
+                                    categoryState.searchList[index]) ||
+                                filterState.categories.isEmpty,
+                            onChanged: (bool? value) {
+                              context.read<FilterCubit>().updateCategory(
+                                  category: categoryState.searchList[index]);
+                            },
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
             },
           ),
           const Padding(

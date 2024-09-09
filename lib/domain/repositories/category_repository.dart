@@ -1,11 +1,8 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:temry_market/core/error/failures.dart';
-import 'package:temry_market/domain/entities/category/category.dart';
+import 'package:temry_market/data/models/category/category_model.dart';
 
-abstract class CategoryRepository {
-  Future<Either<Failure, List<Category>>> getRemoteCategories();
-  Future<Either<Failure, List<Category>>> getCachedCategories();
-  Future<Either<Failure, List<Category>>> filterCachedCategories(
-      String keyword);
+abstract class CategoriesBaseRepository {
+  Future<Either<Failuremessage, List<CategoryModel>>> getCategories();
 }

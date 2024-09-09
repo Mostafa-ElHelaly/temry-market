@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/data/models/category/category_model.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/domain/entities/category/category.dart';
 import 'package:temry_market/domain/entities/product/product_response.dart';
@@ -35,7 +36,7 @@ class GetProductUseCase extends UseCase2<List<ProductModel>, NoParams> {
 
 class FilterProductParams {
   final String? keyword;
-  final List<Category> categories;
+  final List<CategoryModel> categories;
   final double minPrice;
   final double maxPrice;
   final int? limit;
@@ -53,7 +54,7 @@ class FilterProductParams {
   FilterProductParams copyWith({
     int? skip,
     String? keyword,
-    List<Category>? categories,
+    List<CategoryModel>? categories,
     double? minPrice,
     double? maxPrice,
     int? limit,

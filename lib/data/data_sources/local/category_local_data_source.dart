@@ -1,34 +1,39 @@
-import 'package:temry_market/core/error/failures.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-import '../../models/category/category_model.dart';
+import 'package:dio/dio.dart';
+import 'package:temry_market/core/constant/constant_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/error/failures.dart';
+
+import 'package:temry_market/data/models/category/category_model.dart';
 
 abstract class CategoryLocalDataSource {
-  Future<List<CategoryModel>> getCategories();
-  Future<void> saveCategories(List<CategoryModel> categoriesToCache);
+  Future<CategoryModel> getCategories();
+  Future<void> saveCategories(CategoryModel productsToCache);
 }
 
-const cachedCategories = 'CACHED_CATEGORIES';
+const cachedCategory = 'CACHED_CATEGORIES';
 
 class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   final SharedPreferences sharedPreferences;
   CategoryLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<List<CategoryModel>> getCategories() {
-    final jsonString = sharedPreferences.getString(cachedCategories);
+  Future<CategoryModel> getCategories() {
+    final jsonString = sharedPreferences.getString(cachedCategory);
     if (jsonString != null) {
-      return Future.value(categoryModelListFromLocalJson(jsonString));
+      return Future.value(CategoryModel(jsonDecode(jsonString)));
     } else {
-      throw CacheFailure();
+      throw CacheException();
     }
   }
 
   @override
-  Future<void> saveCategories(List<CategoryModel> categoriesToCache) {
+  Future<void> saveCategories(CategoryModel categoryToCache) {
     return sharedPreferences.setString(
-      cachedCategories,
-      categoryModelListToJson(categoriesToCache),
+      cachedCategory,
+      json.encode(CategoryModel(categoryToCache)),
     );
   }
 }

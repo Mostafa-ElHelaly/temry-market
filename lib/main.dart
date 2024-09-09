@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:temry_market/domain/usecases/category/get_remote_category_usecase.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
@@ -11,7 +12,6 @@ import 'package:temry_market/core/constant/strings.dart';
 import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
-import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
 import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
@@ -48,17 +48,19 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
         ),
-
         BlocProvider(
           create: (context) =>
-              di.sl<CategoryBloc>()..add(const GetCategories()),
+              ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
         ),
+
+        // BlocProvider(
+        //   create: (context) =>
+        //       di.sl<CategoryBloc>()..add(const GetCategories()),
+        // ),
         BlocProvider(
           create: (context) => di.sl<CartBloc>()..add(const GetCart()),
         ),
-        // BlocProvider(
-        //   create: (context) => di.sl<UserBloc>()..add(CheckUser()),
-        // ),
+
         BlocProvider(
           create: (context) => di.sl<SignUpBloc>(),
         ),

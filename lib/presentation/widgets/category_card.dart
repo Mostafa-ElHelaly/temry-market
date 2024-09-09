@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:temry_market/data/models/category/category_model.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
@@ -6,27 +7,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
 
-import '../../domain/entities/category/category.dart';
 import '../blocs/home/navbar_cubit.dart';
 
-class CategoryCard extends StatelessWidget {
-  final Category? category;
-  const CategoryCard({Key? key, this.category}) : super(key: key);
+class categoryCard extends StatelessWidget {
+  final CategoryModel? categorymodel;
+  const categoryCard({Key? key, this.categorymodel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (category != null) {
+        if (categorymodel != null) {
           context.read<NavbarCubit>().controller.animateToPage(0,
               duration: const Duration(milliseconds: 400),
               curve: Curves.linear);
           context.read<NavbarCubit>().update(0);
-          context.read<FilterCubit>().update(category: category);
+          context.read<FilterCubit>().update(categoryModel: categorymodel);
           context.read<ProductBloc>().add(GetProductEvent());
         }
       },
-      child: category != null
+      child: categorymodel != null
           ? Stack(
               children: [
                 Card(
@@ -41,9 +41,9 @@ class CategoryCard extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.18,
                     width: double.maxFinite,
                     child: Hero(
-                      tag: category!.id,
+                      tag: categorymodel!.id.toString(),
                       child: CachedNetworkImage(
-                        imageUrl: category!.image,
+                        imageUrl: categorymodel!.thumbnail.toString(),
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
                           color: Colors.grey.shade100,
@@ -65,7 +65,7 @@ class CategoryCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        category!.name,
+                        categorymodel!.name.toString(),
                         style: const TextStyle(
                           fontSize: 18,
                         ),

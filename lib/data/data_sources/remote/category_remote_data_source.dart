@@ -1,32 +1,55 @@
-import 'package:temry_market/core/error/failures.dart';
-import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-import '../../../core/constant/strings.dart';
-import '../../models/category/category_model.dart';
+import 'package:dio/dio.dart';
+import 'package:temry_market/core/constant/constant_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class CategoryRemoteDataSource {
+import 'package:temry_market/data/models/category/category_model.dart';
+
+abstract class CategoryLocalDataSource {
   Future<List<CategoryModel>> getCategories();
 }
 
-class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
-  final http.Client client;
-  CategoryRemoteDataSourceImpl({required this.client});
-
+class CategoryRemotelyDateSource extends CategoryLocalDataSource {
   @override
-  Future<List<CategoryModel>> getCategories() =>
-      _getCategoryFromUrl('$baseUrl/categories');
+  Future<List<CategoryModel>> unsavedcategories() async {
+    Dio dio = Dio();
+    dio.interceptors.add(LogInterceptor(responseBody: true));
 
-  Future<List<CategoryModel>> _getCategoryFromUrl(String url) async {
-    final response = await client.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    if (response.statusCode == 200) {
-      return categoryModelListFromRemoteJson(response.body);
+    try {
+      Response response = await dio.get(ConstantApi.categories);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = response.data;
+        final List<dynamic> categoriesJson = jsonResponse['data'];
+        List<CategoryModel> categories = categoriesJson.map((json) {
+          return CategoryModel.fromJson(json);
+        }).toList();
+        print(jsonResponse['data']);
+        save_categories(categories);
+        return categories;
+      } else {
+        throw Exception('Getting Countries Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching countries: $e');
+    }
+  }
+
+  Future<void> save_categories(List<CategoryModel> trainers) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String data = json.encode(trainers.map((e) => e.toJson()).toList());
+    await prefs.setString('categories_info', data);
+  }
+
+  Future<List<CategoryModel>> getCategories() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString('categories_info');
+    if (data != null) {
+      Iterable<dynamic> decodeddata = json.decode(data);
+      return decodeddata.map((e) => CategoryModel.fromJson(e)).toList();
     } else {
-      throw ServerFailure();
+      return await unsavedcategories();
     }
   }
 }

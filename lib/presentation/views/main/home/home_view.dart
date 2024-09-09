@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
+import 'package:temry_market/core/constant/constant_image_url.dart';
 import 'package:temry_market/core/constant/locale_keys.g.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
@@ -74,77 +75,122 @@ class _HomeViewState extends State<HomeView> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: BlocBuilder<SignInBloc, SignInState>(
-                  builder: (context, state) {
-                if (state is SignInSuccessState) {
-                  return Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(AppRouter.userProfile);
-                        },
-                        child: Text(
-                          "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
-                          style: const TextStyle(fontSize: 26),
+                builder: (context, state) {
+                  if (state is SignInSuccessState) {
+                    return Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRouter.userProfile);
+                          },
+                          child: Text(
+                            "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
+                            style: const TextStyle(fontSize: 26),
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(AppRouter.userProfile);
-                        },
-                        child: const CircleAvatar(
-                          radius: 24.0,
-                          backgroundImage: AssetImage(kUserAvatar),
-                          backgroundColor: AppColors.secondary,
+                        const Spacer(),
+                        const SizedBox(
+                          width: 8,
                         ),
-                      )
-                    ],
-                  );
-                } else {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "Welcome,",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 36),
-                          ),
-                          Text(
-                            "E-Shop mobile store",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 22),
-                          ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(AppRouter.signIn);
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircleAvatar(
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRouter.userProfile);
+                          },
+                          child: const CircleAvatar(
                             radius: 24.0,
                             backgroundImage: AssetImage(kUserAvatar),
                             backgroundColor: AppColors.secondary,
                           ),
+                        )
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            // Text(
+                            //   "Welcome to,",
+                            //   style: TextStyle(
+                            //     fontWeight: FontWeight.normal,
+                            //     fontSize: 15,
+                            //     color: Colors.black45,
+                            //   ),
+                            // ),
+                            Text(
+                              "Temry Market",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: AppColors.secondary,
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  );
-                }
-              }),
+                        BlocBuilder<SignInBloc, SignInState>(
+                          builder: (context, state) {
+                            if (state is SignInSuccessState) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(AppRouter.signIn);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                    radius: 24.0,
+                                    backgroundImage:
+                                        const AssetImage(kUserAvatar),
+                                    backgroundColor: AppColors.secondary,
+                                    foregroundColor: AppColors.secondary,
+                                    child: Text(
+                                      "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
+                                      style: TextStyle(
+                                        fontSize: ConfigSize.defaultSize! * 2.5,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(AppRouter.signIn);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                    radius: 24.0,
+                                    backgroundImage:
+                                        const AssetImage(kUserAvatar),
+                                    backgroundColor: AppColors.secondary,
+                                    foregroundColor: AppColors.secondary,
+                                    child: Text(
+                                      "",
+                                      style: TextStyle(
+                                        fontSize: ConfigSize.defaultSize! * 2.5,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        )
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
             SizedBox(
               height: ConfigSize.defaultSize! * 2,
@@ -327,24 +373,155 @@ class _HomeViewState extends State<HomeView> {
                         controller: scrollController,
                         padding: EdgeInsets.only(
                             top: 18,
-                            left: 20,
-                            right: 20,
+                            left: 10,
+                            right: 10,
                             bottom:
                                 (80 + MediaQuery.of(context).padding.bottom)),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.55,
-                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.65,
+                          crossAxisSpacing: 15,
                           mainAxisSpacing: 20,
                         ),
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
+                          const double borderRadius = 10;
                           if (state.searchList.length > index) {
-                            return Card(
-                                child: Text(
-                                    state.searchList[index].name.toString()));
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                                // border: Border.all(
+                                //   color: AppColors.secondary,
+                                //   width: 1,
+                                // ),
+                                color: AppColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black
+                                        .withOpacity(0.1), // Shadow color
+                                    spreadRadius: 0,
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 2), // Shadow offset
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(borderRadius),
+                                      ),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Image(
+                                        width: ConfigSize.screenWidth,
+                                        image: NetworkImage(
+                                          // scale: 2,
+                                          ConstantImageUrl.constantimageurl +
+                                              state.searchList[index].thumbnail
+                                                  .toString(),
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 6,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  ConfigSize.defaultSize! * 1,
+                                              vertical:
+                                                  ConfigSize.defaultSize! * 1,
+                                            ),
+                                            child: Text(
+                                              state.searchList[index].name
+                                                  .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ConfigSize.defaultSize! *
+                                                        1.5,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  ConfigSize.defaultSize! * 1,
+                                            ),
+                                            child: Text(
+                                              '${state.searchList[index].price} EPG',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: AppColors.secondary,
+                                                fontSize:
+                                                    ConfigSize.defaultSize! * 2,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.secondary,
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .vertical(
+                                                bottom: Radius.circular(10),
+                                              ),
+                                            ),
+                                            height: ConfigSize.defaultSize! * 4,
+                                            width: ConfigSize.screenWidth,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  Icons.shopping_cart,
+                                                  color: AppColors.white,
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      ConfigSize.defaultSize! *
+                                                          1,
+                                                ),
+                                                Text(
+                                                  'ADD TO Cart',
+                                                  style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: ConfigSize
+                                                            .defaultSize! *
+                                                        1.5,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
                           } else {
                             return Shimmer.fromColors(
                               baseColor: Colors.grey.shade100,

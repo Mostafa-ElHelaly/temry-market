@@ -1,20 +1,8 @@
-part of 'category_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class CategoryEvent extends Equatable {
-  const CategoryEvent();
-}
-
-class GetCategories extends CategoryEvent {
-  const GetCategories();
-
+class CategoryEvent extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => throw UnimplementedError();
 }
 
-class FilterCategories extends CategoryEvent {
-  final String keyword;
-  const FilterCategories(this.keyword);
-
-  @override
-  List<Object> get props => [];
-}
+class GetCategoryEvent extends CategoryEvent {}

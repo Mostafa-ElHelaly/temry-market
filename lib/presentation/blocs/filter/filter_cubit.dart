@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:temry_market/data/models/category/category_model.dart';
 
-import 'package:temry_market/domain/entities/category/category.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 
 class FilterCubit extends Cubit<FilterProductParams> {
@@ -10,10 +10,11 @@ class FilterCubit extends Cubit<FilterProductParams> {
 
   void update({
     String? keyword,
-    List<Category>? categories,
-    Category? category,
+    List<CategoryModel>? categories,
+    CategoryModel? category,
+    CategoryModel? categoryModel,
   }) {
-    List<Category> updatedCategories = [];
+    List<CategoryModel> updatedCategories = [];
     if (category != null) {
       updatedCategories.add(category);
     } else if (categories != null) {
@@ -28,9 +29,9 @@ class FilterCubit extends Cubit<FilterProductParams> {
   }
 
   void updateCategory({
-    required Category category,
+    required CategoryModel category,
   }) {
-    List<Category> updatedCategories = [];
+    List<CategoryModel> updatedCategories = [];
     updatedCategories.addAll(state.categories);
     if (updatedCategories.contains(category)) {
       updatedCategories.remove(category);
