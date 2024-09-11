@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
-import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_event.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpParams, SignUPState> {

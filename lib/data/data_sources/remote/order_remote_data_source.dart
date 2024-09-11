@@ -1,9 +1,9 @@
 import 'package:temry_market/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/strings.dart';
-import '../../models/order/order_details_model.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/constant/strings.dart';
+import 'package:temry_market/data/models/order/order_details_model.dart';
 
 abstract class OrderRemoteDataSource {
   Future<OrderDetailsModel> addOrder(OrderDetailsModel params, String token);

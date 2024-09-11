@@ -1,8 +1,8 @@
 import 'package:http/http.dart' as http;
 
-import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/strings.dart';
-import '../../models/user/delivery_info_model.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/constant/strings.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoRemoteDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo(String token);
@@ -54,7 +54,8 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
   }
 
   @override
-  Future<DeliveryInfoModel> editDeliveryInfo(DeliveryInfoModel params, String token) async {
+  Future<DeliveryInfoModel> editDeliveryInfo(
+      DeliveryInfoModel params, String token) async {
     final response = await client.put(
       Uri.parse('$baseUrl/users/delivery-info'),
       headers: {

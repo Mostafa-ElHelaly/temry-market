@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/usecases/usecase.dart';
-import '../../entities/user/delivery_info.dart';
-import '../../repositories/delivery_info_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/repositories/delivery_info_repository.dart';
 
-class GetCachedDeliveryInfoUseCase implements UseCase<List<DeliveryInfo>, NoParams> {
+class GetCachedDeliveryInfoUseCase
+    implements UseCase<List<DeliveryInfo>, NoParams> {
   final DeliveryInfoRepository repository;
   GetCachedDeliveryInfoUseCase(this.repository);
 

@@ -1,15 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
 
-import 'package:temry_market/core/error/exceptions.dart';
-import 'package:temry_market/core/constant/strings.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
-import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
-import 'package:temry_market/data/models/product/product_response_model.dart';
 
 // abstract class ProductRemoteDataSource {
 //   Future<ProductResponseModel> getProducts(FilterProductParams params);

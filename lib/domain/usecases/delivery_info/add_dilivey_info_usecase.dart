@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/usecases/usecase.dart';
-import '../../../data/models/user/delivery_info_model.dart';
-import '../../entities/user/delivery_info.dart';
-import '../../repositories/delivery_info_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/repositories/delivery_info_repository.dart';
 
-class AddDeliveryInfoUseCase implements UseCase<DeliveryInfo, DeliveryInfoModel> {
+class AddDeliveryInfoUseCase
+    implements UseCase<DeliveryInfo, DeliveryInfoModel> {
   final DeliveryInfoRepository repository;
   AddDeliveryInfoUseCase(this.repository);
 

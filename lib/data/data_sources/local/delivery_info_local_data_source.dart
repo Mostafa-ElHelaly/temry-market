@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/error/failures.dart';
-import '../../models/user/delivery_info_model.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoLocalDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo();

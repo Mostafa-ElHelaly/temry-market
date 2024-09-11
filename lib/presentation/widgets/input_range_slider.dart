@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/filter/filter_cubit.dart';
+import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 
 class RangeSliderExample extends StatefulWidget {
   final double initMin;

@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:temry_market/domain/usecases/category/get_remote_category_usecase.dart';
+import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
@@ -48,9 +49,11 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
         ),
+
         BlocProvider(
-          create: (context) =>
-              ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
+          create: (context) => CategoryBloc(
+            CategoryUseCase: di.sl<GetRemoteCategoryUseCase>(),
+          ),
         ),
 
         // BlocProvider(

@@ -1,5 +1,5 @@
-import 'pagination_meta_data.dart';
-import 'product.dart';
+import 'package:temry_market/domain/entities/product/pagination_meta_data.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
 
 class ProductResponse {
   final List<Product> products;

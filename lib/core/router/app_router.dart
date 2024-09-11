@@ -39,6 +39,7 @@ class AppRouter {
   static const String notifications = '/notifications';
   static const String about = '/about';
   static const String filter = '/filter';
+  static const String productDetailsView = '/productDetailsView';
 
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -56,9 +57,7 @@ class AppRouter {
       //   return MaterialPageRoute(builder: (_) => const OtpScreen());
 
       case productDetails:
-        Product product = routeSettings.arguments as Product;
-        return MaterialPageRoute(
-            builder: (_) => ProductDetailsView(product: product));
+        return MaterialPageRoute(builder: (_) => const ProductDetailsView());
       case userProfile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
 
@@ -70,6 +69,8 @@ class AppRouter {
                 ));
       case deliveryDetails:
         return MaterialPageRoute(builder: (_) => const DeliveryInfoView());
+      case productDetailsView:
+        return MaterialPageRoute(builder: (_) => const ProductDetailsView());
       case orders:
         return MaterialPageRoute(builder: (_) => const OrderView());
       case categoryView:

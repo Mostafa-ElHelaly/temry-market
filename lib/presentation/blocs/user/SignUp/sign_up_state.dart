@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:temry_market/core/error/failures.dart';
-import 'package:temry_market/domain/entities/user/user.dart';
 
 abstract class SignUPState extends Equatable {
   const SignUPState();

@@ -4,8 +4,6 @@ import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/usecases/usecase.dart';
 import 'package:temry_market/data/models/category/category_model.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
-import 'package:temry_market/domain/entities/category/category.dart';
-import 'package:temry_market/domain/entities/product/product_response.dart';
 import 'package:temry_market/domain/repositories/product_repository.dart';
 
 // class GetProductUseCase

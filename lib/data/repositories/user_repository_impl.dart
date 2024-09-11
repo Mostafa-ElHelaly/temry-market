@@ -26,7 +26,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final result = await remoteDataSource.signIn(params);
       return Right(result);
-    } on Exception catch (e) {
+    } on Exception {
       return Left(ExceptionFailure());
     }
   }
@@ -36,7 +36,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final result = await remoteDataSource.signUp(params);
       return Right(result);
-    } on Exception catch (e) {
+    } on Exception {
       return Left(ExceptionFailure());
     }
   }
@@ -46,7 +46,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final result = await remoteDataSource.forgetpassword(params);
       return Right(result);
-    } on Exception catch (e) {
+    } on Exception {
       return Left(ExceptionFailure());
     }
   }

@@ -10,7 +10,7 @@ import 'package:temry_market/presentation/widgets/cart_item_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 
 class CartView extends StatefulWidget {
-  const CartView({Key? key}) : super(key: key);
+  const CartView({super.key});
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -135,7 +135,7 @@ class _CartViewState extends State<CartView> {
                               style: const TextStyle(fontSize: 16),
                             ),
                             Text(
-                              '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue))}',
+                              '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag!.price + previousValue))}',
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w500),
                             ),

@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-import 'package:temry_market/core/constant/constant_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:temry_market/core/error/exceptions.dart';
-import 'package:temry_market/core/error/failures.dart';
 
 import 'package:temry_market/data/models/category/category_model.dart';
 

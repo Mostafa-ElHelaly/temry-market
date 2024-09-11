@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../../domain/entities/user/user.dart';
+import 'package:temry_market/domain/entities/user/user.dart';
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 

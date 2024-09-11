@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../product/price_tag.dart';
-import '../product/product.dart';
+import 'package:temry_market/domain/entities/product/price_tag.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
 
 class OrderItem extends Equatable {
   final String id;
@@ -20,6 +20,6 @@ class OrderItem extends Equatable {
 
   @override
   List<Object> get props => [
-    id,
-  ];
+        id,
+      ];
 }

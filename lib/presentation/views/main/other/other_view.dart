@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
-import '../../../../core/constant/images.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../widgets/other_item_card.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/presentation/widgets/other_item_card.dart';
 
 class OtherView extends StatelessWidget {
-  const OtherView({Key? key}) : super(key: key);
+  const OtherView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/usecases/usecase.dart';
-import '../../entities/order/order_details.dart';
-import '../../repositories/order_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/domain/repositories/order_repository.dart';
 
 class AddOrderUseCase implements UseCase<OrderDetails, OrderDetails> {
   final OrderRepository repository;

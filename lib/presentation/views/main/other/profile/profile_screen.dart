@@ -7,8 +7,8 @@ import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();

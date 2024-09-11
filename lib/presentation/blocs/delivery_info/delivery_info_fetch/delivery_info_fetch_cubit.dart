@@ -3,10 +3,10 @@ import 'package:temry_market/domain/usecases/delivery_info/clear_local_delivery_
 import 'package:temry_market/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/usecases/usecase.dart';
-import '../../../../domain/entities/user/delivery_info.dart';
-import '../../../../domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
-import '../../../../domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
+import 'package:temry_market/domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
 
 part 'delivery_info_fetch_state.dart';
 

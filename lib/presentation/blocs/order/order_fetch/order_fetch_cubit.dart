@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:temry_market/domain/usecases/order/clear_local_order_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/usecases/usecase.dart';
-import '../../../../domain/entities/order/order_details.dart';
-import '../../../../domain/usecases/order/get_cached_orders_usecase.dart';
-import '../../../../domain/usecases/order/get_remote_orders_usecase.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/domain/usecases/order/get_cached_orders_usecase.dart';
+import 'package:temry_market/domain/usecases/order/get_remote_orders_usecase.dart';
 
 part 'order_fetch_state.dart';
 

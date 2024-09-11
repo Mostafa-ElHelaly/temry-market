@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../error/failures.dart';
+import 'package:temry_market/core/error/failures.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnsignedInteger(String str) {

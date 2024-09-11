@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import '../../../core/services/services_locator.dart' as di;
-import '../../../core/router/app_router.dart';
-import '../../../domain/entities/cart/cart_item.dart';
-import '../../../domain/entities/order/order_details.dart';
-import '../../../domain/entities/order/order_item.dart';
-import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import '../../blocs/order/order_add/order_add_cubit.dart';
-import '../../widgets/input_form_button.dart';
-import '../../widgets/outline_label_card.dart';
+import 'package:temry_market/core/services/services_locator.dart' as di;
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/domain/entities/order/order_item.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:temry_market/presentation/blocs/order/order_add/order_add_cubit.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/outline_label_card.dart';
 
 class OrderCheckoutView extends StatelessWidget {
   final List<CartItem> items;
-  const OrderCheckoutView({Key? key, required this.items}) : super(key: key);
+  const OrderCheckoutView({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +141,7 @@ class OrderCheckoutView extends StatelessWidget {
                                                   const EdgeInsets.all(8.0),
                                               child: CachedNetworkImage(
                                                 imageUrl: product
-                                                    .product.images.first,
+                                                    .product!.images.first,
                                               ),
                                             )),
                                       ),
@@ -155,7 +155,7 @@ class OrderCheckoutView extends StatelessWidget {
                                             MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            product.product.name,
+                                            product.product!.name,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .labelLarge,
@@ -164,7 +164,7 @@ class OrderCheckoutView extends StatelessWidget {
                                             height: 4,
                                           ),
                                           Text(
-                                              '\$${product.priceTag.price.toStringAsFixed(2)}')
+                                              '\$${product.priceTag!.price.toStringAsFixed(2)}')
                                         ],
                                       ),
                                     )
@@ -198,7 +198,7 @@ class OrderCheckoutView extends StatelessWidget {
                           children: [
                             const Text("Total Price"),
                             Text(
-                                "\$${items.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue))}")
+                                "\$${items.fold(0.0, (previousValue, element) => (element.priceTag!.price + previousValue))}")
                           ],
                         ),
                         const Row(
@@ -210,7 +210,7 @@ class OrderCheckoutView extends StatelessWidget {
                           children: [
                             const Text("Total"),
                             Text(
-                                "\$${(items.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue)) + 4.99)}")
+                                "\$${(items.fold(0.0, (previousValue, element) => (element.priceTag!.price + previousValue)) + 4.99)}")
                           ],
                         )
                       ],
@@ -240,9 +240,9 @@ class OrderCheckoutView extends StatelessWidget {
                           orderItems: items
                               .map((item) => OrderItem(
                                     id: '',
-                                    product: item.product,
-                                    priceTag: item.priceTag,
-                                    price: item.priceTag.price,
+                                    product: item.product!,
+                                    priceTag: item.priceTag!,
+                                    price: item.priceTag!.price,
                                     quantity: 1,
                                   ))
                               .toList(),

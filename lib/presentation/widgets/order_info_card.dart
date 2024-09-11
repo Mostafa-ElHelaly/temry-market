@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../domain/entities/order/order_details.dart';
-import 'outline_label_card.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/presentation/widgets/outline_label_card.dart';
 
 class OrderInfoCard extends StatelessWidget {
   final OrderDetails? orderDetails;
-  const OrderInfoCard({Key? key, this.orderDetails}) : super(key: key);
+  const OrderInfoCard({super.key, this.orderDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,7 @@ class OrderInfoCard extends StatelessWidget {
         child: OutlineLabelCard(
           title: '',
           child: Container(
-            padding: const EdgeInsets.only(
-              top: 12
-            ),
+            padding: const EdgeInsets.only(top: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,51 +48,49 @@ class OrderInfoCard extends StatelessWidget {
                 Column(
                   children: orderDetails!.orderItems
                       .map((product) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 75,
-                          child: AspectRatio(
-                            aspectRatio: 0.88,
-                            child: ClipRRect(
-                                borderRadius:
-                                BorderRadius.circular(8.0),
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.all(8.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: product
-                                        .product.images.first,
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 75,
+                                  child: AspectRatio(
+                                    aspectRatio: 0.88,
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                product.product.images.first,
+                                          ),
+                                        )),
                                   ),
-                                )),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                product.product.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge,
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                  '\$${product.priceTag.price.toStringAsFixed(2)}')
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ))
+                                ),
+                                const SizedBox(width: 20),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.product.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                          '\$${product.priceTag.price.toStringAsFixed(2)}')
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ))
                       .toList(),
                 )
               ],

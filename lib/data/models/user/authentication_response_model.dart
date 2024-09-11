@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'user_model.dart';
+import 'package:temry_market/data/models/user/user_model.dart';
 
 AuthenticationResponseModel authenticationResponseModelFromJson(String str) =>
     AuthenticationResponseModel.fromJson(json.decode(str));

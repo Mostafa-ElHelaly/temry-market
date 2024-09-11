@@ -6,9 +6,9 @@ import 'package:temry_market/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 import 'package:temry_market/domain/usecases/user/forget_password_usecase.dart';
 
-import '../../../../core/error/exceptions.dart';
-import '../../../domain/usecases/user/sign_in_usecase.dart';
-import '../../../domain/usecases/user/sign_up_usecase.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/domain/usecases/user/sign_in_usecase.dart';
+import 'package:temry_market/domain/usecases/user/sign_up_usecase.dart';
 
 abstract class UserRemoteDataSource {
   Future<Map<String, dynamic>> signIn(SignInParams params);

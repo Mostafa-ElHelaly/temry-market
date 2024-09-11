@@ -60,25 +60,25 @@ class CategoryModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['parent_id'] = this.parentId;
-    data['slug'] = this.slug;
-    data['name'] = this.name;
-    data['desc'] = this.desc;
-    data['sort_order'] = this.sortOrder;
-    data['icon'] = this.icon;
-    data['thumbnail'] = this.thumbnail;
-    data['parents'] = this.parents;
-    data['children'] = this.children;
-    data['brands'] = this.brands;
-    data['active'] = this.active;
-    data['deleted'] = this.deleted;
-    data['delstamp'] = this.delstamp;
-    data['addstamp'] = this.addstamp;
-    data['updatestamp'] = this.updatestamp;
-    data['name_ar'] = this.nameAr;
-    data['desc_ar'] = this.descAr;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['parent_id'] = parentId;
+    data['slug'] = slug;
+    data['name'] = name;
+    data['desc'] = desc;
+    data['sort_order'] = sortOrder;
+    data['icon'] = icon;
+    data['thumbnail'] = thumbnail;
+    data['parents'] = parents;
+    data['children'] = children;
+    data['brands'] = brands;
+    data['active'] = active;
+    data['deleted'] = deleted;
+    data['delstamp'] = delstamp;
+    data['addstamp'] = addstamp;
+    data['updatestamp'] = updatestamp;
+    data['name_ar'] = nameAr;
+    data['desc_ar'] = descAr;
     return data;
   }
 }

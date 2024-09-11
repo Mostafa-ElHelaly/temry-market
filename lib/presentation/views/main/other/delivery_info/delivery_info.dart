@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import '../../../../../core/constant/images.dart';
-import '../../../../../data/models/user/delivery_info_model.dart';
-import '../../../../../domain/entities/user/delivery_info.dart';
-import '../../../../blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
-import '../../../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import '../../../../widgets/delivery_info_card.dart';
-import '../../../../widgets/input_form_button.dart';
-import '../../../../widgets/input_text_form_field.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:temry_market/presentation/widgets/delivery_info_card.dart';
+import 'package:temry_market/presentation/widgets/input_form_button.dart';
+import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class DeliveryInfoView extends StatefulWidget {
-  const DeliveryInfoView({Key? key}) : super(key: key);
+  const DeliveryInfoView({super.key});
 
   @override
   State<DeliveryInfoView> createState() => _DeliveryInfoViewState();
@@ -40,15 +40,15 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
         ),
         body: BlocBuilder<DeliveryInfoFetchCubit, DeliveryInfoFetchState>(
           builder: (context, state) {
-            if(state is! DeliveryInfoFetchLoading && state.deliveryInformation.isEmpty) {
+            if (state is! DeliveryInfoFetchLoading &&
+                state.deliveryInformation.isEmpty) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(kEmptyDeliveryInfo),
                   const Text("Delivery information are Empty!"),
                   SizedBox(
-                    height:
-                    MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.1,
                   )
                 ],
               );

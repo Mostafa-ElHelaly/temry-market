@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:temry_market/core/constant/colors%20copy.dart';
+import 'package:temry_market/core/constant/config_size.dart';
+import 'package:temry_market/core/constant/constant_image_url.dart';
+import 'package:temry_market/core/router/app_router.dart';
 
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
-import 'package:temry_market/presentation/widgets/category_card.dart';
 
 class CategoryView extends StatefulWidget {
-  const CategoryView({Key? key}) : super(key: key);
+  const CategoryView({super.key});
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
@@ -15,6 +18,29 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   final TextEditingController _textEditingController = TextEditingController();
+  // Original list of items
+  final List<String> items = List.generate(20, (index) => 'Item $index');
+
+  // List that will display filtered items
+  List<String> filteredItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initially, show all items
+    filteredItems = items;
+  }
+
+  // Function to handle search input changes
+  void filterItems(String query) {
+    setState(() {
+      // Update the filtered list based on the query
+      filteredItems = items
+          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,12 +58,10 @@ class _CategoryViewState extends State<CategoryView> {
               child: TextField(
                 controller: _textEditingController,
                 autofocus: false,
-                onSubmitted: (val) {
-                  context.read<CategoryBloc>().add(GetCategoryEvent());
-                },
-                onChanged: (val) => setState(() {
-                  context.read<CategoryBloc>().add(GetCategoryEvent());
-                }),
+                // onSubmitted: (val) {
+                //   context.read<CategoryBloc>().add(GetCategoryEvent());
+                // },
+                onChanged: filterItems,
                 decoration: InputDecoration(
                     contentPadding:
                         const EdgeInsets.only(left: 20, bottom: 22, top: 22),
@@ -75,26 +99,96 @@ class _CategoryViewState extends State<CategoryView> {
                     )),
               ),
             ),
-            // Expanded(
-            //   child: BlocBuilder<CategoryBloc, CategoryState>(
-            //     builder: (context, state) {
-            //       return ListView.builder(
-            //         itemCount: (state is CategoryLoadingState) ? 10 : state
-            //           ..length,
-            //         physics: const BouncingScrollPhysics(),
-            //         padding: EdgeInsets.only(
-            //             top: 14,
-            //             bottom: (80 + MediaQuery.of(context).padding.bottom)),
-            //         itemBuilder: (context, index) =>
-            //             (state is CategoryLoadingState)
-            //                 ? const CategoryCard()
-            //                 : CategoryCard(
-            //                     category: state.categories[index],
-            //                   ),
-            //       );
-            //     },
-            //   ),
-            // ),
+            Expanded(
+              child: BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  if (state is CategorySuccessState) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          AppRouter.productDetailsView,
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+                        child: SizedBox(
+                          height: ConfigSize.defaultSize! * 10,
+                          child: GridView.builder(
+                            itemCount: state.searchList.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(
+                                    ConfigSize.defaultSize! * 0.5),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(10),
+                                      border: Border.all(
+                                        width: 1.5,
+                                        color: AppColors.secondary,
+                                      )),
+                                  height: ConfigSize.defaultSize! * 10.1,
+                                  width: ConfigSize.defaultSize! * 8.8,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: ConfigSize.defaultSize! * 1,
+                                      ),
+                                      Container(
+                                        height: ConfigSize.defaultSize! * 11,
+                                        width: ConfigSize.defaultSize! * 11,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                              ConstantImageUrl
+                                                      .constantimageurl +
+                                                  state.searchList[index]
+                                                      .thumbnail
+                                                      .toString(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        state.searchList[index].name.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                ConfigSize.defaultSize! * 2,
+                                            color: AppColors.secondary),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, // Number of columns
+                              crossAxisSpacing: 12.0, // Space between columns
+                              mainAxisSpacing: 12.0, // Space between rows
+                              childAspectRatio: 1, // Aspect ratio of each item
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
+            SizedBox(
+              height: ConfigSize.defaultSize! * 10,
+            ),
           ],
         ),
       ),

@@ -4,40 +4,40 @@ import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
-import 'package:temry_market/core/constant/locale_keys.g.dart';
+import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
+import 'package:temry_market/presentation/blocs/category/category_event.dart';
+import 'package:temry_market/presentation/blocs/category/category_state.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/core/constant/images.dart';
-import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
-import 'package:temry_market/presentation/widgets/alert_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
-List<ImageProvider<Object>> image = [
-  const AssetImage('assets/other_images/fresh.jpg'),
-  const AssetImage('assets/other_images/matinted.jpg'),
-  const AssetImage('assets/other_images/half cooked.jpg'),
-  const AssetImage('assets/other_images/frozen.jpg'),
-];
-List<String> text = [
-  StringManager.fresh,
-  StringManager.marinated,
-  StringManager.halfCooked,
-  StringManager.frozen,
-];
+// List<ImageProvider<Object>> image = [
+//   const AssetImage('assets/other_images/fresh.jpg'),
+//   const AssetImage('assets/other_images/matinted.jpg'),
+//   const AssetImage('assets/other_images/half cooked.jpg'),
+//   const AssetImage('assets/other_images/frozen.jpg'),
+// ];
+// List<String> text = [
+//   StringManager.fresh,
+//   StringManager.marinated,
+//   StringManager.halfCooked,
+//   StringManager.frozen,
+// ];
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController scrollController = ScrollController();
@@ -57,6 +57,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     scrollController.addListener(_scrollListener);
     BlocProvider.of<ProductBloc>(context).add(ProductEvent());
+    BlocProvider.of<CategoryBloc>(context).add(CategoryEvent());
 
     super.initState();
   }
@@ -86,7 +87,10 @@ class _HomeViewState extends State<HomeView> {
                           },
                           child: Text(
                             "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
-                            style: const TextStyle(fontSize: 26),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: ConfigSize.defaultSize! * 2.6,
+                            ),
                           ),
                         ),
                         const Spacer(),
@@ -95,15 +99,33 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(AppRouter.userProfile);
+                            Navigator.of(context).pushNamed(AppRouter.signIn);
                           },
-                          child: const CircleAvatar(
-                            radius: 24.0,
-                            backgroundImage: AssetImage(kUserAvatar),
-                            backgroundColor: AppColors.secondary,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: ConfigSize.defaultSize! * 6,
+                              height: ConfigSize.defaultSize! * 6,
+                              decoration: const BoxDecoration(
+                                color: AppColors.secondary,
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(colors: [
+                                  Color.fromARGB(255, 1, 114, 201),
+                                  Color.fromARGB(255, 0, 28, 49),
+                                ]),
+                              ),
+                              child: Text(
+                                "${state.signInModelResponse['data']['user']['first_name'].substring(0, 1).toUpperCase()}${state.signInModelResponse['data']['user']['last_name'].substring(0, 1).toUpperCase()}",
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: ConfigSize.defaultSize! * 2.6,
+                                ),
+                              ),
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     );
                   } else {
@@ -117,14 +139,14 @@ class _HomeViewState extends State<HomeView> {
                             SizedBox(
                               height: 8,
                             ),
-                            // Text(
-                            //   "Welcome to,",
-                            //   style: TextStyle(
-                            //     fontWeight: FontWeight.normal,
-                            //     fontSize: 15,
-                            //     color: Colors.black45,
-                            //   ),
-                            // ),
+                            Text(
+                              "Welcome to,",
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15,
+                                color: Colors.black45,
+                              ),
+                            ),
                             Text(
                               "Temry Market",
                               style: TextStyle(
@@ -135,57 +157,17 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ],
                         ),
-                        BlocBuilder<SignInBloc, SignInState>(
-                          builder: (context, state) {
-                            if (state is SignInSuccessState) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(AppRouter.signIn);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 24.0,
-                                    backgroundImage:
-                                        const AssetImage(kUserAvatar),
-                                    backgroundColor: AppColors.secondary,
-                                    foregroundColor: AppColors.secondary,
-                                    child: Text(
-                                      "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
-                                      style: TextStyle(
-                                        fontSize: ConfigSize.defaultSize! * 2.5,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(AppRouter.signIn);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    radius: 24.0,
-                                    backgroundImage:
-                                        const AssetImage(kUserAvatar),
-                                    backgroundColor: AppColors.secondary,
-                                    foregroundColor: AppColors.secondary,
-                                    child: Text(
-                                      "",
-                                      style: TextStyle(
-                                        fontSize: ConfigSize.defaultSize! * 2.5,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRouter.userProfile);
                           },
-                        )
+                          child: const CircleAvatar(
+                            radius: 24.0,
+                            backgroundImage: AssetImage(kUserAvatar),
+                            backgroundColor: AppColors.secondary,
+                          ),
+                        ),
                       ],
                     );
                   }
@@ -195,71 +177,81 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(
               height: ConfigSize.defaultSize! * 2,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                  AppRouter.categoryView,
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
-                child: SizedBox(
-                  height: ConfigSize.defaultSize! * 10,
-                  child: ListView.builder(
-                    itemCount: image.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadiusDirectional.circular(10),
-                              border: Border.all(
-                                width: 1.5,
-                                color: AppColors.secondary,
-                              )),
-                          height: ConfigSize.defaultSize! * 10.1,
-                          width: ConfigSize.defaultSize! * 8.8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: ConfigSize.defaultSize! * 1,
-                              ),
-                              Container(
-                                height: ConfigSize.defaultSize! * 5.5,
-                                width: ConfigSize.defaultSize! * 5.5,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: image[index],
-                                  ),
-                                ),
-                                // child: Image(
-                                //   image: image[index],
-                                //   width: ConfigSize.defaultSize! * 5,
-                                //   height: ConfigSize.defaultSize! * 6,
-                                // ),
-                              ),
-                              Text(
-                                text[index],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: ConfigSize.defaultSize! * 1.1,
-                                    color: AppColors.secondary),
-                              ),
-                            ],
-                          ),
-                        ),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategorySuccessState) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        AppRouter.categoryView,
                       );
                     },
-                  ),
-                ),
-              ),
+                    child: Padding(
+                      padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+                      child: SizedBox(
+                        height: ConfigSize.defaultSize! * 10,
+                        child: ListView.builder(
+                          itemCount: state.searchList.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadiusDirectional.circular(10),
+                                    border: Border.all(
+                                      width: 1.5,
+                                      color: AppColors.secondary,
+                                    )),
+                                height: ConfigSize.defaultSize! * 10.1,
+                                width: ConfigSize.defaultSize! * 8.8,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: ConfigSize.defaultSize! * 1,
+                                    ),
+                                    Container(
+                                      height: ConfigSize.defaultSize! * 5.5,
+                                      width: ConfigSize.defaultSize! * 5.5,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                            ConstantImageUrl.constantimageurl +
+                                                state
+                                                    .searchList[index].thumbnail
+                                                    .toString(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      state.searchList[index].name.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              ConfigSize.defaultSize! * 1.1,
+                                          color: AppColors.secondary),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -393,10 +385,6 @@ class _HomeViewState extends State<HomeView> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.circular(borderRadius),
-                                // border: Border.all(
-                                //   color: AppColors.secondary,
-                                //   width: 1,
-                                // ),
                                 color: AppColors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -545,52 +533,50 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
+//Result Empty and No Error
+// if (state is ProductSuccessState &&
+//     state.searchList.isEmpty) {
+//   return const AlertCard(
+//     image: kEmpty,
+//     message: "Products not found!",
+//   );
+// }
+// //Error and no preloaded data
+// if (state is ProductErrorState &&
+//     state.failure is NetworkFailure) {
+//   if (state.failure is NetworkFailure) {
+//     return AlertCard(
+//       image: kNoConnection,
+//       message: "Network failure\nTry again!",
+//       onClick: () {
+//         context.read<ProductBloc>().add(GetProductEvent());
+//       },
+//     );
+//   }
+//   return Column(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     children: [
+//       if (state.failure is ServerFailure)
+//         Image.asset(
+//             'assets/status_image/internal-server-error.png'),
+//       if (state.failure is CacheFailure)
+//         Image.asset('assets/status_image/no-connection.png'),
+//       const Text("Products not found!"),
+//       IconButton(
+//           onPressed: () {
+//             context
+//                 .read<ProductBloc>()
+//                 .add(GetProductEvent());
+//           },
+//           icon: const Icon(Icons.refresh)),
+//       SizedBox(
+//         height: MediaQuery.of(context).size.height * 0.1,
+//       )
+//     ],
+//   );
+// }
+// if (state is ProductSuccessState) {
 
-
-  //Result Empty and No Error
-                  // if (state is ProductSuccessState &&
-                  //     state.searchList.isEmpty) {
-                  //   return const AlertCard(
-                  //     image: kEmpty,
-                  //     message: "Products not found!",
-                  //   );
-                  // }
-                  // //Error and no preloaded data
-                  // if (state is ProductErrorState &&
-                  //     state.failure is NetworkFailure) {
-                  //   if (state.failure is NetworkFailure) {
-                  //     return AlertCard(
-                  //       image: kNoConnection,
-                  //       message: "Network failure\nTry again!",
-                  //       onClick: () {
-                  //         context.read<ProductBloc>().add(GetProductEvent());
-                  //       },
-                  //     );
-                  //   }
-                  //   return Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       if (state.failure is ServerFailure)
-                  //         Image.asset(
-                  //             'assets/status_image/internal-server-error.png'),
-                  //       if (state.failure is CacheFailure)
-                  //         Image.asset('assets/status_image/no-connection.png'),
-                  //       const Text("Products not found!"),
-                  //       IconButton(
-                  //           onPressed: () {
-                  //             context
-                  //                 .read<ProductBloc>()
-                  //                 .add(GetProductEvent());
-                  //           },
-                  //           icon: const Icon(Icons.refresh)),
-                  //       SizedBox(
-                  //         height: MediaQuery.of(context).size.height * 0.1,
-                  //       )
-                  //     ],
-                  //   );
-                  // }
-                  // if (state is ProductSuccessState) {
-                 
-                  // } else {
-                  //   return const Center(child: CircularProgressIndicator());
-                  // }
+// } else {
+//   return const Center(child: CircularProgressIndicator());
+// }

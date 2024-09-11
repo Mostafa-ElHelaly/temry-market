@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/usecases/usecase.dart';
-import '../../../domain/entities/cart/cart_item.dart';
-import '../../../domain/usecases/cart/add_cart_item_usecase.dart';
-import '../../../domain/usecases/cart/clear_cart_usecase.dart';
-import '../../../domain/usecases/cart/get_cached_cart_usecase.dart';
-import '../../../domain/usecases/cart/sync_cart_usecase.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
+import 'package:temry_market/domain/usecases/cart/add_cart_item_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/clear_cart_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/get_cached_cart_usecase.dart';
+import 'package:temry_market/domain/usecases/cart/sync_cart_usecase.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -55,8 +55,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       cart.add(event.cartItem);
       var result = await _addCartUseCase(event.cartItem);
       result.fold(
-            (failure) => emit(CartError(cart: state.cart, failure: failure)),
-            (_) => emit(CartLoaded(cart: cart)),
+        (failure) => emit(CartError(cart: state.cart, failure: failure)),
+        (_) => emit(CartLoaded(cart: cart)),
       );
     } catch (e) {
       emit(CartError(cart: state.cart, failure: ExceptionFailure()));

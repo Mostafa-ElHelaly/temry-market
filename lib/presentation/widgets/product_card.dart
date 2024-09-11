@@ -2,19 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../core/router/app_router.dart';
-import '../../domain/entities/product/product.dart';
+import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/domain/entities/product/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product? product;
   final Function? onFavoriteToggle;
   final Function? onClick;
   const ProductCard({
-    Key? key,
+    super.key,
     this.product,
     this.onFavoriteToggle,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

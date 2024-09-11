@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../user/delivery_info.dart';
-import 'order_item.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/entities/order/order_item.dart';
 
 class OrderDetails extends Equatable {
   final String id;

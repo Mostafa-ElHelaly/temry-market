@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../../../domain/entities/order/order_details.dart';
-import '../user/delivery_info_model.dart';
-import 'order_item_model.dart';
+import 'package:temry_market/domain/entities/order/order_details.dart';
+import 'package:temry_market/data/models/user/delivery_info_model.dart';
+import 'package:temry_market/data/models/order/order_item_model.dart';
 
 List<OrderDetailsModel> orderDetailsModelListFromJson(String str) =>
     List<OrderDetailsModel>.from(
@@ -26,16 +26,11 @@ String orderDetailsModelToJson(OrderDetailsModel data) =>
 
 class OrderDetailsModel extends OrderDetails {
   const OrderDetailsModel({
-    required String id,
-    required List<OrderItemModel> orderItems,
-    required DeliveryInfoModel deliveryInfo,
-    required num discount,
-  }) : super(
-          id: id,
-          orderItems: orderItems,
-          deliveryInfo: deliveryInfo,
-          discount: discount,
-        );
+    required super.id,
+    required List<OrderItemModel> super.orderItems,
+    required DeliveryInfoModel super.deliveryInfo,
+    required super.discount,
+  });
 
   factory OrderDetailsModel.fromJson(Map<String, dynamic> json) =>
       OrderDetailsModel(

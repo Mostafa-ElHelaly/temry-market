@@ -14,7 +14,7 @@ import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
 class SignInView extends StatefulWidget {
-  const SignInView({Key? key}) : super(key: key);
+  const SignInView({super.key});
 
   @override
   State<SignInView> createState() => _SignInViewState();

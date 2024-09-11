@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:temry_market/domain/entities/product/product.dart';
 
-import '../../../domain/entities/cart/cart_item.dart';
-import '../product/price_tag_model.dart';
-import '../product/product_model.dart';
+import 'package:temry_market/domain/entities/cart/cart_item.dart';
+import 'package:temry_market/data/models/product/price_tag_model.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 
 List<CartItemModel> cartItemModelListFromLocalJson(String str) =>
     List<CartItemModel>.from(
@@ -23,10 +23,10 @@ String cartItemModelToJson(List<CartItemModel> data) =>
 
 class CartItemModel extends CartItem {
   const CartItemModel({
-    String? id,
-    required Product product,
-    required PriceTagModel priceTag,
-  }) : super(id: id, product: product, priceTag: priceTag);
+    super.id,
+    required super.product,
+    required PriceTagModel super.priceTag,
+  });
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
     return CartItemModel(
@@ -44,8 +44,8 @@ class CartItemModel extends CartItem {
 
   Map<String, dynamic> toBodyJson() => {
         "_id": id,
-        "product": product.id,
-        "priceTag": priceTag.id,
+        "product": product!.id,
+        "priceTag": priceTag!.id,
       };
 
   factory CartItemModel.fromParent(CartItem cartItem) {

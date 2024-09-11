@@ -1,9 +1,7 @@
 import 'dart:developer';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/core/error/exceptions.dart';

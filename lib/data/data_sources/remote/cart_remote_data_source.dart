@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/strings.dart';
-import '../../models/cart/cart_item_model.dart';
+import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/core/constant/strings.dart';
+import 'package:temry_market/data/models/cart/cart_item_model.dart';
 
 abstract class CartRemoteDataSource {
   Future<CartItemModel> addToCart(CartItemModel cartItem, String token);
@@ -42,8 +42,8 @@ class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
         body: jsonEncode({
           "data": cart
               .map((e) => {
-                    "product": e.product.id,
-                    "priceTag": e.priceTag.id,
+                    "product": e.product!.id,
+                    "priceTag": e.priceTag!.id,
                   })
               .toList()
         }));

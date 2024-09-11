@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../domain/entities/user/delivery_info.dart';
-import '../blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
-import '../views/main/other/delivery_info/delivery_info.dart';
-import 'outline_label_card.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
+import 'package:temry_market/presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
+import 'package:temry_market/presentation/views/main/other/delivery_info/delivery_info.dart';
+import 'package:temry_market/presentation/widgets/outline_label_card.dart';
 
 class DeliveryInfoCard extends StatelessWidget {
   final DeliveryInfo? deliveryInformation;
   final bool isSelected;
   const DeliveryInfoCard(
-      {Key? key, this.deliveryInformation, this.isSelected = false})
-      : super(key: key);
+      {super.key, this.deliveryInformation, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {

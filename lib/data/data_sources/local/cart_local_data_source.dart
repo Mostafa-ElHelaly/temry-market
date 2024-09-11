@@ -1,7 +1,7 @@
 import 'package:temry_market/core/error/failures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/cart/cart_item_model.dart';
+import 'package:temry_market/data/models/cart/cart_item_model.dart';
 
 abstract class CartLocalDataSource {
   Future<List<CartItemModel>> getCart();
@@ -32,8 +32,8 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
       cart.addAll(cartItemModelListFromLocalJson(jsonString));
     }
     if (!cart.any((element) =>
-        element.product.id == cartItem.product.id &&
-        element.priceTag.id == cartItem.priceTag.id)) {
+        element.product!.id == cartItem.product!.id &&
+        element.priceTag!.id == cartItem.priceTag!.id)) {
       cart.add(cartItem);
     }
     return sharedPreferences.setString(

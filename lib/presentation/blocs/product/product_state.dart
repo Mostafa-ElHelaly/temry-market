@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
 
 abstract class ProductState extends Equatable {

@@ -42,6 +42,7 @@ class CategoryRemotelyDateSource extends CategoryLocalDataSource {
     await prefs.setString('categories_info', data);
   }
 
+  @override
   Future<List<CategoryModel>> getCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? data = prefs.getString('categories_info');

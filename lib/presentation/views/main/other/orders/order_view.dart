@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/constant/images.dart';
-import '../../../../blocs/order/order_fetch/order_fetch_cubit.dart';
-import '../../../../widgets/order_info_card.dart';
+import 'package:temry_market/core/constant/images.dart';
+import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
+import 'package:temry_market/presentation/widgets/order_info_card.dart';
 
 class OrderView extends StatelessWidget {
-  const OrderView({Key? key}) : super(key: key);
+  const OrderView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +16,14 @@ class OrderView extends StatelessWidget {
       ),
       body: BlocBuilder<OrderFetchCubit, OrderFetchState>(
         builder: (context, state) {
-          if(state is! OrderFetchLoading && state.orders.isEmpty) {
+          if (state is! OrderFetchLoading && state.orders.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(kOrderDelivery),
                 const Text("Orders are Empty!"),
                 SizedBox(
-                  height:
-                  MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 )
               ],
             );

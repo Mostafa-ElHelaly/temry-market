@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../../domain/entities/user/delivery_info.dart';
+import 'package:temry_market/domain/entities/user/delivery_info.dart';
 
 DeliveryInfoModel deliveryInfoModelFromRemoteJson(String str) =>
     DeliveryInfoModel.fromJson(json.decode(str)['data']);
@@ -24,24 +24,15 @@ String deliveryInfoModelListToJson(List<DeliveryInfoModel> data) =>
 
 class DeliveryInfoModel extends DeliveryInfo {
   const DeliveryInfoModel({
-    required String id,
-    required String firstName,
-    required String lastName,
-    required String addressLineOne,
-    required String addressLineTwo,
-    required String city,
-    required String zipCode,
-    required String contactNumber,
-  }) : super(
-          id: id,
-          firstName: firstName,
-          lastName: lastName,
-          addressLineOne: addressLineOne,
-          addressLineTwo: addressLineTwo,
-          city: city,
-          zipCode: zipCode,
-          contactNumber: contactNumber,
-        );
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.addressLineOne,
+    required super.addressLineTwo,
+    required super.city,
+    required super.zipCode,
+    required super.contactNumber,
+  });
 
   factory DeliveryInfoModel.fromJson(Map<String, dynamic> json) =>
       DeliveryInfoModel(

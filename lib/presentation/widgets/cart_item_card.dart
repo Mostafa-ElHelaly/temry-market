@@ -3,7 +3,7 @@ import 'package:temry_market/domain/entities/cart/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../core/router/app_router.dart';
+import 'package:temry_market/core/router/app_router.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem? cartItem;
@@ -12,13 +12,13 @@ class CartItemCard extends StatelessWidget {
   final Function()? onLongClick;
   final bool isSelected;
   const CartItemCard({
-    Key? key,
+    super.key,
     this.cartItem,
     this.onFavoriteToggle,
     this.onClick,
     this.onLongClick,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class CartItemCard extends StatelessWidget {
                         : Padding(
                             padding: const EdgeInsets.all(24.0),
                             child: CachedNetworkImage(
-                              imageUrl: cartItem!.product.images.first,
+                              imageUrl: cartItem!.product!.images.first,
                               placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
@@ -121,7 +121,7 @@ class CartItemCard extends StatelessWidget {
                                 )
                               : SizedBox(
                                   child: Text(
-                                    cartItem!.product.name,
+                                    cartItem!.product!.name,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
@@ -145,7 +145,7 @@ class CartItemCard extends StatelessWidget {
                                     ),
                                   )
                                 : Text(
-                                    r'$' + cartItem!.priceTag.price.toString(),
+                                    r'$' + cartItem!.priceTag!.price.toString(),
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,

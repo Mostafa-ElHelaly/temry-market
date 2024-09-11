@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/usecases/usecase.dart';
-import '../../repositories/delivery_info_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/repositories/delivery_info_repository.dart';
 
 class ClearLocalDeliveryInfoUseCase implements UseCase<NoParams, NoParams> {
   final DeliveryInfoRepository repository;

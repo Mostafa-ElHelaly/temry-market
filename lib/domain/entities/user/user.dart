@@ -73,28 +73,28 @@ class User extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['gender'] = this.gender;
-    data['birthdate'] = this.birthdate;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['password'] = this.password;
-    data['password_token'] = this.passwordToken;
-    data['google_id'] = this.googleId;
-    data['google_account'] = this.googleAccount;
-    data['facebook_id'] = this.facebookId;
-    data['facebook_account'] = this.facebookAccount;
-    data['apple_id'] = this.appleId;
-    data['apple_account'] = this.appleAccount;
-    data['banned'] = this.banned;
-    data['deleted'] = this.deleted;
-    data['delstamp'] = this.delstamp;
-    data['addstamp'] = this.addstamp;
-    data['updatestamp'] = this.updatestamp;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['gender'] = gender;
+    data['birthdate'] = birthdate;
+    data['email'] = email;
+    data['mobile'] = mobile;
+    data['password'] = password;
+    data['password_token'] = passwordToken;
+    data['google_id'] = googleId;
+    data['google_account'] = googleAccount;
+    data['facebook_id'] = facebookId;
+    data['facebook_account'] = facebookAccount;
+    data['apple_id'] = appleId;
+    data['apple_account'] = appleAccount;
+    data['banned'] = banned;
+    data['deleted'] = deleted;
+    data['delstamp'] = delstamp;
+    data['addstamp'] = addstamp;
+    data['updatestamp'] = updatestamp;
+    data['image'] = image;
 
     return data;
   }

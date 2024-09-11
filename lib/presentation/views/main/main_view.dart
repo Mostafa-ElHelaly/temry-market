@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 
-import '../../blocs/home/navbar_cubit.dart';
-import 'cart/cart_view.dart';
-import 'category/category_view.dart';
-import 'home/home_view.dart';
-import 'other/other_view.dart';
+import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
+import 'package:temry_market/presentation/views/main/cart/cart_view.dart';
+import 'package:temry_market/presentation/views/main/category/category_view.dart';
+import 'package:temry_market/presentation/views/main/home/home_view.dart';
+import 'package:temry_market/presentation/views/main/other/other_view.dart';
 
 class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
+  const MainView({super.key});
 
   @override
   State<MainView> createState() => _MainViewState();

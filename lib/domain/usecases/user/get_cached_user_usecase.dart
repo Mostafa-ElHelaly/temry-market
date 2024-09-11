@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../../core/error/failures.dart';
-import '../../../../../core/usecases/usecase.dart';
-import '../../entities/user/user.dart';
-import '../../repositories/user_repository.dart';
+import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/core/usecases/usecase.dart';
+import 'package:temry_market/domain/entities/user/user.dart';
+import 'package:temry_market/domain/repositories/user_repository.dart';
 
 class GetCachedUserUseCase implements UseCase<User, NoParams> {
   final UserRepository repository;
