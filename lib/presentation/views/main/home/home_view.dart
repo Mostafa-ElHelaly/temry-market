@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
+import 'package:temry_market/core/error/failures.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
@@ -16,6 +17,7 @@ import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
+import 'package:temry_market/presentation/widgets/alert_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
 
@@ -25,19 +27,6 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
-
-// List<ImageProvider<Object>> image = [
-//   const AssetImage('assets/other_images/fresh.jpg'),
-//   const AssetImage('assets/other_images/matinted.jpg'),
-//   const AssetImage('assets/other_images/half cooked.jpg'),
-//   const AssetImage('assets/other_images/frozen.jpg'),
-// ];
-// List<String> text = [
-//   StringManager.fresh,
-//   StringManager.marinated,
-//   StringManager.halfCooked,
-//   StringManager.frozen,
-// ];
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController scrollController = ScrollController();
@@ -85,11 +74,11 @@ class _HomeViewState extends State<HomeView> {
                             Navigator.of(context)
                                 .pushNamed(AppRouter.userProfile);
                           },
-                          child: Text(
-                            "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: ConfigSize.defaultSize! * 2.6,
+                          child: SizedBox(
+                            width: ConfigSize.defaultSize! * 12,
+                            height: ConfigSize.defaultSize! * 12,
+                            child: const Image(
+                              image: AssetImage('assets/other_images/logo.png'),
                             ),
                           ),
                         ),
@@ -103,26 +92,39 @@ class _HomeViewState extends State<HomeView> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: ConfigSize.defaultSize! * 6,
-                              height: ConfigSize.defaultSize! * 6,
-                              decoration: const BoxDecoration(
-                                color: AppColors.secondary,
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(colors: [
-                                  Color.fromARGB(255, 1, 114, 201),
-                                  Color.fromARGB(255, 0, 28, 49),
-                                ]),
-                              ),
-                              child: Text(
-                                "${state.signInModelResponse['data']['user']['first_name'].substring(0, 1).toUpperCase()}${state.signInModelResponse['data']['user']['last_name'].substring(0, 1).toUpperCase()}",
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ConfigSize.defaultSize! * 2.6,
+                            child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: ConfigSize.defaultSize! * 5,
+                                  height: ConfigSize.defaultSize! * 5,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.secondary,
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(colors: [
+                                      Color.fromARGB(255, 1, 114, 201),
+                                      Color.fromARGB(255, 0, 28, 49),
+                                    ]),
+                                  ),
+                                  child: Text(
+                                    "${state.signInModelResponse['data']['user']['first_name'].substring(0, 1).toUpperCase()}${state.signInModelResponse['data']['user']['last_name'].substring(0, 1).toUpperCase()}",
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: ConfigSize.defaultSize! * 2.2,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  "${state.signInModelResponse['data']['user']['first_name']}",
+                                  style: TextStyle(
+                                    color: AppColors.secondary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: ConfigSize.defaultSize! * 2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -133,29 +135,16 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 8,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: ConfigSize.defaultSize! * 2),
+                          child: SizedBox(
+                            width: ConfigSize.defaultSize! * 10,
+                            height: ConfigSize.defaultSize! * 10,
+                            child: const Image(
+                              image: AssetImage('assets/other_images/logo.png'),
                             ),
-                            Text(
-                              "Welcome to,",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15,
-                                color: Colors.black45,
-                              ),
-                            ),
-                            Text(
-                              "Temry Market",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: AppColors.secondary,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -174,9 +163,9 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
             ),
-            SizedBox(
-              height: ConfigSize.defaultSize! * 2,
-            ),
+            // SizedBox(
+            //   height: ConfigSize.defaultSize! * 2,
+            // ),
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
                 if (state is CategorySuccessState) {
@@ -351,181 +340,211 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: BlocBuilder<ProductBloc, ProductState>(
-                    builder: (context, state) {
-                  if (state is ProductSuccessState) {
-                    return RefreshIndicator(
-                      onRefresh: () async {
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: BlocBuilder<ProductBloc, ProductState>(
+                  builder: (context, state) {
+                if (state is ProductSuccessState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<ProductBloc>().add(GetProductEvent());
+                    },
+                    child: GridView.builder(
+                      itemCount: state.searchList.length +
+                          ((state is ProductLoadingState) ? 10 : 0),
+                      controller: scrollController,
+                      padding: EdgeInsets.only(
+                          top: 18,
+                          left: 10,
+                          right: 10,
+                          bottom: (80 + MediaQuery.of(context).padding.bottom)),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.65,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 20,
+                      ),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        const double borderRadius = 10;
+                        if (state.searchList.length > index) {
+                          return Container(
+                            height: ConfigSize.defaultSize! * 8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(borderRadius),
+                              color: AppColors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black
+                                      .withOpacity(0.1), // Shadow color
+                                  spreadRadius: 0,
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 2), // Shadow offset
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                // ClipRRect(
+                                //   borderRadius: const BorderRadius.vertical(
+                                //     top: Radius.circular(borderRadius),
+                                //   ),
+                                //   clipBehavior: Clip.antiAlias,
+                                //   child: Image(
+                                //     width: ConfigSize.screenWidth,
+                                //     image: NetworkImage(
+                                //       ConstantImageUrl.constantimageurl +
+                                //           state.searchList[index].thumbnail
+                                //               .toString(),
+                                //     ),
+                                //     fit: BoxFit.cover,
+                                //   ),
+                                // ),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            const BorderRadius.vertical(
+                                          top: Radius.circular(borderRadius),
+                                        ),
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Image(
+                                          width: ConfigSize.screenWidth,
+                                          image: NetworkImage(
+                                            ConstantImageUrl.constantimageurl +
+                                                state
+                                                    .searchList[index].thumbnail
+                                                    .toString(),
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                ConfigSize.defaultSize! * 1,
+                                            vertical:
+                                                ConfigSize.defaultSize! * 1,
+                                          ),
+                                          child: Text(
+                                            state.searchList[index].name
+                                                .toString(),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize:
+                                                  ConfigSize.defaultSize! * 1.5,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    ConfigSize.defaultSize! * 1,
+                                              ),
+                                              child: Text(
+                                                '${state.searchList[index].price} EPG',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: AppColors.secondary,
+                                                  fontSize:
+                                                      ConfigSize.defaultSize! *
+                                                          2,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                color: AppColors.secondary,
+                                                borderRadius:
+                                                    BorderRadiusDirectional
+                                                        .vertical(
+                                                  bottom: Radius.circular(10),
+                                                ),
+                                              ),
+                                              height:
+                                                  ConfigSize.defaultSize! * 4,
+                                              width: ConfigSize.screenWidth,
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Icon(
+                                                    Icons.shopping_cart,
+                                                    color: AppColors.white,
+                                                  ),
+                                                  SizedBox(
+                                                    width: ConfigSize
+                                                            .defaultSize! *
+                                                        1,
+                                                  ),
+                                                  Text(
+                                                    'ADD TO Cart',
+                                                    style: TextStyle(
+                                                      color: AppColors.white,
+                                                      fontSize: ConfigSize
+                                                              .defaultSize! *
+                                                          1.5,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Shimmer.fromColors(
+                            baseColor: Colors.grey.shade100,
+                            highlightColor: Colors.white,
+                            child: const ProductCard(),
+                          );
+                        }
+                      },
+                    ),
+                  );
+                } else if (state is ProductErrorState &&
+                    state.failure is NetworkFailure) {
+                  if (state.failure is NetworkFailure) {
+                    return AlertCard(
+                      image: kNoConnection,
+                      message: "Network failure\nTry again!",
+                      onClick: () {
                         context.read<ProductBloc>().add(GetProductEvent());
                       },
-                      child: GridView.builder(
-                        itemCount: state.searchList.length +
-                            ((state is ProductLoadingState) ? 10 : 0),
-                        controller: scrollController,
-                        padding: EdgeInsets.only(
-                            top: 18,
-                            left: 10,
-                            right: 10,
-                            bottom:
-                                (80 + MediaQuery.of(context).padding.bottom)),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.65,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 20,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          const double borderRadius = 10;
-                          if (state.searchList.length > index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(borderRadius),
-                                color: AppColors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black
-                                        .withOpacity(0.1), // Shadow color
-                                    spreadRadius: 0,
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 2), // Shadow offset
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(borderRadius),
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: Image(
-                                        width: ConfigSize.screenWidth,
-                                        image: NetworkImage(
-                                          // scale: 2,
-                                          ConstantImageUrl.constantimageurl +
-                                              state.searchList[index].thumbnail
-                                                  .toString(),
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 6,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  ConfigSize.defaultSize! * 1,
-                                              vertical:
-                                                  ConfigSize.defaultSize! * 1,
-                                            ),
-                                            child: Text(
-                                              state.searchList[index].name
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize:
-                                                    ConfigSize.defaultSize! *
-                                                        1.5,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  ConfigSize.defaultSize! * 1,
-                                            ),
-                                            child: Text(
-                                              '${state.searchList[index].price} EPG',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: AppColors.secondary,
-                                                fontSize:
-                                                    ConfigSize.defaultSize! * 2,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              color: AppColors.secondary,
-                                              borderRadius:
-                                                  BorderRadiusDirectional
-                                                      .vertical(
-                                                bottom: Radius.circular(10),
-                                              ),
-                                            ),
-                                            height: ConfigSize.defaultSize! * 4,
-                                            width: ConfigSize.screenWidth,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  Icons.shopping_cart,
-                                                  color: AppColors.white,
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                      ConfigSize.defaultSize! *
-                                                          1,
-                                                ),
-                                                Text(
-                                                  'ADD TO Cart',
-                                                  style: TextStyle(
-                                                    color: AppColors.white,
-                                                    fontSize: ConfigSize
-                                                            .defaultSize! *
-                                                        1.5,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Shimmer.fromColors(
-                              baseColor: Colors.grey.shade100,
-                              highlightColor: Colors.white,
-                              child: const ProductCard(),
-                            );
-                          }
-                        },
-                      ),
                     );
-                  } else if (state is ProductErrorState) {
-                    return Center(child: Text(state.failure.toString()));
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
-                }))
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              }),
+            ),
           ],
         ),
       ),

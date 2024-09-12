@@ -4,6 +4,7 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 
 import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
+import 'package:temry_market/presentation/views/main/Recipes/recipes_view.dart';
 import 'package:temry_market/presentation/views/main/cart/cart_view.dart';
 import 'package:temry_market/presentation/views/main/category/category_view.dart';
 import 'package:temry_market/presentation/views/main/home/home_view.dart';
@@ -32,6 +33,7 @@ class _MainViewState extends State<MainView> {
                   children: const <Widget>[
                     HomeView(),
                     CategoryView(),
+                    RecipesView(),
                     CartView(),
                     OtherView(),
                   ],
@@ -106,19 +108,37 @@ class _MainViewState extends State<MainView> {
                           ),
                           label: 'Category'),
                       BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/navbar_icons/shopping-cart.png"),
-                            color: Colors.white,
-                            size: 26,
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/cooking.png"),
+                          color: Colors.white,
+                          size: 26,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.primary,
+                            maxRadius: 4,
                           ),
-                          activeIcon: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: CircleAvatar(
-                              backgroundColor: AppColors.primary,
-                              maxRadius: 4,
-                            ),
+                        ),
+                        label: 'Recipes',
+                      ),
+
+                      BottomNavigationBarItem(
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/shopping-cart.png"),
+                          color: Colors.white,
+                          size: 26,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.primary,
+                            maxRadius: 4,
                           ),
-                          label: 'Cart'),
+                        ),
+                        label: 'Cart',
+                      ),
+
                       BottomNavigationBarItem(
                           icon: ImageIcon(
                             AssetImage("assets/navbar_icons/user.png"),

@@ -73,15 +73,6 @@ class _SignInViewState extends State<SignInView> {
                   SizedBox(
                     height: ConfigSize.defaultSize! * 5,
                   ),
-                  // Text(
-                  //   "Please enter \n your e-mail address and password \n to sign-in",
-                  //   style: TextStyle(
-                  //     fontSize: ConfigSize.defaultSize! * 1.8,
-                  //     color: AppColors.textFourth,
-                  //   ),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // const Spacer(),
                   SizedBox(
                     height: ConfigSize.defaultSize! * 7,
                   ),
@@ -153,31 +144,42 @@ class _SignInViewState extends State<SignInView> {
                     titleText: 'Sign In',
                   ),
                   SizedBox(
-                    height: ConfigSize.defaultSize! * 1,
+                    height: ConfigSize.defaultSize! * 3,
                   ),
-                  // InputFormButton(
-                  //   color: AppColors.secondary,
-                  //   onClick: () {
-                  //     Navigator.of(context).pop();
-                  //   },
-                  //   titleText: 'Back',
-                  // ),
-                  AnimatedTextKit(
-                    animatedTexts: [
-                      FadeAnimatedText(
-                        'Hello, Flutter!',
-                        textStyle: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ConfigSize.defaultSize! * 6),
+                    child: SizedBox(
+                      height: ConfigSize.defaultSize! * 4,
+                      width: ConfigSize.screenWidth,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              EasyLoading.show(status: 'Loading...');
+                            },
+                            child: const Image(
+                              image: AssetImage('assets/icons/facebook.png'),
+                            ),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                EasyLoading.show(status: 'Loading...');
+                              },
+                              child: const Image(
+                                  image:
+                                      AssetImage('assets/icons/google.png'))),
+                          InkWell(
+                              onTap: () {
+                                EasyLoading.show(status: 'Loading...');
+                              },
+                              child: const Image(
+                                  image: AssetImage('assets/icons/apple.png'))),
+                        ],
                       ),
-                    ],
-                    totalRepeatCount: 2,
-                    pause: const Duration(milliseconds: 1000),
-                    displayFullTextOnTap: false,
-                    stopPauseOnTap: true,
+                    ),
                   ),
-
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),

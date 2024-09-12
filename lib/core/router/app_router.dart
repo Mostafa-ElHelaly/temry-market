@@ -17,6 +17,7 @@ import 'package:temry_market/presentation/views/main/other/settings/settings_vie
 import 'package:temry_market/presentation/views/order_chekout/order_checkout_view.dart';
 import 'package:temry_market/presentation/views/product/product_details_view.dart';
 import 'package:temry_market/core/error/exceptions.dart';
+import 'package:temry_market/presentation/views/product/product_list_view.dart';
 
 class AppRouter {
   //main menu
@@ -29,6 +30,7 @@ class AppRouter {
 
   //products
   static const String productDetails = '/product-details';
+  static const String productsScreen = '/productsScreen';
   static const String categoryView = '/CategoryView';
   //other
   static const String userProfile = '/user-profile';
@@ -53,8 +55,8 @@ class AppRouter {
       case forgetPasswordScreen:
         return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
 
-      // case otpScreen:
-      //   return MaterialPageRoute(builder: (_) => const OtpScreen());
+      case productsScreen:
+        return MaterialPageRoute(builder: (_) => const ProductsScreen());
 
       case productDetails:
         return MaterialPageRoute(builder: (_) => const ProductDetailsView());

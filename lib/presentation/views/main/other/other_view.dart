@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/core/constant/images.dart';
 import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/presentation/views/authentication/signin_view.dart';
 import 'package:temry_market/presentation/widgets/other_item_card.dart';
 
 class OtherView extends StatelessWidget {
@@ -101,7 +103,12 @@ class OtherView extends StatelessWidget {
                           ['email'],
                     );
                   } else {
-                    Navigator.of(context).pushNamed(AppRouter.signIn);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignInView()),
+                    );
+                    // Navigator.of(context).pushNamed(AppRouter.signIn);
                   }
                 },
                 title: "Profile",

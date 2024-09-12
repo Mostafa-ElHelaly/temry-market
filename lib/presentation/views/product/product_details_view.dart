@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // TODO: add flutter_svg dependency in pubspec.yaml
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
+import 'package:temry_market/core/constant/config_size.dart';
+import 'package:temry_market/core/constant/constant_image_url.dart';
+import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
+import 'package:temry_market/presentation/blocs/product/product_state.dart';
 
 class ProductDetailsView extends StatelessWidget {
   const ProductDetailsView({super.key});
@@ -20,7 +25,7 @@ class ProductDetailsView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
@@ -116,10 +121,10 @@ class ProductDetailsView extends StatelessWidget {
 
 class TopRoundedContainer extends StatelessWidget {
   const TopRoundedContainer({
-    Key? key,
+    super.key,
     required this.color,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Color color;
   final Widget child;
@@ -144,13 +149,14 @@ class TopRoundedContainer extends StatelessWidget {
 
 class ProductImages extends StatefulWidget {
   const ProductImages({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   final Product product;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProductImagesState createState() => _ProductImagesState();
 }
 
@@ -158,34 +164,47 @@ class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 238,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(widget.product.images[selectedImage]),
-          ),
-        ),
-        // SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(
-              widget.product.images.length,
-              (index) => SmallProductImage(
-                isSelected: index == selectedImage,
-                press: () {
-                  setState(() {
-                    selectedImage = index;
-                  });
-                },
-                image: widget.product.images[index],
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is ProductSuccessState) {
+          return Column(
+            children: [
+              SizedBox(
+                width: 238,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    ConstantImageUrl.constantimageurl +
+                        state.searchList.first.thumbnail.toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+              // SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(
+                    widget.product.images.length,
+                    (index) => SmallProductImage(
+                      isSelected: index == selectedImage,
+                      press: () {
+                        setState(() {
+                          selectedImage = index;
+                        });
+                      },
+                      image: ConstantImageUrl.constantimageurl +
+                          state.searchList.first.thumbnail.toString(),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
@@ -208,118 +227,147 @@ class SmallProductImage extends StatefulWidget {
 class _SmallProductImageState extends State<SmallProductImage> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.press,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        margin: const EdgeInsets.only(right: 16),
-        padding: const EdgeInsets.all(8),
-        height: 48,
-        width: 48,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color:
-                  AppColors.secondary.withOpacity(widget.isSelected ? 1 : 0)),
-        ),
-        child: Image.network(widget.image),
-      ),
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is ProductSuccessState) {
+          return GestureDetector(
+            onTap: widget.press,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              margin: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.all(8),
+              height: 48,
+              width: 48,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    color: AppColors.secondary
+                        .withOpacity(widget.isSelected ? 1 : 0)),
+              ),
+              child: Image.network(
+                ConstantImageUrl.constantimageurl +
+                    state.searchList.first.thumbnail.toString(),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
-    Key? key,
+    super.key,
     required this.product,
     this.pressOnSeeMore,
-  }) : super(key: key);
+  });
 
   final Product product;
   final GestureTapCallback? pressOnSeeMore;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            product.title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            width: 48,
-            decoration: BoxDecoration(
-              color: product.isFavourite
-                  ? const Color(0xFFFFE6E6)
-                  : const Color(0xFFF5F6F9),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is ProductSuccessState) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  state.searchList.first.name.toString(),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-            ),
-            child: SvgPicture.string(
-              heartIcon,
-              colorFilter: ColorFilter.mode(
-                  product.isFavourite
-                      ? AppColors.secondary
-                      : const Color(0xFFDBDEE4),
-                  BlendMode.srcIn),
-              height: 16,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 64,
-          ),
-          child: Text(
-            product.description,
-            maxLines: 3,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 12,
-          ),
-          child: GestureDetector(
-            onTap: () {},
-            child: const Row(
-              children: [
-                Text(
-                  "See More Detail",
+              SizedBox(
+                height: ConfigSize.defaultSize! * 1.8,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  '${state.searchList.first.price} EPG',
                   style: TextStyle(
-                      fontWeight: FontWeight.w600, color: AppColors.secondary),
+                    color: AppColors.secondary,
+                    fontSize: ConfigSize.defaultSize! * 2.6,
+                    fontWeight: FontWeight.bold,
+                  ),
+
+                  // Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: AppColors.secondary,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  width: 48,
+                  decoration: BoxDecoration(
+                    color: product.isFavourite
+                        ? const Color(0xFFFFE6E6)
+                        : const Color(0xFFF5F6F9),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
+                  ),
+                  child: SvgPicture.string(
+                    heartIcon,
+                    colorFilter: ColorFilter.mode(
+                        product.isFavourite
+                            ? AppColors.secondary
+                            : const Color(0xFFDBDEE4),
+                        BlendMode.srcIn),
+                    height: 16,
+                  ),
                 ),
-              ],
-            ),
-          ),
-        )
-      ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 64,
+                ),
+                child: Text(
+                  'Description',
+                  maxLines: 3,
+                  style: TextStyle(
+                    fontSize: ConfigSize.defaultSize! * 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: ConfigSize.defaultSize! * 1.5,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 64,
+                ),
+                child: Text(
+                  state.searchList.first.desc.toString(),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   final Product product;
 
@@ -363,10 +411,10 @@ class ColorDots extends StatelessWidget {
 
 class ColorDot extends StatelessWidget {
   const ColorDot({
-    Key? key,
+    super.key,
     required this.color,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   final Color color;
   final bool isSelected;
@@ -396,11 +444,11 @@ class ColorDot extends StatelessWidget {
 
 class RoundedIconBtn extends StatelessWidget {
   const RoundedIconBtn({
-    Key? key,
+    super.key,
     required this.icon,
     required this.press,
     this.showShadow = false,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final GestureTapCancelCallback press;

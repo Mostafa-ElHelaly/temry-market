@@ -106,7 +106,7 @@ class _CategoryViewState extends State<CategoryView> {
                     return InkWell(
                       onTap: () {
                         Navigator.of(context).pushNamed(
-                          AppRouter.productDetailsView,
+                          AppRouter.productsScreen,
                         );
                       },
                       child: Padding(

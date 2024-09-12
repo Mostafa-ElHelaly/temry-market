@@ -1,7 +1,8 @@
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:temry_market/core/constant/images.dart';
 import 'package:flutter/material.dart';
 
-import 'package:temry_market/domain/entities/user/user.dart';
+import 'package:temry_market/presentation/views/authentication/signin_view.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/input_text_form_field.dart';
 
@@ -82,7 +83,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: InputFormButton(
-          onClick: () {},
+          onClick: () {
+            PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: const SignInView(),
+              withNavBar: false,
+              pageTransitionAnimation: PageTransitionAnimation.fade,
+            );
+          },
           titleText: "Update",
           color: Colors.black87,
         ),
