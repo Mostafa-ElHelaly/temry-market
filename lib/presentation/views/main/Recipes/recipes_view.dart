@@ -15,6 +15,7 @@ import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_event.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_state.dart';
+import 'package:temry_market/presentation/views/main/Recipes/Recipes_Details.dart';
 import 'package:temry_market/presentation/widgets/alert_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
@@ -235,7 +236,17 @@ class _RecipesViewState extends State<RecipesView> {
                                           ),
                                         ),
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RecipesDetailsView(
+                                                  recipesdetails:
+                                                      state.searchList[index],
+                                                ),
+                                              ),
+                                            );
+                                          },
                                           child: Container(
                                             decoration: const BoxDecoration(
                                               color: AppColors.secondary,
