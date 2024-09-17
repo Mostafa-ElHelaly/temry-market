@@ -58,7 +58,7 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
                   color: AppColors.secondary,
                   thickness: ConfigSize.defaultSize! * 0.3,
                 ),
-                Container(
+                SizedBox(
                   height: ConfigSize.defaultSize! * 80,
                   child: RecepisDetailsPageView(
                     pageController: _pageController,
