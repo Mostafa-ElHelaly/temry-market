@@ -7,6 +7,7 @@ import 'package:temry_market/domain/usecases/category/get_remote_category_usecas
 import 'package:temry_market/domain/usecases/respies/get_remote_respies_usecase.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
+import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<SignInBloc>(),
         ),
+        BlocProvider(create: (context) => di.sl<GetSimilarProductsBloc>()),
         BlocProvider(
           create: (context) => di.sl<ForgetPasswordBloc>(),
         ),

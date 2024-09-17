@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
 
 import 'package:temry_market/data/models/product/product_model.dart';
+import 'package:temry_market/data/models/product/similar_products_model.dart';
 
 // abstract class ProductRemoteDataSource {
 //   Future<ProductResponseModel> getProducts(FilterProductParams params);
@@ -38,6 +39,7 @@ import 'package:temry_market/data/models/product/product_model.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
+  Future<List<SimilarProductsModel>> getsimilarProducts(int product_id);
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
@@ -65,6 +67,32 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
       }
     } catch (e) {
       throw Exception('Error fetching search: $e');
+    }
+  }
+
+  @override
+  Future<List<SimilarProductsModel>> getsimilarProducts(int product_id) async {
+    Dio dio = Dio();
+    dio.interceptors.add(LogInterceptor(responseBody: true));
+
+    try {
+      Response response =
+          await dio.get(ConstantApi.similarproducts + product_id.toString());
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = response.data;
+        final List<dynamic> sililarProductsJson = jsonResponse['data'];
+        List<SimilarProductsModel> similarProducts =
+            sililarProductsJson.map((json) {
+          return SimilarProductsModel.fromJson(json);
+        }).toList();
+        print(jsonResponse['data']);
+        return similarProducts;
+      } else {
+        throw Exception('Getting Countries Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching countries: $e');
     }
   }
 }
