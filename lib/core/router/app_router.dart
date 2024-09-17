@@ -18,10 +18,12 @@ import 'package:temry_market/presentation/views/order_chekout/order_checkout_vie
 import 'package:temry_market/presentation/views/product/product_details_view.dart';
 import 'package:temry_market/core/error/exceptions.dart';
 import 'package:temry_market/presentation/views/product/product_list_view.dart';
+import 'package:temry_market/splash_screen.dart';
 
 class AppRouter {
   //main menu
   static const String home = '/';
+  static const String splash = '/splash';
   //authentication
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
@@ -62,6 +64,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ProductDetailsView());
       case userProfile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
+
+      case splash:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
 
       case orderCheckout:
         List<CartItem> items = routeSettings.arguments as List<CartItem>;

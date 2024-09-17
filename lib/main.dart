@@ -21,6 +21,8 @@ import 'package:temry_market/core/services/services_locator.dart' as di;
 import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
 import 'package:temry_market/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
+import 'package:temry_market/presentation/views/main/main_view.dart';
+import 'package:temry_market/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,7 +88,13 @@ class MyApp extends StatelessWidget {
       ],
       child: OKToast(
         child: MaterialApp(
+          routes: {
+            '/': (context) => SplashScreen(),
+            '/home': (context) =>
+                const MainView(), // Replace with your home screen
+          },
           debugShowCheckedModeBanner: false,
+
           initialRoute: AppRouter.home,
           onGenerateRoute: AppRouter.onGenerateRoute,
           title: appTitle,
