@@ -24,6 +24,7 @@ class AppRouter {
   //main menu
   static const String home = '/';
   static const String splash = '/splash';
+  static const String mainview = '/mainview';
   //authentication
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
@@ -47,7 +48,7 @@ class AppRouter {
 
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case home:
+      case mainview:
         return MaterialPageRoute(builder: (_) => const MainView());
       case signIn:
         return MaterialPageRoute(builder: (_) => const SignInView());

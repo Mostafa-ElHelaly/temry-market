@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:temry_market/data/models/Recipes/Recipes_model.dart';
 
-abstract class RecipesLocalDataSource {
+abstract class RecipesRemoteDataSource {
   Future<List<RecipesModel>> getRecipes();
 }
 
-class RecipesRemotelyDateSource extends RecipesLocalDataSource {
+class RecipesRemotelyDateSource extends RecipesRemoteDataSource {
   @override
   Future<List<RecipesModel>> unsavedrespies() async {
     Dio dio = Dio();
@@ -26,6 +26,7 @@ class RecipesRemotelyDateSource extends RecipesLocalDataSource {
           return RecipesModel.fromJson(json);
         }).toList();
         print(jsonResponse['data']);
+        print('-------------------------------------------------');
         save_recipes(recipes);
         return recipes;
       } else {

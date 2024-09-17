@@ -12,7 +12,9 @@ import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
-import 'package:temry_market/presentation/blocs/product/product_state.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_event.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_state.dart';
 import 'package:temry_market/presentation/widgets/alert_card.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
@@ -25,27 +27,31 @@ class RecipesView extends StatefulWidget {
 }
 
 class _RecipesViewState extends State<RecipesView> {
+  final ScrollController scrollController = ScrollController();
+
   // Original list of items
   final List<String> items = List.generate(20, (index) => 'Item $index');
+
+  void _scrollListener() {
+    double maxScroll = scrollController.position.maxScrollExtent;
+    double currentScroll = scrollController.position.pixels;
+    double scrollPercentage = 0.7;
+    if (currentScroll > (maxScroll * scrollPercentage)) {
+      if (context.read<ProductBloc>().state is RecipesSuccessState) {
+        context.read<ProductBloc>().add(GetProductEvent());
+      }
+    }
+  }
 
   // List that will display filtered items
   List<String> filteredItems = [];
 
   @override
   void initState() {
-    super.initState();
-    // Initially, show all items
-    filteredItems = items;
-  }
+    scrollController.addListener(_scrollListener);
+    BlocProvider.of<RecipesBloc>(context).add(RecipesEvent());
 
-  // Function to handle search input changes
-  void filterItems(String query) {
-    setState(() {
-      // Update the filtered list based on the query
-      filteredItems = items
-          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
+    super.initState();
   }
 
   @override
@@ -66,9 +72,6 @@ class _RecipesViewState extends State<RecipesView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: ConfigSize.defaultSize! * 1,
-            ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 12,
@@ -135,219 +138,169 @@ class _RecipesViewState extends State<RecipesView> {
                   const SizedBox(
                     width: 8,
                   ),
-                  SizedBox(
-                    width: 55,
-                    child: BlocBuilder<FilterCubit, FilterProductParams>(
-                      builder: (context, state) {
-                        return Badge(
-                          alignment: AlignmentDirectional.topEnd,
-                          label: Text(
-                            context
-                                .read<FilterCubit>()
-                                .getFiltersCount()
-                                .toString(),
-                            style: const TextStyle(
-                                color: Color.fromARGB(221, 255, 0, 0)),
-                          ),
-                          isLabelVisible:
-                              context.read<FilterCubit>().getFiltersCount() !=
-                                  0,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: InputFormButton(
-                            color: AppColors.secondary,
-                            onClick: () {
-                              Navigator.of(context).pushNamed(AppRouter.filter);
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: BlocBuilder<ProductBloc, ProductState>(
-                  builder: (context, state) {
-                if (state is ProductSuccessState) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      context.read<ProductBloc>().add(GetProductEvent());
-                    },
-                    child: GridView.builder(
-                      itemCount: state.searchList.length +
-                          ((state is ProductLoadingState) ? 10 : 0),
-                      padding: EdgeInsets.only(
-                          top: 18,
-                          left: 10,
-                          right: 10,
-                          bottom: (80 + MediaQuery.of(context).padding.bottom)),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.65,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 20,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        const double borderRadius = 10;
-                        if (state.searchList.length > index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(borderRadius),
-                              color: AppColors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black
-                                      .withOpacity(0.1), // Shadow color
-                                  spreadRadius: 0,
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2), // Shadow offset
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  flex: 4,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(borderRadius),
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Image(
-                                      width: ConfigSize.screenWidth,
-                                      image: NetworkImage(
-                                        // scale: 2,
-                                        ConstantImageUrl.constantimageurl +
-                                            state.searchList[index].thumbnail
-                                                .toString(),
+              child: BlocBuilder<RecipesBloc, RecipesState>(
+                builder: (context, state) {
+                  if (state is RecipesSuccessState) {
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<RecipesBloc>().add(GetRecipesEvent());
+                      },
+                      child: GridView.builder(
+                        itemCount: state.searchList.length +
+                            ((state is RecipesLoadingState) ? 10 : 0),
+                        controller: scrollController,
+                        padding: EdgeInsets.only(
+                            top: 18,
+                            left: 10,
+                            right: 10,
+                            bottom:
+                                (80 + MediaQuery.of(context).padding.bottom)),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.65,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 20,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          const double borderRadius = 10;
+                          if (state.searchList.length > index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                                color: AppColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black
+                                        .withOpacity(0.1), // Shadow color
+                                    spreadRadius: 0,
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 2), // Shadow offset
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(borderRadius),
                                       ),
-                                      fit: BoxFit.cover,
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Image(
+                                        width: ConfigSize.screenWidth,
+                                        image: NetworkImage(
+                                          ConstantImageUrl.constantimageurl +
+                                              state.searchList[index].thumbnail
+                                                  .toString(),
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 6,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                ConfigSize.defaultSize! * 1,
-                                            vertical:
-                                                ConfigSize.defaultSize! * 1,
-                                          ),
-                                          child: Text(
-                                            state.searchList[index].name
-                                                .toString(),
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize:
-                                                  ConfigSize.defaultSize! * 1.5,
-                                              fontWeight: FontWeight.w500,
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  ConfigSize.defaultSize! * 1,
+                                              vertical:
+                                                  ConfigSize.defaultSize! * 1,
+                                            ),
+                                            child: Text(
+                                              state.searchList[index].name
+                                                  .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize:
+                                                    ConfigSize.defaultSize! *
+                                                        1.5,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                ConfigSize.defaultSize! * 1,
-                                          ),
-                                          child: Text(
-                                            '${state.searchList[index].price} EPG',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            decoration: const BoxDecoration(
                                               color: AppColors.secondary,
-                                              fontSize:
-                                                  ConfigSize.defaultSize! * 2,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: AppColors.secondary,
-                                            borderRadius:
-                                                BorderRadiusDirectional
-                                                    .vertical(
-                                              bottom: Radius.circular(10),
-                                            ),
-                                          ),
-                                          height: ConfigSize.defaultSize! * 4,
-                                          width: ConfigSize.screenWidth,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Icon(
-                                                Icons.shopping_cart,
-                                                color: AppColors.white,
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .vertical(
+                                                bottom: Radius.circular(10),
                                               ),
-                                              SizedBox(
-                                                width:
-                                                    ConfigSize.defaultSize! * 1,
-                                              ),
-                                              Text(
-                                                'ADD TO Cart',
-                                                style: TextStyle(
-                                                  color: AppColors.white,
-                                                  fontSize:
-                                                      ConfigSize.defaultSize! *
-                                                          1.5,
-                                                  fontWeight: FontWeight.bold,
+                                            ),
+                                            height: ConfigSize.defaultSize! * 4,
+                                            width: ConfigSize.screenWidth,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'How To Make...',
+                                                  style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: ConfigSize
+                                                            .defaultSize! *
+                                                        1.5,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade100,
-                            highlightColor: Colors.white,
-                            child: const ProductCard(),
-                          );
-                        }
-                      },
-                    ),
-                  );
-                } else if (state is ProductErrorState &&
-                    state.failure is NetworkFailure) {
-                  if (state.failure is NetworkFailure) {
-                    return AlertCard(
-                      image: kNoConnection,
-                      message: "Network failure\nTry again!",
-                      onClick: () {
-                        context.read<ProductBloc>().add(GetProductEvent());
-                      },
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.shade100,
+                              highlightColor: Colors.white,
+                              child: const ProductCard(),
+                            );
+                          }
+                        },
+                      ),
                     );
+                  } else if (state is RecipesErrorState &&
+                      state.failure is NetworkFailure) {
+                    if (state.failure is NetworkFailure) {
+                      return AlertCard(
+                        image: kNoConnection,
+                        message: "Network failure\nTry again!",
+                        onClick: () {
+                          context.read<ProductBloc>().add(GetProductEvent());
+                        },
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }),
+                },
+              ),
             ),
           ],
         ),

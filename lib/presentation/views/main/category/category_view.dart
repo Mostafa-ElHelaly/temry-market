@@ -44,12 +44,43 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Category",
+          style: TextStyle(
+              fontSize: ConfigSize.defaultSize! * 2.2,
+              fontWeight: FontWeight.bold,
+              color: AppColors.secondary),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              backgroundColor: Colors.white,
+            ),
+            child: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.black,
+              size: 20,
+            ),
+          ),
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: ConfigSize.defaultSize! * 2),
         child: Column(
           children: [
             SizedBox(
-              height: (MediaQuery.of(context).padding.top + 8),
+              height: (ConfigSize.defaultSize! * 1),
             ),
             Padding(
               padding: const EdgeInsets.only(

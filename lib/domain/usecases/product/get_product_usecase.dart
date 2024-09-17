@@ -6,18 +6,6 @@ import 'package:temry_market/data/models/category/category_model.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/domain/repositories/product_repository.dart';
 
-// class GetProductUseCase
-//     implements UseCase<ProductResponse, FilterProductParams> {
-//   final ProductRepository repository;
-//   GetProductUseCase(this.repository);
-
-//   @override
-//   Future<Either<Failure, ProductResponse>> call(
-//       FilterProductParams params) async {
-//     return await repository.getProducts(params);
-//   }
-// }
-
 class GetProductUseCase extends UseCase2<List<ProductModel>, NoParams> {
   final ProductRepository baseRepository;
 

@@ -1,3 +1,6 @@
+import 'package:temry_market/data/data_sources/remote/recpies_remote_data_source.dart';
+import 'package:temry_market/data/repositories/recpies_repository_impl.dart';
+import 'package:temry_market/domain/repositories/respies_repository.dart';
 import 'package:temry_market/domain/usecases/delivery_info/clear_local_delivery_info_usecase.dart';
 import 'package:temry_market/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
 import 'package:temry_market/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
@@ -8,7 +11,9 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:temry_market/domain/usecases/respies/get_remote_respies_usecase.dart';
 import 'package:temry_market/domain/usecases/user/forget_password_usecase.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
@@ -80,9 +85,24 @@ Future<void> init() async {
   sl.registerLazySingleton<ProductRemoteDataSource>(
     () => ProductRemoteDataSourceImpl(),
   );
-  // sl.registerLazySingleton<ProductLocalDataSource>(
-  //   () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
-  // );
+
+  //Features - Recipes
+  // Bloc
+  sl.registerFactory(
+    () => RecipesBloc(recipesUseCase: sl()),
+  );
+  // Use cases
+  sl.registerLazySingleton(() => GetRemoteRecipesUseCase(repository: sl()));
+  // Repository
+  sl.registerLazySingleton<RecipesBaseRepository>(
+    () => RecipesRepositoryImp(
+      baseRemotelyDataSource: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<RecipesRemotelyDateSource>(
+    () => RecipesRemotelyDateSource(),
+  );
 
   //Features - Category
   // Bloc

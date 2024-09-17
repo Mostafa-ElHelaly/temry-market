@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
-import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/core/constant/images.dart';
 import 'package:temry_market/core/router/app_router.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
+import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/presentation/views/authentication/signin_view.dart';
 import 'package:temry_market/presentation/widgets/other_item_card.dart';
 
@@ -51,10 +50,10 @@ class OtherView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
+                              "${state.signInModelResponse['data']['SignIn']['first_name']} ${state.signInModelResponse['data']['SignIn']['last_name']}",
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                            Text(state.signInModelResponse['data']['user']
+                            Text(state.signInModelResponse['data']['SignIn']
                                 ['email'])
                           ],
                         ),
@@ -99,7 +98,7 @@ class OtherView extends StatelessWidget {
                   if (state is SignInSuccessState) {
                     Navigator.of(context).pushNamed(
                       AppRouter.userProfile,
-                      arguments: state.signInModelResponse['data']['user']
+                      arguments: state.signInModelResponse['data']['SignIn']
                           ['email'],
                     );
                   } else {
@@ -108,90 +107,90 @@ class OtherView extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => const SignInView()),
                     );
-                    // Navigator.of(context).pushNamed(AppRouter.signIn);
+                    Navigator.of(context).pushNamed(AppRouter.signIn);
                   }
                 },
                 title: "Profile",
               );
             },
           ),
-          // BlocBuilder<UserBloc, UserState>(
-          //   builder: (context, state) {
-          //     if (state is UserLogged) {
-          //       return Padding(
-          //         padding: const EdgeInsets.only(top: 6),
-          //         child: OtherItemCard(
-          //           onClick: () {
-          //             Navigator.of(context).pushNamed(AppRouter.orders);
-          //           },
-          //           title: "Orders",
-          //         ),
-          //       );
-          //     } else {
-          //       return const SizedBox();
-          //     }
-          //   },
-          // ),
-          // BlocBuilder<UserBloc, UserState>(
-          //   builder: (context, state) {
-          //     if (state is UserLogged) {
-          //       return Padding(
-          //         padding: const EdgeInsets.only(top: 6),
-          //         child: OtherItemCard(
-          //           onClick: () {
-          //             Navigator.of(context)
-          //                 .pushNamed(AppRouter.deliveryDetails);
-          //           },
-          //           title: "Delivery Info",
-          //         ),
-          //       );
-          //     } else {
-          //       return const SizedBox();
-          //     }
-          //   },
-          // ),
-          // const SizedBox(height: 6),
-          // OtherItemCard(
-          //   onClick: () {
-          //     Navigator.of(context).pushNamed(AppRouter.settings);
-          //   },
-          //   title: "Settings",
-          // ),
-          // const SizedBox(height: 6),
-          // OtherItemCard(
-          //   onClick: () {
-          //     Navigator.of(context).pushNamed(AppRouter.notifications);
-          //   },
-          //   title: "Notifications",
-          // ),
-          // const SizedBox(height: 6),
-          // OtherItemCard(
-          //   onClick: () {
-          //     Navigator.of(context).pushNamed(AppRouter.about);
-          //   },
-          //   title: "About",
-          // ),
-          // const SizedBox(height: 6),
-          // BlocBuilder<UserBloc, UserState>(
-          //   builder: (context, state) {
-          //     if (state is UserLogged) {
-          //       return OtherItemCard(
-          //         onClick: () {
-          //           context.read<UserBloc>().add(SignOutUser());
-          //           context.read<CartBloc>().add(const ClearCart());
-          //           context
-          //               .read<DeliveryInfoFetchCubit>()
-          //               .clearLocalDeliveryInfo();
-          //           context.read<OrderFetchCubit>().clearLocalOrders();
-          //         },
-          //         title: "Sign Out",
-          //       );
-          //     } else {
-          //       return const SizedBox();
-          //     }
-          //   },
-          // ),
-          // SizedBox(height: (MediaQuery.of(context).padding.bottom + 50)),
+          BlocBuilder<SignInBloc, SignInState>(
+            builder: (context, state) {
+              if (state is SignInSuccessState) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: OtherItemCard(
+                    onClick: () {
+                      Navigator.of(context).pushNamed(AppRouter.orders);
+                    },
+                    title: "Orders",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+          BlocBuilder<SignInBloc, SignInState>(
+            builder: (context, state) {
+              if (state is SignInSuccessState) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: OtherItemCard(
+                    onClick: () {
+                      Navigator.of(context)
+                          .pushNamed(AppRouter.deliveryDetails);
+                    },
+                    title: "Delivery Info",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+          const SizedBox(height: 6),
+          OtherItemCard(
+            onClick: () {
+              Navigator.of(context).pushNamed(AppRouter.settings);
+            },
+            title: "Settings",
+          ),
+          const SizedBox(height: 6),
+          OtherItemCard(
+            onClick: () {
+              Navigator.of(context).pushNamed(AppRouter.notifications);
+            },
+            title: "Notifications",
+          ),
+          const SizedBox(height: 6),
+          OtherItemCard(
+            onClick: () {
+              Navigator.of(context).pushNamed(AppRouter.about);
+            },
+            title: "About",
+          ),
+          const SizedBox(height: 6),
+          BlocBuilder<SignInBloc, SignInState>(
+            builder: (context, state) {
+              if (state is SignInSuccessState) {
+                return OtherItemCard(
+                  onClick: () {
+                    // context.read<SignInBloc>().add(SignOutSignIn());
+                    // context.read<CartBloc>().add(const ClearCart());
+                    // context
+                    //     .read<DeliveryInfoFetchCubit>()
+                    //     .clearLocalDeliveryInfo();
+                    // context.read<OrderFetchCubit>().clearLocalOrders();
+                  },
+                  title: "Sign Out",
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+          SizedBox(height: (MediaQuery.of(context).padding.bottom + 50)),
         ],
       ),
     );

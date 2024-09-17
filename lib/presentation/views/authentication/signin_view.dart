@@ -39,7 +39,7 @@ class _SignInViewState extends State<SignInView> {
           // context.read<OrderFetchCubit>().getOrders();
           // context.read<NavbarCubit>().update(0);
           Navigator.of(context).pushNamedAndRemoveUntil(
-            AppRouter.home,
+            AppRouter.mainview,
             ModalRoute.withName(''),
           );
         } else if (state is SignInErrorState) {

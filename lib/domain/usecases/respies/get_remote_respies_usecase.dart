@@ -8,7 +8,9 @@ import 'package:temry_market/domain/repositories/respies_repository.dart';
 class GetRemoteRecipesUseCase extends UseCase2<List<RecipesModel>, NoParams> {
   final RecipesBaseRepository repository;
 
-  GetRemoteRecipesUseCase({required this.repository});
+  GetRemoteRecipesUseCase({
+    required this.repository,
+  });
 
   @override
   Future<Either<Failuremessage, List<RecipesModel>>> call(
