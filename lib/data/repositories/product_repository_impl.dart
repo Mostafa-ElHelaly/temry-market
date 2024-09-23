@@ -15,12 +15,13 @@ class ProductRepositoryImpl extends ProductRepository {
   });
 
   @override
-  Future<Either<Failuremessage, List<ProductModel>>> getProducts() async {
+  Future<Either<String, List<ProductModel>>> getProducts() async {
     try {
       final result = await remoteDataSource.getProducts();
       return Right(result);
     } on Exception catch (e) {
-      return Left(DioHelper.buildFailure(e));
+      print(DioHelper.buildFailure(e).errorMessage);
+      return Left(e.toString());
     }
   }
 

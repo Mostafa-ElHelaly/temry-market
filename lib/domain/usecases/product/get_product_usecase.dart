@@ -6,14 +6,13 @@ import 'package:temry_market/data/models/category/category_model.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/domain/repositories/product_repository.dart';
 
-class GetProductUseCase extends UseCase2<List<ProductModel>, NoParams> {
+class GetProductUseCase extends UseCase3<List<ProductModel>, NoParams> {
   final ProductRepository baseRepository;
 
   GetProductUseCase({required this.baseRepository});
 
   @override
-  Future<Either<Failuremessage, List<ProductModel>>> call(
-      NoParams params) async {
+  Future<Either<String, List<ProductModel>>> call(NoParams params) async {
     final result = await baseRepository.getProducts();
 
     return result;

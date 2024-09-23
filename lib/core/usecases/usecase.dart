@@ -11,6 +11,10 @@ abstract class UseCase2<Type, Params> {
   Future<Either<Failuremessage, Type>> call(Params params);
 }
 
+abstract class UseCase3<Type, Params> {
+  Future<Either<String, Type>> call(Params params);
+}
+
 class NoParams extends Equatable {
   @override
   List<Object> get props => [];

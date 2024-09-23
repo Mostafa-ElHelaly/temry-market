@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
 
@@ -63,10 +65,24 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         // save_products(search);
         return search;
       } else {
-        throw Exception('Getting search Failed: ${response.statusCode}');
+        // Error: Parse the error message from the response
+        String errorMessage = _getErrorMessage(response);
+        print('Error: $errorMessage');
+        throw Exception('Getting products Failed: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching search: $e');
+      print('Exception: $e');
+      throw Exception('Getting products Failed: ${e.toString()}');
+    }
+  }
+
+  String _getErrorMessage(Response<dynamic> response) {
+    try {
+      final Map<String, dynamic> errorData = json.decode(response.data);
+      // Assuming the API returns an error message in the format: { "error": "Error message here" }
+      return errorData['error'] ?? 'Unknown error occurred';
+    } catch (e) {
+      return 'Failed to parse error message';
     }
   }
 

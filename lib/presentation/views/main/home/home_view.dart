@@ -5,6 +5,7 @@ import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
 import 'package:temry_market/core/error/failures.dart';
+import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
@@ -30,6 +31,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController scrollController = ScrollController();
+  final TextEditingController searchcontroller = TextEditingController();
 
   void _scrollListener() {
     double maxScroll = scrollController.position.maxScrollExtent;
@@ -49,6 +51,17 @@ class _HomeViewState extends State<HomeView> {
     BlocProvider.of<CategoryBloc>(context).add(CategoryEvent());
 
     super.initState();
+  }
+
+  List<ProductModel> _filteredItems = [];
+
+  void _updateSearchQuery(String query, List<ProductModel> list) {
+    setState(() {
+      _filteredItems = list
+          .where((item) =>
+              item.name!.toLowerCase().startsWith(query.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -250,61 +263,77 @@ class _HomeViewState extends State<HomeView> {
               ),
               child: Row(
                 children: [
-                  Expanded(
-                    child: BlocBuilder<FilterCubit, FilterProductParams>(
-                      builder: (context, state) {
-                        return TextField(
-                          autofocus: false,
-                          controller:
-                              context.read<FilterCubit>().searchController,
-                          onChanged: (val) => setState(() {}),
-                          onSubmitted: (val) => context.read<ProductBloc>().add(
-                                GetProductEvent(),
-                              ),
-                          decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 20, bottom: 22, top: 22),
-                              prefixIcon: const Padding(
-                                padding: EdgeInsets.only(left: 8),
-                                child: Icon(Icons.search),
-                              ),
-                              suffixIcon: context
-                                      .read<FilterCubit>()
-                                      .searchController
-                                      .text
-                                      .isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(right: 8),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            context
-                                                .read<FilterCubit>()
-                                                .searchController
-                                                .clear();
-                                            context
-                                                .read<FilterCubit>()
-                                                .update(keyword: '');
-                                          },
-                                          icon: const Icon(Icons.clear)),
-                                    )
-                                  : null,
-                              border: const OutlineInputBorder(),
-                              hintText: "Search Product",
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              focusedBorder: OutlineInputBorder(
+                  Expanded(child: BlocBuilder<ProductBloc, ProductState>(
+                      builder: (context, basestate) {
+                    if (basestate is ProductErrorState) {
+                      return Text(basestate.failure.toString());
+                    }
+
+                    if (basestate is ProductSuccessState) {
+                      return BlocBuilder<FilterCubit, FilterProductParams>(
+                        builder: (context, state) {
+                          return TextField(
+                            autofocus: false,
+                            controller: searchcontroller,
+                            onChanged: (value) {
+                              _updateSearchQuery(
+                                  searchcontroller.text, basestate.searchList);
+                            },
+                            onSubmitted: (val) =>
+                                context.read<ProductBloc>().add(
+                                      GetProductEvent(),
+                                    ),
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.only(
+                                    left: 20, bottom: 22, top: 22),
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Icon(Icons.search),
+                                ),
+                                suffixIcon: context
+                                        .read<FilterCubit>()
+                                        .searchController
+                                        .text
+                                        .isNotEmpty
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              context
+                                                  .read<FilterCubit>()
+                                                  .searchController
+                                                  .clear();
+                                              context
+                                                  .read<FilterCubit>()
+                                                  .update(keyword: '');
+                                            },
+                                            icon: const Icon(Icons.clear)),
+                                      )
+                                    : null,
+                                border: const OutlineInputBorder(),
+                                hintText: "Search Product",
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 3.0),
+                                    borderRadius: BorderRadius.circular(26)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(26),
                                   borderSide: const BorderSide(
                                       color: Colors.white, width: 3.0),
-                                  borderRadius: BorderRadius.circular(26)),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(26),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 3.0),
-                              )),
-                        );
-                      },
-                    ),
-                  ),
+                                )),
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.secondary,
+                      ));
+                    }
+                  })),
                   const SizedBox(
                     width: 8,
                   ),
@@ -343,6 +372,9 @@ class _HomeViewState extends State<HomeView> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: BlocBuilder<ProductBloc, ProductState>(
                   builder: (context, state) {
+                if (state is ProductErrorState) {
+                  return Text(state.failure.toString());
+                }
                 if (state is ProductSuccessState) {
                   return RefreshIndicator(
                     onRefresh: () async {
@@ -360,7 +392,7 @@ class _HomeViewState extends State<HomeView> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.65,
+                        childAspectRatio: 0.55,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 20,
                       ),
@@ -386,43 +418,34 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             child: Column(
                               children: [
-                                // ClipRRect(
-                                //   borderRadius: const BorderRadius.vertical(
-                                //     top: Radius.circular(borderRadius),
-                                //   ),
-                                //   clipBehavior: Clip.antiAlias,
-                                //   child: Image(
-                                //     width: ConfigSize.screenWidth,
-                                //     image: NetworkImage(
-                                //       ConstantImageUrl.constantimageurl +
-                                //           state.searchList[index].thumbnail
-                                //               .toString(),
-                                //     ),
-                                //     fit: BoxFit.cover,
-                                //   ),
-                                // ),
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(borderRadius),
+                                    ),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: state.searchList[index].thumbnail ==
+                                            null
+                                        ? Image.asset(
+                                            'assets/other_images/logo.png')
+                                        : Image(
+                                            width: ConfigSize.screenWidth,
+                                            image: NetworkImage(
+                                              ConstantImageUrl
+                                                      .constantimageurl +
+                                                  state.searchList[index]
+                                                      .thumbnail
+                                                      .toString(),
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                ),
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            const BorderRadius.vertical(
-                                          top: Radius.circular(borderRadius),
-                                        ),
-                                        clipBehavior: Clip.antiAlias,
-                                        child: Image(
-                                          width: ConfigSize.screenWidth,
-                                          image: NetworkImage(
-                                            ConstantImageUrl.constantimageurl +
-                                                state
-                                                    .searchList[index].thumbnail
-                                                    .toString(),
-                                          ),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
                                       Center(
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
@@ -444,72 +467,64 @@ class _HomeViewState extends State<HomeView> {
                                           ),
                                         ),
                                       ),
-                                      Column(
-                                        children: [
-                                          Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal:
+                                      Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                ConfigSize.defaultSize! * 1,
+                                          ),
+                                          child: Text(
+                                            '${state.searchList[index].price} EPG',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: AppColors.secondary,
+                                              fontSize:
+                                                  ConfigSize.defaultSize! * 2,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: AppColors.secondary,
+                                            borderRadius:
+                                                BorderRadiusDirectional
+                                                    .vertical(
+                                              bottom: Radius.circular(10),
+                                            ),
+                                          ),
+                                          height: ConfigSize.defaultSize! * 4,
+                                          width: ConfigSize.screenWidth,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.shopping_cart,
+                                                color: AppColors.white,
+                                              ),
+                                              SizedBox(
+                                                width:
                                                     ConfigSize.defaultSize! * 1,
                                               ),
-                                              child: Text(
-                                                '${state.searchList[index].price} EPG',
-                                                textAlign: TextAlign.center,
+                                              Text(
+                                                'ADD TO Cart',
                                                 style: TextStyle(
-                                                  color: AppColors.secondary,
+                                                  color: AppColors.white,
                                                   fontSize:
                                                       ConfigSize.defaultSize! *
-                                                          2,
+                                                          1.5,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                          InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                color: AppColors.secondary,
-                                                borderRadius:
-                                                    BorderRadiusDirectional
-                                                        .vertical(
-                                                  bottom: Radius.circular(10),
-                                                ),
-                                              ),
-                                              height:
-                                                  ConfigSize.defaultSize! * 4,
-                                              width: ConfigSize.screenWidth,
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.shopping_cart,
-                                                    color: AppColors.white,
-                                                  ),
-                                                  SizedBox(
-                                                    width: ConfigSize
-                                                            .defaultSize! *
-                                                        1,
-                                                  ),
-                                                  Text(
-                                                    'ADD TO Cart',
-                                                    style: TextStyle(
-                                                      color: AppColors.white,
-                                                      fontSize: ConfigSize
-                                                              .defaultSize! *
-                                                          1.5,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),

@@ -15,9 +15,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ProductEvent>((event, emit) async {
       emit(const ProductLoadingState());
       final result = await productUseCase.call(NoParams());
-      result.fold(
-          (l) =>
-              emit(ProductErrorState(failure: DioHelper().getTypeOfFailure(l))),
+      result.fold((l) => emit(ProductErrorState(failure: l.toString())),
           (r) => emit(ProductSuccessState(r)));
     });
   }
