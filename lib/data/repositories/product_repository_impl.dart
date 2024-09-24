@@ -35,6 +35,17 @@ class ProductRepositoryImpl extends ProductRepository {
       return Left(DioHelper.buildFailure(e));
     }
   }
+
+  @override
+  Future<Either<String, List<ProductModel>>> searchproducts(
+      String? term, int? page) async {
+    try {
+      final result = await remoteDataSource.searchproducts(term, page);
+      return Right(result);
+    } on Exception catch (e) {
+      return Left(e.toString());
+    }
+  }
 }
   // @override
   // Future<Either<List<ProductModel>, Failure>> getProducts() async {

@@ -42,6 +42,7 @@ import 'package:temry_market/data/models/product/similar_products_model.dart';
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
   Future<List<SimilarProductsModel>> getsimilarProducts(int product_id);
+  Future<List<ProductModel>> searchproducts(String? term, int? page);
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
@@ -104,6 +105,32 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         }).toList();
         print(jsonResponse['data']);
         return similarProducts;
+      } else {
+        throw Exception('Getting Countries Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching countries: $e');
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> searchproducts(String? term, int? page) async {
+    Dio dio = Dio();
+    dio.interceptors.add(LogInterceptor(responseBody: true));
+
+    try {
+      Response response = await dio.get(
+          ConstantApi.searchproducts + "?term=${term ?? ''}&page=${page ?? 0}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = response.data;
+        final List<dynamic> searchProductsJson =
+            jsonResponse['data']['products'];
+        List<ProductModel> searchProducts = searchProductsJson.map((json) {
+          return ProductModel.fromJson(json);
+        }).toList();
+        print(jsonResponse['data']);
+        return searchProducts;
       } else {
         throw Exception('Getting Countries Failed: ${response.statusCode}');
       }

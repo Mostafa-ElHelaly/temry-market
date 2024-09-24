@@ -11,6 +11,9 @@ import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
+import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_bloc.dart';
+import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_event.dart';
+import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_state.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_state.dart';
 import 'package:temry_market/core/constant/images.dart';
@@ -48,6 +51,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     scrollController.addListener(_scrollListener);
     BlocProvider.of<ProductBloc>(context).add(ProductEvent());
+    BlocProvider.of<SearchProductsBloc>(context).add(SearchAllProductsEvent());
     BlocProvider.of<CategoryBloc>(context).add(CategoryEvent());
 
     super.initState();
@@ -275,13 +279,11 @@ class _HomeViewState extends State<HomeView> {
                           return TextField(
                             autofocus: false,
                             controller: searchcontroller,
-                            onChanged: (value) {
-                              _updateSearchQuery(
-                                  searchcontroller.text, basestate.searchList);
-                            },
                             onSubmitted: (val) =>
-                                context.read<ProductBloc>().add(
-                                      GetProductEvent(),
+                                context.read<SearchProductsBloc>().add(
+                                      SearchAllProductsEvent(
+                                        term: searchcontroller.text ?? '',
+                                      ),
                                     ),
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.only(
@@ -370,18 +372,18 @@ class _HomeViewState extends State<HomeView> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: BlocBuilder<ProductBloc, ProductState>(
+              child: BlocBuilder<SearchProductsBloc, SearchProductsState>(
                   builder: (context, state) {
-                if (state is ProductErrorState) {
-                  return Text(state.failure.toString());
+                if (state is SearchProductsErrorState) {
+                  return Text(state.errorMessage);
                 }
-                if (state is ProductSuccessState) {
+                if (state is SearchProductsSuccessState) {
                   return RefreshIndicator(
                     onRefresh: () async {
                       context.read<ProductBloc>().add(GetProductEvent());
                     },
                     child: GridView.builder(
-                      itemCount: state.searchList.length +
+                      itemCount: state.SearchProducts.length +
                           ((state is ProductLoadingState) ? 10 : 0),
                       controller: scrollController,
                       padding: EdgeInsets.only(
@@ -400,7 +402,7 @@ class _HomeViewState extends State<HomeView> {
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         const double borderRadius = 10;
-                        if (state.searchList.length > index) {
+                        if (state.SearchProducts.length > index) {
                           return Container(
                             height: ConfigSize.defaultSize! * 8,
                             decoration: BoxDecoration(
@@ -424,21 +426,23 @@ class _HomeViewState extends State<HomeView> {
                                       top: Radius.circular(borderRadius),
                                     ),
                                     clipBehavior: Clip.antiAlias,
-                                    child: state.searchList[index].thumbnail ==
-                                            null
-                                        ? Image.asset(
-                                            'assets/other_images/logo.png')
-                                        : Image(
-                                            width: ConfigSize.screenWidth,
-                                            image: NetworkImage(
-                                              ConstantImageUrl
-                                                      .constantimageurl +
-                                                  state.searchList[index]
-                                                      .thumbnail
-                                                      .toString(),
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
+                                    child:
+                                        state.SearchProducts[index].thumbnail ==
+                                                null
+                                            ? Image.asset(
+                                                'assets/other_images/logo.png')
+                                            : Image(
+                                                width: ConfigSize.screenWidth,
+                                                image: NetworkImage(
+                                                  ConstantImageUrl
+                                                          .constantimageurl +
+                                                      state
+                                                          .SearchProducts[index]
+                                                          .thumbnail
+                                                          .toString(),
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
                                   ),
                                 ),
                                 Expanded(
@@ -455,7 +459,7 @@ class _HomeViewState extends State<HomeView> {
                                                 ConfigSize.defaultSize! * 1,
                                           ),
                                           child: Text(
-                                            state.searchList[index].name
+                                            state.SearchProducts[index].name
                                                 .toString(),
                                             maxLines: 2,
                                             textAlign: TextAlign.center,
@@ -474,7 +478,7 @@ class _HomeViewState extends State<HomeView> {
                                                 ConfigSize.defaultSize! * 1,
                                           ),
                                           child: Text(
-                                            '${state.searchList[index].price} EPG',
+                                            '${state.SearchProducts[index].price} EPG',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: AppColors.secondary,
@@ -542,9 +546,9 @@ class _HomeViewState extends State<HomeView> {
                       },
                     ),
                   );
-                } else if (state is ProductErrorState &&
-                    state.failure is NetworkFailure) {
-                  if (state.failure is NetworkFailure) {
+                } else if (state is SearchProductsErrorState &&
+                    state.errorMessage is NetworkFailure) {
+                  if (state.errorMessage is NetworkFailure) {
                     return AlertCard(
                       image: kNoConnection,
                       message: "Network failure\nTry again!",

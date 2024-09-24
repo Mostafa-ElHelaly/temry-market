@@ -6,6 +6,8 @@ import 'package:temry_market/data/models/product/similar_products_model.dart';
 
 abstract class ProductRepository {
   Future<Either<String, List<ProductModel>>> getProducts();
+  Future<Either<String, List<ProductModel>>> searchproducts(
+      String? term, int? page);
   Future<Either<Failuremessage, List<SimilarProductsModel>>> getSimilarProducts(
       int product_id);
 }

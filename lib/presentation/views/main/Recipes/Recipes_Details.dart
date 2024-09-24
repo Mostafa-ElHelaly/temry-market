@@ -58,13 +58,15 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
                   color: AppColors.secondary,
                   thickness: ConfigSize.defaultSize! * 0.3,
                 ),
-                SizedBox(
-                  height: ConfigSize.defaultSize! * 80,
-                  child: RecepisDetailsPageView(
-                    pageController: _pageController,
-                    recipesdetails: widget.recipesdetails,
-                    textStyle: textStyle,
-                  ),
+                PageViewItem(
+                  label: "ingredients",
+                  recipesdetails: widget.recipesdetails,
+                  textStyle: textStyle,
+                ),
+                PageViewItem(
+                  label: "Preperations",
+                  recipesdetails: widget.recipesdetails,
+                  textStyle: textStyle,
                 )
               ],
             ),

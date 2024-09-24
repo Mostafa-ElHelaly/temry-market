@@ -4,9 +4,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:temry_market/domain/usecases/category/get_remote_category_usecase.dart';
+import 'package:temry_market/domain/usecases/product/search_products_usecase.dart';
 import 'package:temry_market/domain/usecases/respies/get_remote_respies_usecase.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
+import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_bloc.dart';
 import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
@@ -53,6 +55,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               ProductBloc(productUseCase: di.sl<GetProductUseCase>()),
+        ),
+        BlocProvider(
+          create: (context) => SearchProductsBloc(
+              searchProductsUsecase: di.sl<SearchProductsUsecase>()),
         ),
         BlocProvider(
           create: (context) => RecipesBloc(
