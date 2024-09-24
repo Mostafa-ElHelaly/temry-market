@@ -27,52 +27,53 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
     return Scaffold(
       appBar: CustomAppBar(context, false),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(ConfigSize.defaultSize! * 2),
-          child: Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                Text(
-                  widget.recipesdetails.name.toString(),
-                  style: textStyle,
-                ),
-                SizedBox(height: ConfigSize.defaultSize! * 2),
-                ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(ConfigSize.defaultSize! * 2),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(ConfigSize.defaultSize! * 2),
+            child: Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Text(
+                    widget.recipesdetails.name.toString(),
+                    style: textStyle,
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Image(
-                    width: ConfigSize.screenWidth,
-                    image: NetworkImage(
-                      ConstantImageUrl.constantimageurl +
-                          widget.recipesdetails.thumbnail.toString(),
+                  SizedBox(height: ConfigSize.defaultSize! * 2),
+                  ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(ConfigSize.defaultSize! * 2),
                     ),
-                    fit: BoxFit.cover,
+                    clipBehavior: Clip.antiAlias,
+                    child: Image(
+                      width: ConfigSize.screenWidth,
+                      image: NetworkImage(
+                        ConstantImageUrl.constantimageurl +
+                            widget.recipesdetails.thumbnail.toString(),
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                SizedBox(height: ConfigSize.defaultSize! * 2),
-                Divider(
-                  color: AppColors.secondary,
-                  thickness: ConfigSize.defaultSize! * 0.3,
-                ),
-                PageViewItem(
-                  label: "ingredients",
-                  recipesdetails: widget.recipesdetails,
-                  textStyle: textStyle,
-                ),
-                PageViewItem(
-                  label: "Preperations",
-                  recipesdetails: widget.recipesdetails,
-                  textStyle: textStyle,
-                )
-              ],
+                  SizedBox(height: ConfigSize.defaultSize! * 2),
+                  Divider(
+                    color: AppColors.secondary,
+                    thickness: ConfigSize.defaultSize! * 0.3,
+                  ),
+                  PageViewItem(
+                    label: "Ingredients",
+                    recipesdetails: widget.recipesdetails,
+                    textStyle: textStyle,
+                  ),
+                  PageViewItem(
+                    label: "Preperations",
+                    recipesdetails: widget.recipesdetails,
+                    textStyle: textStyle,
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 }

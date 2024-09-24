@@ -15,6 +15,9 @@ class PageViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(recipesdetails.ingredients);
+    print(recipesdetails.preparations);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -21,7 +21,6 @@ import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/simil
 import 'package:temry_market/presentation/blocs/user/SignIn/sign_in_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/SignUp/sign_up_bloc.dart';
 import 'package:temry_market/presentation/blocs/user/forget_password_bloc/forget_password_bloc.dart';
-
 import 'package:temry_market/data/data_sources/local/cart_local_data_source.dart';
 import 'package:temry_market/data/data_sources/local/delivery_info_local_data_source.dart';
 import 'package:temry_market/data/data_sources/local/order_local_data_source.dart';
