@@ -553,10 +553,16 @@ class _HomeViewState extends State<HomeView> {
                       },
                     );
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: AppColors.secondary,
+                    ));
                   }
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ));
                 }
               }),
             ),

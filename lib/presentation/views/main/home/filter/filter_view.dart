@@ -1,3 +1,4 @@
+import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,19 @@ import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/input_range_slider.dart';
 
-class FilterView extends StatelessWidget {
+class FilterView extends StatefulWidget {
   const FilterView({super.key});
+
+  @override
+  State<FilterView> createState() => _FilterViewState();
+}
+
+class _FilterViewState extends State<FilterView> {
+  @override
+  void initState() {
+    BlocProvider.of<CategoryBloc>(context).add(CategoryEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
