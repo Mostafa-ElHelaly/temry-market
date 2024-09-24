@@ -7,6 +7,8 @@ import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
+import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_bloc.dart';
+import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_state.dart';
 
 class ProductDetailsView extends StatelessWidget {
   const ProductDetailsView({super.key});
@@ -353,6 +355,45 @@ class ProductDescription extends StatelessWidget {
                   maxLines: 3,
                 ),
               ),
+              BlocBuilder<GetSimilarProductsBloc, GetSimilarProductsState>(
+                builder: (context, similarProductsState) {
+                  if (similarProductsState is GetSimilarProductsSuccessState) {
+                    return Container(
+                      height: ConfigSize.defaultSize! * 40,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            similarProductsState.GetSimilarProducts.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: ConfigSize.defaultSize! * 20,
+                            width: ConfigSize.defaultSize! * 20,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Text(similarProductsState
+                                      .GetSimilarProducts[index].name
+                                      .toString()),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                  if (similarProductsState is GetSimilarProductsErrorState) {
+                    return Center(
+                        child:
+                            Text(similarProductsState.errorMessage.toString()));
+                  } else {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: AppColors.secondary,
+                    ));
+                  }
+                },
+              )
             ],
           );
         } else {
