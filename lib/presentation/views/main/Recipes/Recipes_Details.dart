@@ -26,12 +26,10 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(context, false),
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(ConfigSize.defaultSize! * 2),
-          child: Expanded(
-            flex: 1,
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(ConfigSize.defaultSize! * 2),
             child: Column(
               children: [
                 Text(
@@ -71,8 +69,8 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
               ],
             ),
           ),
-        ),
-      )),
+        ],
+      ),
     );
   }
 }
