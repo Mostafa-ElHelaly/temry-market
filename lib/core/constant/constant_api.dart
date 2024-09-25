@@ -1,6 +1,7 @@
 class ConstantApi {
   static const String basePath =
       'https://devops.exabyte-eg.com/projects/commerce/apis';
+
   static const String baseUrl = "$basePath/public/api";
 
   static const String register = "$baseUrl/client/access/sign-up";

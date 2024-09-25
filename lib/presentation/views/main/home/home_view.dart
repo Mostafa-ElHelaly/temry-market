@@ -11,6 +11,9 @@ import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
 import 'package:temry_market/presentation/blocs/product/product_event.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_event.dart';
+import 'package:temry_market/presentation/blocs/respies/respies_state.dart';
 import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_bloc.dart';
 import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_event.dart';
 import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_state.dart';
@@ -53,19 +56,13 @@ class _HomeViewState extends State<HomeView> {
     BlocProvider.of<ProductBloc>(context).add(ProductEvent());
     BlocProvider.of<SearchProductsBloc>(context).add(SearchAllProductsEvent());
     BlocProvider.of<CategoryBloc>(context).add(CategoryEvent());
+    BlocProvider.of<RecipesBloc>(context).add(RecipesEvent());
 
     super.initState();
   }
 
-  List<ProductModel> _filteredItems = [];
-
   void _updateSearchQuery(String query, List<ProductModel> list) {
-    setState(() {
-      _filteredItems = list
-          .where((item) =>
-              item.name!.toLowerCase().startsWith(query.toLowerCase()))
-          .toList();
-    });
+    setState(() {});
   }
 
   @override
@@ -183,6 +180,9 @@ class _HomeViewState extends State<HomeView> {
             // SizedBox(
             //   height: ConfigSize.defaultSize! * 2,
             // ),
+
+            //Category Tab
+
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
                 if (state is CategorySuccessState) {
@@ -193,35 +193,35 @@ class _HomeViewState extends State<HomeView> {
                       );
                     },
                     child: Padding(
-                      padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: ConfigSize.defaultSize! * 1),
                       child: SizedBox(
-                        height: ConfigSize.defaultSize! * 10,
+                        height: ConfigSize.defaultSize! * 12,
                         child: ListView.builder(
                           itemCount: state.searchList.length,
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding:
-                                  EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadiusDirectional.circular(10),
-                                    border: Border.all(
-                                      width: 1.5,
-                                      color: AppColors.secondary,
-                                    )),
-                                height: ConfigSize.defaultSize! * 10.1,
-                                width: ConfigSize.defaultSize! * 8.8,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: ConfigSize.defaultSize! * 1,
-                                    ),
-                                    Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ConfigSize.defaultSize! * 0.6),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: ConfigSize.defaultSize! * 8,
+                                    height: ConfigSize.defaultSize! * 8,
+
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                50),
+                                        border: Border.all(
+                                          width: 1.5,
+                                          color: AppColors.secondary,
+                                        )),
+
+                                    child: Container(
                                       height: ConfigSize.defaultSize! * 5.5,
                                       width: ConfigSize.defaultSize! * 5.5,
                                       decoration: BoxDecoration(
@@ -237,16 +237,27 @@ class _HomeViewState extends State<HomeView> {
                                         ),
                                       ),
                                     ),
-                                    Text(
-                                      state.searchList[index].name.toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              ConfigSize.defaultSize! * 1.1,
-                                          color: AppColors.secondary),
-                                    ),
-                                  ],
-                                ),
+                                    // Text(
+                                    //   state.searchList[index].name
+                                    //       .toString(),
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize:
+                                    //           ConfigSize.defaultSize! * 1.1,
+                                    //       color: AppColors.secondary),
+                                    // ),
+                                  ),
+                                  SizedBox(
+                                    height: ConfigSize.defaultSize! * 1,
+                                  ),
+                                  Text(
+                                    state.searchList[index].name.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: ConfigSize.defaultSize! * 1.5,
+                                        color: AppColors.secondary),
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -259,6 +270,108 @@ class _HomeViewState extends State<HomeView> {
                 }
               },
             ),
+
+            SizedBox(
+              height: ConfigSize.defaultSize! * 1.5,
+            ),
+
+            //Recepies Tab
+
+            BlocBuilder<RecipesBloc, RecipesState>(
+              builder: (context, state) {
+                if (state is RecipesSuccessState) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        AppRouter.categoryView,
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: ConfigSize.defaultSize! * 1),
+                      child: SizedBox(
+                        height: ConfigSize.defaultSize! * 12,
+                        child: ListView.builder(
+                          itemCount: state.searchList.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ConfigSize.defaultSize! * 0.6),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: ConfigSize.defaultSize! * 8,
+                                    height: ConfigSize.defaultSize! * 8,
+
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                50),
+                                        border: Border.all(
+                                          width: 1.5,
+                                          color: AppColors.secondary,
+                                        )),
+
+                                    child: Container(
+                                      height: ConfigSize.defaultSize! * 5.5,
+                                      width: ConfigSize.defaultSize! * 5.5,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                            ConstantImageUrl.constantimageurl +
+                                                state
+                                                    .searchList[index].thumbnail
+                                                    .toString(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // Text(
+                                    //   state.searchList[index].name
+                                    //       .toString(),
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize:
+                                    //           ConfigSize.defaultSize! * 1.1,
+                                    //       color: AppColors.secondary),
+                                    // ),
+                                  ),
+                                  SizedBox(
+                                    height: ConfigSize.defaultSize! * 1,
+                                  ),
+                                  Text(
+                                    state.searchList[index].name
+                                        .toString()
+                                        .split(' ')
+                                        .first,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: ConfigSize.defaultSize! * 1.5,
+                                        color: AppColors.secondary),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+
+//
             Padding(
               padding: const EdgeInsets.only(
                 top: 12,
@@ -282,7 +395,7 @@ class _HomeViewState extends State<HomeView> {
                             onSubmitted: (val) =>
                                 context.read<SearchProductsBloc>().add(
                                       SearchAllProductsEvent(
-                                        term: searchcontroller.text ?? '',
+                                        term: searchcontroller.text,
                                       ),
                                     ),
                             decoration: InputDecoration(
