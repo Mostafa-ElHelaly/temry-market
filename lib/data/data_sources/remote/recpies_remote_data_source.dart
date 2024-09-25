@@ -12,7 +12,7 @@ abstract class RecipesRemoteDataSource {
 
 class RecipesRemotelyDateSource extends RecipesRemoteDataSource {
   @override
-  Future<List<RecipesModel>> unsavedrespies() async {
+  Future<List<RecipesModel>> getRecipes() async {
     Dio dio = Dio();
     dio.interceptors.add(LogInterceptor(responseBody: true));
 
@@ -27,7 +27,7 @@ class RecipesRemotelyDateSource extends RecipesRemoteDataSource {
         }).toList();
         print(jsonResponse['data']);
         print('-------------------------------------------------');
-        save_recipes(recipes);
+        // save_recipes(recipes);
         return recipes;
       } else {
         throw Exception('Getting recipes Failed: ${response.statusCode}');
@@ -37,21 +37,21 @@ class RecipesRemotelyDateSource extends RecipesRemoteDataSource {
     }
   }
 
-  Future<void> save_recipes(List<RecipesModel> trainers) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String data = json.encode(trainers.map((e) => e.toJson()).toList());
-    await prefs.setString('recipes_info', data);
-  }
+  // Future<void> save_recipes(List<RecipesModel> trainers) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String data = json.encode(trainers.map((e) => e.toJson()).toList());
+  //   await prefs.setString('recipes_info', data);
+  // }
 
-  @override
-  Future<List<RecipesModel>> getRecipes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? data = prefs.getString('recipes_info');
-    if (data != null) {
-      Iterable<dynamic> decodeddata = json.decode(data);
-      return decodeddata.map((e) => RecipesModel.fromJson(e)).toList();
-    } else {
-      return await unsavedrespies();
-    }
-  }
+  // @override
+  // Future<List<RecipesModel>> getRecipes() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? data = prefs.getString('recipes_info');
+  //   if (data != null) {
+  //     Iterable<dynamic> decodeddata = json.decode(data);
+  //     return decodeddata.map((e) => RecipesModel.fromJson(e)).toList();
+  //   } else {
+  //     return await unsavedrespies();
+  //   }
+  // }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:temry_market/core/constant/constant_api.dart';
+import 'package:temry_market/data/models/product/product_details_model.dart';
 
 import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/data/models/product/similar_products_model.dart';
@@ -43,6 +44,7 @@ abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
   Future<List<SimilarProductsModel>> getsimilarProducts(int product_id);
   Future<List<ProductModel>> searchproducts(String? term, int? page);
+  Future<List<ProductDetailsModel>> getdetailsproducts();
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
@@ -106,10 +108,10 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         print(jsonResponse['data']);
         return similarProducts;
       } else {
-        throw Exception('Getting Countries Failed: ${response.statusCode}');
+        throw Exception('Getting Products Failed: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching countries: $e');
+      throw Exception('Error fetching product: $e');
     }
   }
 
@@ -136,6 +138,37 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
       }
     } catch (e) {
       throw Exception('Error fetching countries: $e');
+    }
+  }
+
+  @override
+  Future<List<ProductDetailsModel>> getdetailsproducts() async {
+    Dio dio = Dio();
+    dio.interceptors.add(LogInterceptor(responseBody: true));
+    try {
+      Response response = await dio.get(ConstantApi.productsdetails);
+
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final Map<String, dynamic> jsonResponse = response.data;
+        final List<dynamic> searchJson = jsonResponse['data'];
+
+        // Convert JSON list to List<CountriesModel>
+        List<ProductDetailsModel> search = searchJson.map((json) {
+          return ProductDetailsModel.fromJson(json);
+        }).toList();
+        print(response.data['data']);
+        // save_products(search);
+        return search;
+      } else {
+        // Error: Parse the error message from the response
+        String errorMessage = _getErrorMessage(response);
+        print('Error: $errorMessage');
+        throw Exception('Getting products Failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      throw Exception('Getting products Failed: ${e.toString()}');
     }
   }
 }

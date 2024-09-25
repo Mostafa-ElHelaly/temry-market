@@ -12,7 +12,7 @@ abstract class CategoryLocalDataSource {
 
 class CategoryRemotelyDateSource extends CategoryLocalDataSource {
   @override
-  Future<List<CategoryModel>> unsavedcategories() async {
+  Future<List<CategoryModel>> getCategories() async {
     Dio dio = Dio();
     dio.interceptors.add(LogInterceptor(responseBody: true));
 
@@ -26,7 +26,7 @@ class CategoryRemotelyDateSource extends CategoryLocalDataSource {
           return CategoryModel.fromJson(json);
         }).toList();
         print(jsonResponse['data']);
-        save_categories(categories);
+        // save_categories(categories);
         return categories;
       } else {
         throw Exception('Getting Countries Failed: ${response.statusCode}');
@@ -36,21 +36,21 @@ class CategoryRemotelyDateSource extends CategoryLocalDataSource {
     }
   }
 
-  Future<void> save_categories(List<CategoryModel> trainers) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String data = json.encode(trainers.map((e) => e.toJson()).toList());
-    await prefs.setString('categories_info', data);
-  }
+  // Future<void> save_categories(List<CategoryModel> trainers) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String data = json.encode(trainers.map((e) => e.toJson()).toList());
+  //   await prefs.setString('categories_info', data);
+  // }
 
-  @override
-  Future<List<CategoryModel>> getCategories() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? data = prefs.getString('categories_info');
-    if (data != null) {
-      Iterable<dynamic> decodeddata = json.decode(data);
-      return decodeddata.map((e) => CategoryModel.fromJson(e)).toList();
-    } else {
-      return await unsavedcategories();
-    }
-  }
+  // @override
+  // Future<List<CategoryModel>> getCategories() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? data = prefs.getString('categories_info');
+  //   if (data != null) {
+  //     Iterable<dynamic> decodeddata = json.decode(data);
+  //     return decodeddata.map((e) => CategoryModel.fromJson(e)).toList();
+  //   } else {
+  //     return await unsavedcategories();
+  //   }
+  // }
 }

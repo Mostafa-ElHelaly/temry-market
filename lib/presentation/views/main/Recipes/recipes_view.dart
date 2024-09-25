@@ -6,7 +6,6 @@ import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
 import 'package:temry_market/core/constant/images.dart';
 import 'package:temry_market/core/error/failures.dart';
-import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/domain/usecases/product/get_product_usecase.dart';
 import 'package:temry_market/presentation/blocs/filter/filter_cubit.dart';
 
@@ -17,7 +16,6 @@ import 'package:temry_market/presentation/blocs/respies/respies_event.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_state.dart';
 import 'package:temry_market/presentation/views/main/Recipes/Recipes_Details.dart';
 import 'package:temry_market/presentation/widgets/alert_card.dart';
-import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
 
 class RecipesView extends StatefulWidget {
@@ -120,7 +118,7 @@ class _RecipesViewState extends State<RecipesView> {
                                     )
                                   : null,
                               border: const OutlineInputBorder(),
-                              hintText: "Search Product",
+                              hintText: "Search Recipes",
                               fillColor: Colors.grey.shade100,
                               filled: true,
                               focusedBorder: OutlineInputBorder(
@@ -209,7 +207,7 @@ class _RecipesViewState extends State<RecipesView> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 2,
+                                    flex: 3,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

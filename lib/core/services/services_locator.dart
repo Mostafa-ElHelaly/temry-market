@@ -11,10 +11,12 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:temry_market/domain/usecases/product/get_product_details_usecase.dart';
 import 'package:temry_market/domain/usecases/product/get_similar_products_usecase.dart';
 import 'package:temry_market/domain/usecases/product/search_products_usecase.dart';
 import 'package:temry_market/domain/usecases/respies/get_remote_respies_usecase.dart';
 import 'package:temry_market/domain/usecases/user/forget_password_usecase.dart';
+import 'package:temry_market/presentation/blocs/product_Details/product_details_bloc.dart';
 import 'package:temry_market/presentation/blocs/respies/respies_bloc.dart';
 import 'package:temry_market/presentation/blocs/search_product_bloc/search_product_bloc.dart';
 import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_bloc.dart';
@@ -82,11 +84,16 @@ Future<void> init() async {
   sl.registerFactory(
     () => SearchProductsBloc(searchProductsUsecase: sl()),
   );
+  sl.registerFactory(
+    () => ProductDetailsBloc(productdetailsUseCase: sl()),
+  );
   // Use cases
   sl.registerLazySingleton(() => GetProductUseCase(baseRepository: sl()));
   sl.registerLazySingleton(
       () => GetSimilarProductsUsecase(baseRepository: sl()));
   sl.registerLazySingleton(() => SearchProductsUsecase(baseRepository: sl()));
+  sl.registerLazySingleton(
+      () => GetProductDetailsUseCase(baseRepository: sl()));
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(

@@ -61,10 +61,6 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
-  void _updateSearchQuery(String query, List<ProductModel> list) {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

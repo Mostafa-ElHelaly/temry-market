@@ -26,7 +26,8 @@ import 'package:temry_market/presentation/widgets/input_form_button.dart';
 import 'package:temry_market/presentation/widgets/product_card.dart';
 
 class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({super.key});
+  const ProductsScreen({super.key, this.categoryId});
+  final int? categoryId;
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -121,6 +122,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     }
 
                     if (basestate is ProductSuccessState) {
+                      List<ProductModel> products = basestate.searchList
+                          .where(
+                            (element) =>
+                                element.categoryId == widget.categoryId,
+                          )
+                          .toList();
                       return BlocBuilder<FilterCubit, FilterProductParams>(
                         builder: (context, state) {
                           return TextField(
@@ -231,12 +238,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     return Text(state.errorMessage);
                   }
                   if (state is SearchProductsSuccessState) {
+                    List<ProductModel> products = state.SearchProducts.where(
+                      (element) => element.categoryId == widget.categoryId,
+                    ).toList();
+
                     return RefreshIndicator(
                       onRefresh: () async {
                         context.read<ProductBloc>().add(GetProductEvent());
                       },
                       child: GridView.builder(
-                        itemCount: state.SearchProducts.length +
+                        itemCount: products.length +
                             ((state is ProductLoadingState) ? 10 : 0),
                         controller: scrollController,
                         padding: EdgeInsets.only(
@@ -281,9 +292,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         top: Radius.circular(borderRadius),
                                       ),
                                       clipBehavior: Clip.antiAlias,
-                                      child: state.SearchProducts[index]
-                                                  .thumbnail ==
-                                              null
+                                      child: products[index].thumbnail == null
                                           ? Image.asset(
                                               'assets/other_images/logo.png')
                                           : Image(
@@ -291,7 +300,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                               image: NetworkImage(
                                                 ConstantImageUrl
                                                         .constantimageurl +
-                                                    state.SearchProducts[index]
+                                                    products[index]
                                                         .thumbnail
                                                         .toString(),
                                               ),
@@ -313,8 +322,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                   ConfigSize.defaultSize! * 1,
                                             ),
                                             child: Text(
-                                              state.SearchProducts[index].name
-                                                  .toString(),
+                                              products[index].name.toString(),
                                               maxLines: 2,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -333,7 +341,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                   ConfigSize.defaultSize! * 1,
                                             ),
                                             child: Text(
-                                              '${state.SearchProducts[index].price} EPG',
+                                              '${products[index].price} EPG',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: AppColors.secondary,

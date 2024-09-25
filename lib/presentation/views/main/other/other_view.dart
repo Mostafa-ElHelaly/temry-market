@@ -50,10 +50,10 @@ class OtherView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${state.signInModelResponse['data']['SignIn']['first_name']} ${state.signInModelResponse['data']['SignIn']['last_name']}",
+                              "${state.signInModelResponse['data']['user']['first_name']} ${state.signInModelResponse['data']['user']['last_name']}",
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                            Text(state.signInModelResponse['data']['SignIn']
+                            Text(state.signInModelResponse['data']['user']
                                 ['email'])
                           ],
                         ),
@@ -157,11 +157,22 @@ class OtherView extends StatelessWidget {
             title: "Settings",
           ),
           const SizedBox(height: 6),
-          OtherItemCard(
-            onClick: () {
-              Navigator.of(context).pushNamed(AppRouter.notifications);
+          BlocBuilder<SignInBloc, SignInState>(
+            builder: (context, state) {
+              if (state is SignInSuccessState) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: OtherItemCard(
+                    onClick: () {
+                      Navigator.of(context).pushNamed(AppRouter.notifications);
+                    },
+                    title: "Address",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
             },
-            title: "Notifications",
           ),
           const SizedBox(height: 6),
           OtherItemCard(
@@ -176,6 +187,10 @@ class OtherView extends StatelessWidget {
               if (state is SignInSuccessState) {
                 return OtherItemCard(
                   onClick: () {
+                    Navigator.of(context).popAndPushNamed(
+                      AppRouter.signIn,
+                    );
+
                     // context.read<SignInBloc>().add(SignOutSignIn());
                     // context.read<CartBloc>().add(const ClearCart());
                     // context

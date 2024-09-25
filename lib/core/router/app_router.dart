@@ -10,7 +10,7 @@ import 'package:temry_market/presentation/views/authentication/signup_view.dart'
 import 'package:temry_market/presentation/views/main/main_view.dart';
 import 'package:temry_market/presentation/views/main/other/about/about_view.dart';
 import 'package:temry_market/presentation/views/main/other/delivery_info/delivery_info.dart';
-import 'package:temry_market/presentation/views/main/other/notification/notification_view.dart';
+import 'package:temry_market/presentation/views/main/other/address/address_view.dart';
 import 'package:temry_market/presentation/views/main/other/orders/order_view.dart';
 import 'package:temry_market/presentation/views/main/other/profile/profile_screen.dart';
 import 'package:temry_market/presentation/views/main/other/settings/settings_view.dart';
@@ -86,7 +86,7 @@ class AppRouter {
       case settings:
         return MaterialPageRoute(builder: (_) => const SettingsView());
       case notifications:
-        return MaterialPageRoute(builder: (_) => const NotificationView());
+        return MaterialPageRoute(builder: (_) => const AddressView());
       case about:
         return MaterialPageRoute(builder: (_) => const AboutView());
       case filter:

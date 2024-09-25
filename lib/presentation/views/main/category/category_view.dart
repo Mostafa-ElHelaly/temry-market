@@ -8,6 +8,7 @@ import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
+import 'package:temry_market/presentation/views/product/product_list_view.dart';
 
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key});
@@ -134,24 +135,26 @@ class _CategoryViewState extends State<CategoryView> {
               child: BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   if (state is CategorySuccessState) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          AppRouter.productsScreen,
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
-                        child: SizedBox(
-                          height: ConfigSize.defaultSize! * 10,
-                          child: GridView.builder(
-                            itemCount: state.searchList.length,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.all(
-                                    ConfigSize.defaultSize! * 0.5),
+                    return Padding(
+                      padding: EdgeInsets.all(ConfigSize.defaultSize! * 1),
+                      child: SizedBox(
+                        height: ConfigSize.defaultSize! * 10,
+                        child: GridView.builder(
+                          itemCount: state.searchList.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ProductsScreen(
+                                            categoryId:
+                                                state.searchList[index].id,
+                                          )));
+                                },
                                 child: Container(
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
@@ -198,15 +201,15 @@ class _CategoryViewState extends State<CategoryView> {
                                     ],
                                   ),
                                 ),
-                              );
-                            },
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, // Number of columns
-                              crossAxisSpacing: 12.0, // Space between columns
-                              mainAxisSpacing: 12.0, // Space between rows
-                              childAspectRatio: 1, // Aspect ratio of each item
-                            ),
+                              ),
+                            );
+                          },
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Number of columns
+                            crossAxisSpacing: 12.0, // Space between columns
+                            mainAxisSpacing: 12.0, // Space between rows
+                            childAspectRatio: 1, // Aspect ratio of each item
                           ),
                         ),
                       ),

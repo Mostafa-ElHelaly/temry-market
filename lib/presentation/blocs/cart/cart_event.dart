@@ -13,7 +13,7 @@ class GetCart extends CartEvent {
 
 class AddProduct extends CartEvent {
   final CartItem cartItem;
-  const AddProduct({required this.cartItem});
+  const AddProduct(product, {required this.cartItem});
 
   @override
   List<Object> get props => [];

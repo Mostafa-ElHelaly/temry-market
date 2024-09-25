@@ -5,10 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:temry_market/core/constant/colors%20copy.dart';
 import 'package:temry_market/core/constant/config_size.dart';
 import 'package:temry_market/core/constant/constant_image_url.dart';
+import 'package:temry_market/presentation/blocs/cart/cart_bloc.dart';
 import 'package:temry_market/presentation/blocs/product/product_bloc.dart';
 import 'package:temry_market/presentation/blocs/product/product_state.dart';
+import 'package:temry_market/presentation/blocs/product_Details/product_details_bloc.dart';
+import 'package:temry_market/presentation/blocs/product_Details/product_details_state.dart';
 import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_bloc.dart';
 import 'package:temry_market/presentation/blocs/similar_products_bloc.dart/similar_products_state.dart';
+import 'package:temry_market/presentation/views/main/cart/cart_view.dart';
 
 class ProductDetailsView extends StatelessWidget {
   const ProductDetailsView({super.key});
@@ -64,7 +68,11 @@ class ProductDetailsView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 4),
-                    SvgPicture.string(starIcon),
+                    SvgPicture.string(
+                        '''<svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+// <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7201 5.50474C12.9813 5.23322 13.0659 4.86077 12.9476 4.50957C12.8292 4.15777 12.5325 3.90514 12.156 3.83313L9.12773 3.25704C9.03883 3.23992 8.96219 3.18621 8.91743 3.11007L7.41279 0.515295C7.22517 0.192424 6.88365 0 6.49983 0C6.116 0 5.7751 0.192424 5.58748 0.515295L4.08284 3.11007C4.03808 3.18621 3.96144 3.23992 3.87192 3.25704L0.844252 3.83313C0.467173 3.90514 0.171028 4.15777 0.0526921 4.50957C-0.0662565 4.86077 0.0189695 5.23322 0.280166 5.50474L2.37832 7.68397C2.43963 7.74831 2.46907 7.83508 2.45803 7.92185L2.09199 10.8725C2.04661 11.2397 2.20419 11.5891 2.51566 11.8063C2.6996 11.935 2.91236 11.9999 3.12696 11.9999C3.27595 11.9999 3.42617 11.9687 3.56842 11.9055L6.36984 10.6577C6.45262 10.6211 6.54704 10.6211 6.62981 10.6577L9.43185 11.9055C9.7795 12.0601 10.1725 12.0235 10.484 11.8063C10.7955 11.5891 10.9537 11.2397 10.9083 10.8725L10.5416 7.92244C10.5306 7.83508 10.56 7.74831 10.6226 7.68397L12.7201 5.50474Z" fill="#FFC416"/>
+// </svg>
+// '''),
                   ],
                 ),
               ),
@@ -111,7 +119,25 @@ class ProductDetailsView extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                // Dispatch an AddProductToCart event
+                BlocProvider.of<CartBloc>(context).add(AddProduct(product,
+                    cartItem: context.read<CartBloc>().state.cart.first));
+
+                // Optionally show a Snackbar
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("${product.id.toString()} added to cart!"),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+
+                // Navigate to the cart page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartView()),
+                );
+              },
               child: const Text("Add To Cart"),
             ),
           ),
@@ -172,7 +198,7 @@ class _ProductImagesState extends State<ProductImages> {
           return Column(
             children: [
               SizedBox(
-                width: 238,
+                width: ConfigSize.screenWidth,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Image.network(
@@ -186,6 +212,9 @@ class _ProductImagesState extends State<ProductImages> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: ConfigSize.screenWidth! * 0.2,
+                  ),
                   ...List.generate(
                     widget.product.images.length,
                     (index) => SmallProductImage(
@@ -229,9 +258,9 @@ class SmallProductImage extends StatefulWidget {
 class _SmallProductImageState extends State<SmallProductImage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    return BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
       builder: (context, state) {
-        if (state is ProductSuccessState) {
+        if (state is ProductDetailsSuccessState) {
           return GestureDetector(
             onTap: widget.press,
             child: AnimatedContainer(
@@ -249,7 +278,7 @@ class _SmallProductImageState extends State<SmallProductImage> {
               ),
               child: Image.network(
                 ConstantImageUrl.constantimageurl +
-                    state.searchList.first.thumbnail.toString(),
+                    state.searchList.first.icon.toString(),
                 fit: BoxFit.cover,
               ),
             ),
@@ -318,7 +347,10 @@ class ProductDescription extends StatelessWidget {
                     ),
                   ),
                   child: SvgPicture.string(
-                    heartIcon,
+                    '''<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.5266 8.61383L9.27142 15.8877C9.12207 16.0374 8.87889 16.0374 8.72858 15.8877L1.47343 8.61383C0.523696 7.66069 0 6.39366 0 5.04505C0 3.69644 0.523696 2.42942 1.47343 1.47627C2.45572 0.492411 3.74438 0 5.03399 0C6.3236 0 7.61225 0.492411 8.59454 1.47627C8.81857 1.70088 9.18143 1.70088 9.40641 1.47627C11.3691 -0.491451 14.5629 -0.491451 16.5266 1.47627C17.4763 2.42846 18 3.69548 18 5.04505C18 6.39366 17.4763 7.66165 16.5266 8.61383Z" fill="#DBDEE4"/>
+</svg>
+''',
                     colorFilter: ColorFilter.mode(
                         product.isFavourite
                             ? AppColors.secondary
