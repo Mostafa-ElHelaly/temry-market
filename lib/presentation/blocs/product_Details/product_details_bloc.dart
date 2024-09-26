@@ -14,7 +14,7 @@ class ProductDetailsBloc
   }) : super(ProductDetailsInitial()) {
     on<ProductDetailsEvent>((event, emit) async {
       emit(const ProductDetailsLoadingState());
-      final result = await productdetailsUseCase.call(NoParams());
+      final result = await productdetailsUseCase.call(event.product_id);
       result.fold((l) => emit(ProductDetailsErrorState(failure: l.toString())),
           (r) => emit(ProductDetailsSuccessState(r)));
     });

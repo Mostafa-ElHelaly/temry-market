@@ -8,7 +8,7 @@ import 'package:temry_market/core/router/app_router.dart';
 import 'package:temry_market/presentation/blocs/category/category_bloc.dart';
 import 'package:temry_market/presentation/blocs/category/category_event.dart';
 import 'package:temry_market/presentation/blocs/category/category_state.dart';
-import 'package:temry_market/presentation/views/product/product_list_view.dart';
+import 'package:temry_market/presentation/views/product/pages/product_list_view.dart';
 
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key});

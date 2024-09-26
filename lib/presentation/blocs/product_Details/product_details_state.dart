@@ -21,6 +21,6 @@ final class ProductDetailsErrorState extends ProductDetailsState {
 }
 
 final class ProductDetailsSuccessState extends ProductDetailsState {
-  final List<ProductDetailsModel> searchList;
-  const ProductDetailsSuccessState(this.searchList);
+  final ProductDetailsModel productsdetails;
+  const ProductDetailsSuccessState(this.productsdetails);
 }

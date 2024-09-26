@@ -15,9 +15,9 @@ import 'package:temry_market/presentation/views/main/other/orders/order_view.dar
 import 'package:temry_market/presentation/views/main/other/profile/profile_screen.dart';
 import 'package:temry_market/presentation/views/main/other/settings/settings_view.dart';
 import 'package:temry_market/presentation/views/order_chekout/order_checkout_view.dart';
-import 'package:temry_market/presentation/views/product/product_details_view.dart';
+import 'package:temry_market/presentation/views/product/pages/product_details_view.dart';
 import 'package:temry_market/core/error/exceptions.dart';
-import 'package:temry_market/presentation/views/product/product_list_view.dart';
+import 'package:temry_market/presentation/views/product/pages/product_list_view.dart';
 import 'package:temry_market/splash_screen.dart';
 
 class AppRouter {
@@ -61,8 +61,8 @@ class AppRouter {
       case productsScreen:
         return MaterialPageRoute(builder: (_) => const ProductsScreen());
 
-      case productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetailsView());
+      // case productDetails:
+      //   return MaterialPageRoute(builder: (_) => const ProductDetailsView());
       case userProfile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
 
@@ -77,8 +77,8 @@ class AppRouter {
                 ));
       case deliveryDetails:
         return MaterialPageRoute(builder: (_) => const DeliveryInfoView());
-      case productDetailsView:
-        return MaterialPageRoute(builder: (_) => const ProductDetailsView());
+      // case productDetailsView:
+      //   return MaterialPageRoute(builder: (_) => const ProductDetailsView());
       case orders:
         return MaterialPageRoute(builder: (_) => const OrderView());
       case categoryView:

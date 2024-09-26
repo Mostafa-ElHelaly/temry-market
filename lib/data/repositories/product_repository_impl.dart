@@ -49,9 +49,10 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<Either<String, List<ProductDetailsModel>>> getdetailsproducts() async {
+  Future<Either<String, ProductDetailsModel>> getdetailsproducts(
+      int course_id) async {
     try {
-      final result = await remoteDataSource.getdetailsproducts();
+      final result = await remoteDataSource.getdetailsproducts(course_id);
       return Right(result);
     } on Exception catch (e) {
       print(DioHelper.buildFailure(e).errorMessage);

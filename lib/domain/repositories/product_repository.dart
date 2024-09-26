@@ -12,5 +12,5 @@ abstract class ProductRepository {
   Future<Either<Failuremessage, List<SimilarProductsModel>>> getSimilarProducts(
       int product_id);
 
-  Future<Either<String, List<ProductDetailsModel>>> getdetailsproducts();
+  Future<Either<String, ProductDetailsModel>> getdetailsproducts(int course_id);
 }

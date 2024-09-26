@@ -31,6 +31,7 @@ class _RecipesDetailsViewState extends State<RecipesDetailsView> {
           Padding(
             padding: EdgeInsets.all(ConfigSize.defaultSize! * 2),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.recipesdetails.name.toString(),

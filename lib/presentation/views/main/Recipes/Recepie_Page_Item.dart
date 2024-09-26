@@ -27,20 +27,11 @@ class PageViewItem extends StatelessWidget {
           style: textStyle.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: ConfigSize.defaultSize! * 2),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          itemCount: label == "ingredients"
-              ? recipesdetails.ingredients?.length ?? 0
-              : recipesdetails.preparations?.length ?? 0,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
-              child: Text(
-                  '• ${label == "ingredients" ? recipesdetails.ingredients![index] : recipesdetails.preparations?[index] ?? ''}',
-                  style: textStyle),
-            );
-          },
+        Padding(
+          padding: EdgeInsets.all(ConfigSize.defaultSize! * 0.5),
+          child: Text(
+              '• ${label == "ingredients" ? recipesdetails.ingredients! : recipesdetails.preparations ?? ''}',
+              style: textStyle),
         )
       ],
     );
