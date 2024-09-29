@@ -6,9 +6,9 @@ import 'package:temry_market/core/constant/constant_image_url.dart';
 import 'package:temry_market/data/models/product/product_model.dart';
 import 'package:temry_market/presentation/blocs/product_Details/product_details_bloc.dart';
 import 'package:temry_market/presentation/blocs/product_Details/product_details_state.dart';
-import 'package:temry_market/presentation/views/main/cart/cart_view.dart';
+import 'package:temry_market/presentation/views/main/cart/pages/cart_view.dart';
 import 'package:temry_market/presentation/views/product/widgets/Product_Description.dart';
-import 'package:temry_market/presentation/views/product/widgets/ProductsImages.dart';
+import 'package:temry_market/presentation/views/product/widgets/Products_Images.dart';
 import 'package:temry_market/presentation/views/product/widgets/Top_Rounded_Container.dart';
 
 class ProductDetailsView extends StatelessWidget {

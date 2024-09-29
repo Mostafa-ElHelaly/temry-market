@@ -29,7 +29,7 @@ dependencies:
   http: ^1.2.2
   equatable: ^2.0.5
   dartz: ^0.10.1
-  internet_connection_checker: ^2.0.0
+  internet_connection_checker: ^1.0.0
 
   #ui
   oktoast: ^3.3.1
@@ -59,6 +59,7 @@ dependencies:
   persistent_bottom_nav_bar: ^6.2.1
   transparent_image: ^2.0.0 # For GIF support
   flutter_splash_screen: ^0.3.0 # Optional, for native splash screens
+  firebase_core: ^3.6.0
 
 dev_dependencies:
   flutter_test:

@@ -106,9 +106,14 @@ class _ProductDescriptionState extends State<ProductDescription> {
             right: 64,
           ),
           child: Text(
-            widget.product.desc.toString(),
+            widget.product.desc == null
+                ? 'Description :'
+                : widget.product.desc.toString(),
             maxLines: 3,
           ),
+        ),
+        SizedBox(
+          height: ConfigSize.defaultSize! * 2,
         ),
         BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           builder: (context, state) {
@@ -120,22 +125,38 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   scrollDirection: Axis.horizontal,
                   physics: ClampingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: state.productsdetails.similar?.length ?? 1,
+                  itemCount: state.productsdetails.similar?.length ?? 3,
                   itemBuilder: (context, index) {
                     return Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: ConfigSize.defaultSize! * 1),
-                        child: CustomProductCard(
-                            borderRadius: ConfigSize.defaultSize! * 2,
-                            image: null,
-                            // " ${state.productsdetails.similar![index].image}" ??
-                            //     '',
-                            name: state.productsdetails.similar![index].name ??
-                                'unknown',
-                            price:
-                                // int.parse(state.productsdetails.similar![index].
-                                //     !.toString()),
-                                '200'));
+                        child: Container(
+                            width: ConfigSize.defaultSize! * 20,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black
+                                      .withOpacity(0.1), // Shadow color
+                                  spreadRadius: 0,
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 2), // Shadow offset
+                                ),
+                              ],
+                            ),
+                            child: CustomProductCard(
+                                pricesize: ConfigSize.defaultSize! * 1.2,
+                                buttonheight: ConfigSize.defaultSize! * 2,
+                                borderRadius: 10,
+                                name: state
+                                        .productsdetails.similar![index].name ??
+                                    'null',
+                                price: state
+                                    .productsdetails.similar![index].price
+                                    .toString(),
+                                image: state.productsdetails.similar![index]
+                                    .thumbnail)));
                   },
                 ),
               );

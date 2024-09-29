@@ -300,9 +300,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       ],
                                     ),
                                     child: CustomProductCard(
+                                      pricesize: ConfigSize.defaultSize! * 2,
+                                      buttonheight: ConfigSize.defaultSize! * 4,
                                       borderRadius: borderRadius,
-                                      image:
-                                          products[index].thumbnail ?? 'null',
+                                      image: products[index].thumbnail,
                                       name: products[index].name ?? 'null',
                                       price: products[index].price.toString() ??
                                           'null',

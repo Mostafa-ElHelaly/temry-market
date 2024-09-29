@@ -298,45 +298,48 @@ class Similar {
   String? delstamp;
   String? addstamp;
   String? updatestamp;
+  int? price;
 
-  Similar(
-      {this.id,
-      this.productGroupId,
-      this.returnPolicyId,
-      this.categoryId,
-      this.brandId,
-      this.wholesaleParentId,
-      this.wholesaleParentQuantity,
-      this.slug,
-      this.sku,
-      // this.barcode,
-      // this.model,
-      this.name,
-      this.brief,
-      this.desc,
-      // this.measure,
-      this.icon,
-      this.thumbnail,
-      this.image,
-      // this.displayMultiplier,
-      // this.minOrderQuantity,
-      // this.stepOrderQuantity,
-      // this.maxOrderQuantity,
-      // this.minStock,
-      // this.packageWidth,
-      // this.packageHeight,
-      // this.packageLength,
-      // this.packageWeight,
-      // this.leadTimeFrom,
-      // this.leadTimeTo,
-      this.perOrder,
-      this.infiniteStock,
-      this.visibleStock,
-      this.active,
-      this.deleted,
-      this.delstamp,
-      this.addstamp,
-      this.updatestamp});
+  Similar({
+    this.id,
+    this.productGroupId,
+    this.returnPolicyId,
+    this.categoryId,
+    this.brandId,
+    this.wholesaleParentId,
+    this.wholesaleParentQuantity,
+    this.slug,
+    this.sku,
+    // this.barcode,
+    // this.model,
+    this.name,
+    this.brief,
+    this.desc,
+    // this.measure,
+    this.icon,
+    this.thumbnail,
+    this.image,
+    // this.displayMultiplier,
+    // this.minOrderQuantity,
+    // this.stepOrderQuantity,
+    // this.maxOrderQuantity,
+    // this.minStock,
+    // this.packageWidth,
+    // this.packageHeight,
+    // this.packageLength,
+    // this.packageWeight,
+    // this.leadTimeFrom,
+    // this.leadTimeTo,
+    this.perOrder,
+    this.infiniteStock,
+    this.visibleStock,
+    this.active,
+    this.deleted,
+    this.delstamp,
+    this.addstamp,
+    this.updatestamp,
+    this.price,
+  });
 
   Similar.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -376,6 +379,7 @@ class Similar {
     delstamp = json['delstamp'];
     addstamp = json['addstamp'];
     updatestamp = json['updatestamp'];
+    price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
@@ -417,6 +421,7 @@ class Similar {
     data['delstamp'] = this.delstamp;
     data['addstamp'] = this.addstamp;
     data['updatestamp'] = this.updatestamp;
+    data['price'] = this.price;
     return data;
   }
 }

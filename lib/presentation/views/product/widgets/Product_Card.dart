@@ -9,11 +9,15 @@ class CustomProductCard extends StatelessWidget {
       required this.borderRadius,
       this.image,
       required this.name,
-      required this.price});
+      required this.price,
+      required this.buttonheight,
+      required this.pricesize});
   final double borderRadius;
   final String? image;
   final String name;
   final String price;
+  final double buttonheight;
+  final double pricesize;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,7 @@ class CustomProductCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.secondary,
-                      fontSize: ConfigSize.defaultSize! * 2,
+                      fontSize: pricesize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

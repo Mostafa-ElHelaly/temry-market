@@ -5,9 +5,9 @@ import 'package:temry_market/core/constant/colors%20copy.dart';
 
 import 'package:temry_market/presentation/blocs/home/navbar_cubit.dart';
 import 'package:temry_market/presentation/views/main/Recipes/recipes_view.dart';
-import 'package:temry_market/presentation/views/main/cart/cart_view.dart';
+import 'package:temry_market/presentation/views/main/cart/pages/cart_view.dart';
 import 'package:temry_market/presentation/views/main/category/category_view.dart';
-import 'package:temry_market/presentation/views/main/home/home_view.dart';
+import 'package:temry_market/presentation/views/main/home/pages/home_view.dart';
 import 'package:temry_market/presentation/views/main/other/other_view.dart';
 
 class MainView extends StatefulWidget {

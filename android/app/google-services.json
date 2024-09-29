@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1083694915581",
+    "project_id": "temry-market",
+    "storage_bucket": "temry-market.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083694915581:android:c682516b59dfeca730c394",
+        "android_client_info": {
+          "package_name": "com.example.temry_market"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1707tEBZJQH7Bg5J9Yrq5kpLZMtyr_qY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
